@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
     <style>
+
+        body{
+            background-color:black;
+        }
+
         .canvas {
             background-color:transparent;
             width:100%;
@@ -10,17 +15,24 @@
             top: 0px;
             left: 0px;
         }
+
+        label{
+            font-size:larger; 
+            position: absolute; 
+            bottom:10px; 
+            color:azure;
+        }
+
     </style>
     
     <title>Mortal Space Wars Extreme Combat Turbo</title>
-    
     <script src="Framework/System/Engine.js"></script>
     <script src="SpaceGame.js"></script>
 
 </head>
-    <body style="background-color:black;">
-        <canvas class="canvas" style="opacity:0.3" id="backgroundCanvas"></canvas>
-        <canvas class="canvas" id="mainCanvas"></canvas>
-        <label id="fpsLabel" style="font-size:larger; position: absolute; bottom:10px; color:azure;"></label>
+    <body>
+        <canvas id="backgroundCanvas" class="canvas" style="opacity:0.3" ></canvas>
+        <canvas id="mainCanvas" class="canvas"></canvas>
+        <label id="fpsLabel"></label>
     </body>
 </html>
