@@ -1,0 +1,73 @@
+﻿	-------------------------
+	| List of exciting work |
+	-------------------------
+
+	find alle metoder der ikke længere kaldes!
+
+	obstacle pool skal laves ordentligt - levelmanageren skal ikke have lov at skabe nye instanser men genbruge tidligere!
+
+	refactor gamepad og keyboard
+
+	drop in framerate
+
+	levelmanager kan genbruge obstacles
+
+	genbrug små astroider som opstår når man skyder store astroider - altså få dem skabt når de store skabes - garbage collections
+
+	noget kan gå i orbit
+	max canvas size
+	info bar til spiller 2, spiller 2 joiner spillet.
+	shield bar må gerne blive fremme et par sekunder
+
+	bedre lyde
+
+	boss har skjold af små astroider i en cirkel som udvider og trækker sig sammen
+	arbejd på monstre. nogle de skyder vildt. og derefter levels.
+	de skal søge mere ind på midten og ikke blive i kanten af skærmen
+	endebosser har bevæg mønstre
+
+	tjek at alting har pools (obstacles og obstacle bullet pool etc);
+
+	obstacle der kan skyde igennem skjold
+	
+	this og fat arrow =>
+
+	når man bliver ramt bliver skibet skubbet i den retning
+
+	obstacles er alt for langsomme!
+
+	partikkelsystem
+	skyd 3 bullets power up
+	fjern gab i skud i bullet cue for skib
+	1 slicer forsøger at stjæle flaget
+
+•	nogen bosses kan kun skydes af missiler
+•	slicer skal ikke skyde men køre hurtigt fremad
+•	et obstacle bevæger sig mod skib der er tættest på
+•	more obstacles (shoot missiles, eller stunder skibe)
+•	blades har tyngdekraft (så kun 1 per level)
+•	blades og spikey skal ikke explodere ved collision
+•	læg miner for at forsvare jewel
+•	obstacle strategier, bevæg sig anderledes, skyd anderledes
+
+•	spawn blade midt i level
+•	Asteroids hastighereder både ved spanw og når de indsættes ved eksplotion af større asteroid
+
+•	Problem med collision detection
+•	Endeboss (plus music)
+•	Bonus udstyr (3 skud fremad, hurtigere skud, længere rækkende skud, større misil, skyd både forlæns og baglæns, skud fortsætter gennem obstacles)
+•	dårlige power ups(e.g. man ikke kan styre sit skib, mist skjold)
+
+•	Get rid of level-0, get rid of peakatnextlevel, move code at 182 in spacegame.ts to nextlevel method
+•	bullets skal komme fra skibenes kanoner
+•	Lyseffekt/lightening/Particle system/special effects and animations, effect når bullet rammer gameobject
+•	kun 1 bullet pool til begge skibe
+•	scripting system til obstacles og endebosser
+•	max hastighed for skib
+•	screen partitioning collision detection, ny collision detection fra Galaxian Shooter. Lige nu løbes listen af bullets igennem to gange per Act() kald.
+•	prevent garbace collection af obstacles and their bullets
+•	convert wavs til mp3
+•	BUG: Thrust grafik
+•	refactor Gamepad support, strategy iskeydown
+•	thrust på scythe, fighter og slicer
+•	break feature?
