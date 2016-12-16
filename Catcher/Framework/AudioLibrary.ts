@@ -8,7 +8,7 @@
 
         AudioLibrary.audioCollection = new Array<HTMLAudioElement>()
         AudioLibrary.AddAudioFile("explosion.mp3", 0.4, false);
-        AudioLibrary.AddAudioFile("laser.mp3", 0.15, false);
+        AudioLibrary.AddAudioFile("laser.mp3", 0.2, false);
         AudioLibrary.AddAudioFile("thrust2.mp3", 0.85, true);
         AudioLibrary.AddAudioFile("missile.mp3", 0.7, false);
         AudioLibrary.AddAudioFile("powerup.mp3", 0.51, false);
@@ -70,7 +70,7 @@
     }
 
     public static Play(index:number) {
-        
+
         this.audioCollection[index].currentTime = 0;
 
         this.audioCollection[index].play();

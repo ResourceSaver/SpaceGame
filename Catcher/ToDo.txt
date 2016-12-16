@@ -2,6 +2,8 @@
 	| List of exciting work |
 	-------------------------
 
+	click sound when thrust and shield sound stops
+
 	hvis obstacles kender deres obstacle pool vil asteroid kunne indsætte nye mindre i poolen uden at det skal gå gennem spacegame
 	
 	flyt powerup til pool som kender ship

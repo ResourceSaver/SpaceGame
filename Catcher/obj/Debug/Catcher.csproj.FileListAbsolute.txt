@@ -14,3 +14,8 @@ C:\Users\Niller\Dropbox\SpaceGame\Catcher\Catcher\bin\Catcher.pdb
 C:\Users\Niller\Dropbox\SpaceGame\Catcher\Catcher\obj\Debug\Catcher.csprojResolveAssemblyReference.cache
 C:\Users\Niller\Dropbox\SpaceGame\Catcher\Catcher\obj\Debug\Catcher.dll
 C:\Users\Niller\Dropbox\SpaceGame\Catcher\Catcher\obj\Debug\Catcher.pdb
+C:\Users\Hå\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.dll.config
+C:\Users\Hå\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.dll
+C:\Users\Hå\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.pdb
+C:\Users\Hå\Documents\GitHub\SpaceGame\Catcher\obj\Debug\Catcher.dll
+C:\Users\Hå\Documents\GitHub\SpaceGame\Catcher\obj\Debug\Catcher.pdb

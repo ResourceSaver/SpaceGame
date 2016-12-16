@@ -1,10 +1,15 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var AudioLibrary = (function () {
     function AudioLibrary() {
     }
     AudioLibrary.Initialize = function () {
         AudioLibrary.audioCollection = new Array();
         AudioLibrary.AddAudioFile("explosion.mp3", 0.4, false);
-        AudioLibrary.AddAudioFile("laser.mp3", 0.15, false);
+        AudioLibrary.AddAudioFile("laser.mp3", 0.2, false);
         AudioLibrary.AddAudioFile("thrust2.mp3", 0.85, true);
         AudioLibrary.AddAudioFile("missile.mp3", 0.7, false);
         AudioLibrary.AddAudioFile("powerup.mp3", 0.51, false);
@@ -204,11 +209,6 @@ var Drawable = (function () {
     Drawable.prototype.GetName = function () { return this.name; };
     return Drawable;
 }());
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var DrawableAnimation = (function (_super) {
     __extends(DrawableAnimation, _super);
     function DrawableAnimation(image, length, offsetX, offsetY, width, height, speed, name, finishedEventHandler) {
@@ -2066,7 +2066,7 @@ var SpaceGame = (function () {
         this.levelManager = new LevelManager();
         this.player1 = new Ship(UserAction.SHIP1_LEFT, UserAction.SHIP1_RIGHT, UserAction.SHIP1_ACCELERATE, System.resolutionX / 3, System.resolutionY / 2, 2, 12);
         this.poolBullet1 = new BulletPool(this.player1, "red");
-        this.player1.useGamePad = false;
+        // this.player1.useGamePad = true;
         this.player2 = new Ship(UserAction.SHIP2_LEFT2, UserAction.SHIP2_RIGHT2, UserAction.SHIP2_ACCELERATE2, System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13);
         this.poolBullet2 = new BulletPool(this.player2, "blue");
         this.shipInformationBar = new ShipInformationBar();
