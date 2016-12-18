@@ -1,12 +1,5 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var AudioLibrary = (function () {
-    function AudioLibrary() {
-    }
-    AudioLibrary.Initialize = function () {
+class AudioLibrary {
+    static Initialize() {
         AudioLibrary.audioCollection = new Array();
         AudioLibrary.AddAudioFile("explosion.mp3", 0.4, false);
         AudioLibrary.AddAudioFile("laser.mp3", 0.2, false);
@@ -22,25 +15,25 @@ var AudioLibrary = (function () {
         AudioLibrary.AddAudioFile("clash.mp3", 0.5, false);
         AudioLibrary.AddAudioFile("shield.mp3", 0.6, true);
         AudioLibrary.AddAudioFile("shield.mp3", 0.6, true);
-    };
-    AudioLibrary.AddAudioFile = function (fileName, volume, loop) {
-        var audio = new Audio('Resources\\Audio\\' + fileName);
+    }
+    static AddAudioFile(fileName, volume, loop) {
+        let audio = new Audio('Resources\\Audio\\' + fileName);
         audio.volume = System.Volume * volume;
         audio.innerText = volume.toString();
         audio.loop = loop;
         AudioLibrary.audioCollection.push(audio);
-    };
-    AudioLibrary.Mute = function () {
+    }
+    static Mute() {
         for (var i = 0; i < AudioLibrary.audioCollection.length; i++) {
             AudioLibrary.audioCollection[i].volume = 0;
         }
-    };
-    AudioLibrary.UnMute = function () {
+    }
+    static UnMute() {
         for (var i = 0; i < AudioLibrary.audioCollection.length; i++) {
             AudioLibrary.audioCollection[i].volume = +AudioLibrary.audioCollection[i].innerText;
         }
-    };
-    AudioLibrary.ToggleMute = function () {
+    }
+    static ToggleMute() {
         AudioLibrary.Muted = !AudioLibrary.Muted;
         if (!AudioLibrary.Muted) {
             AudioLibrary.UnMute();
@@ -50,39 +43,31 @@ var AudioLibrary = (function () {
             AudioLibrary.Mute();
             AudioLibrary.Stop(7);
         }
-    };
-    AudioLibrary.Play = function (index) {
+    }
+    static Play(index) {
         this.audioCollection[index].currentTime = 0;
         this.audioCollection[index].play();
-    };
-    AudioLibrary.Stop = function (index) {
+    }
+    static Stop(index) {
         this.audioCollection[index].pause();
-    };
-    AudioLibrary.Muted = false;
-    return AudioLibrary;
-}());
-var Canvas = (function () {
-    function Canvas(canvasName) {
-        var canvas = document.getElementById(canvasName);
+    }
+}
+AudioLibrary.Muted = false;
+class Canvas {
+    constructor(canvasName) {
+        let canvas = document.getElementById(canvasName);
         canvas.height = System.resolutionY;
         canvas.width = System.resolutionX;
         this.context = canvas.getContext("2d");
         this.context.lineWidth = 2;
-        //this.DisableSmoothing(this.context);
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
         this.context.font = "100px Verdana";
         this.context.strokeStyle = 'skyblue';
         this.context.fillStyle = 'lightblue';
     }
-    //public DisableSmoothing(context) {
-    //    if (context.imageSmoothingEnabled) { context.imageSmoothingEnabled = false; }
-    //    else if (context.mozImageSmoothingEnabled) { context.mozImageSmoothingEnabled = false; }
-    //    else if (context.msImageSmoothingEnabled) { context.msImageSmoothingEnabled = false; }
-    //    else if (context.webkitImageSmoothingEnabled) { context.webkitImageSmoothingEnabled = false; }
-    //}
-    Canvas.prototype.Clear = function () { this.context.clearRect(0, 0, System.resolutionX, System.resolutionY); };
-    Canvas.prototype.DrawObject = function (gameObject) {
+    Clear() { this.context.clearRect(0, 0, System.resolutionX, System.resolutionY); }
+    DrawObject(gameObject) {
         if (System.DebugMode) {
             this.context.strokeRect(gameObject.GetBoundingX(), gameObject.GetBoundingY(), gameObject.boundingBoxWidth, gameObject.boundingBoxHeight);
         }
@@ -97,8 +82,8 @@ var Canvas = (function () {
             }
         }
         this.DrawDrawable(gameObject.GetDrawableCollection().GetCurrentDrawable(), gameObject.x, gameObject.y, gameObject.width, gameObject.height);
-    };
-    Canvas.prototype.DrawObjectRotate = function (gameObject) {
+    }
+    DrawObjectRotate(gameObject) {
         this.x = gameObject.x + gameObject.widthHalf;
         this.y = gameObject.y + gameObject.heightHalf;
         this.context.save();
@@ -107,8 +92,8 @@ var Canvas = (function () {
         this.context.translate(-this.x, -this.y);
         this.DrawObject(gameObject);
         this.context.restore();
-    };
-    Canvas.prototype.DrawObjectRotateAround = function (gameObject) {
+    }
+    DrawObjectRotateAround(gameObject) {
         this.x = gameObject.GetCenterX();
         this.y = gameObject.GetCenterY();
         this.context.save();
@@ -117,18 +102,17 @@ var Canvas = (function () {
         this.context.translate(-this.x, -this.y + gameObject.boundingBoxHeight - 20);
         this.DrawObject(gameObject);
         this.context.restore();
-    };
-    Canvas.prototype.DrawDrawable = function (drawable, x, y, width, height) {
+    }
+    DrawDrawable(drawable, x, y, width, height) {
         this.context.drawImage(drawable.GetImage(), drawable.GetOffsetX(), drawable.GetOffSetY(), drawable.GetWidth(), drawable.GetHeight(), x, y, width, height);
-    };
-    Canvas.prototype.DrawImage = function (image, x, y, w, h, alpha) {
-        if (alpha === void 0) { alpha = 1; }
+    }
+    DrawImage(image, x, y, w, h, alpha = 1) {
         this.context.save();
         this.context.globalAlpha = alpha;
         this.context.drawImage(image, 0, 0, image.width, image.height, x, y, w, h);
         this.context.restore();
-    };
-    Canvas.prototype.DrawStar = function (x, y, radius, alpha) {
+    }
+    DrawStar(x, y, radius, alpha) {
         this.context.save();
         this.context.strokeStyle = 'white';
         this.context.fillStyle = 'lightblue';
@@ -139,8 +123,8 @@ var Canvas = (function () {
         this.context.stroke();
         this.context.fill();
         this.context.restore();
-    };
-    Canvas.prototype.DrawCircle = function (x, y, radius, color, alpha, lineWidth) {
+    }
+    DrawCircle(x, y, radius, color, alpha, lineWidth) {
         this.context.save();
         this.context.globalAlpha = alpha;
         this.context.strokeStyle = color;
@@ -152,32 +136,30 @@ var Canvas = (function () {
         this.context.stroke();
         this.context.fill();
         this.context.restore();
-    };
-    Canvas.prototype.DrawRectangle = function (x, y, h, w, color) {
-        if (color === void 0) { color = "lightblue"; }
+    }
+    DrawRectangle(x, y, h, w, color = "lightblue") {
         this.context.save();
         this.context.fillStyle = color;
         this.context.fillRect(x, y, w, h);
         this.context.restore();
-    };
-    Canvas.prototype.DrawParticle = function (x, y, r, hue) {
+    }
+    DrawParticle(x, y, r, hue) {
         this.context.save();
         this.context.beginPath();
         this.context.arc(x, y, r, 0, 2 * Math.PI, false);
         this.context.fillStyle = "hsla(" + hue + ",100%,50%,1)";
         this.context.fill();
         this.context.restore();
-    };
-    Canvas.prototype.DrawLevelText = function (text, fontSize, alpha) {
+    }
+    DrawLevelText(text, fontSize, alpha) {
         this.context.save();
         this.context.globalAlpha = alpha;
         this.context.fillStyle = '#916DFF';
         this.context.font = fontSize + "px Impact";
         this.context.fillText(text, System.resolutionX / 2, System.resolutionY / 2);
         this.context.restore();
-    };
-    Canvas.prototype.DrawText = function (x, y, string, font, alpha) {
-        if (alpha === void 0) { alpha = 1; }
+    }
+    DrawText(x, y, string, font, alpha = 1) {
         this.context.save();
         this.context.globalAlpha = alpha;
         this.context.font = font;
@@ -185,15 +167,10 @@ var Canvas = (function () {
         this.context.fillText(string, x, y);
         this.context.textAlign = "center";
         this.context.restore();
-    };
-    return Canvas;
-}());
-var Drawable = (function () {
-    function Drawable(name, image, offsetX, offsetY, width, height) {
-        if (offsetX === void 0) { offsetX = 0; }
-        if (offsetY === void 0) { offsetY = 0; }
-        if (width === void 0) { width = image.width; }
-        if (height === void 0) { height = image.height; }
+    }
+}
+class Drawable {
+    constructor(name, image, offsetX = 0, offsetY = 0, width = image.width, height = image.height) {
         this.image = image;
         this.offsetx = offsetX;
         this.offsety = offsetY;
@@ -201,26 +178,23 @@ var Drawable = (function () {
         this.height = height;
         this.name = name;
     }
-    Drawable.prototype.GetImage = function () { return this.image; };
-    Drawable.prototype.GetOffsetX = function () { return this.offsetx; };
-    Drawable.prototype.GetOffSetY = function () { return this.offsety; };
-    Drawable.prototype.GetWidth = function () { return this.width; };
-    Drawable.prototype.GetHeight = function () { return this.height; };
-    Drawable.prototype.GetName = function () { return this.name; };
-    return Drawable;
-}());
-var DrawableAnimation = (function (_super) {
-    __extends(DrawableAnimation, _super);
-    function DrawableAnimation(image, length, offsetX, offsetY, width, height, speed, name, finishedEventHandler) {
-        if (finishedEventHandler === void 0) { finishedEventHandler = null; }
-        _super.call(this, name, image, offsetX, offsetY, width, height);
+    GetImage() { return this.image; }
+    GetOffsetX() { return this.offsetx; }
+    GetOffSetY() { return this.offsety; }
+    GetWidth() { return this.width; }
+    GetHeight() { return this.height; }
+    GetName() { return this.name; }
+}
+class DrawableAnimation extends Drawable {
+    constructor(image, length, offsetX, offsetY, width, height, speed, name, finishedEventHandler = null) {
+        super(name, image, offsetX, offsetY, width, height);
         this.numberOfFrames = length;
         this.currentFrame = 0;
         this.animationSpeed = speed;
         this.animationSpeedCounter = speed;
         this.animationFinishedEvent = finishedEventHandler;
     }
-    DrawableAnimation.prototype.GetOffsetX = function () {
+    GetOffsetX() {
         if (this.animationSpeedCounter <= 0) {
             this.animationSpeedCounter = this.animationSpeed;
             this.currentFrame++;
@@ -232,48 +206,45 @@ var DrawableAnimation = (function (_super) {
             }
         }
         this.animationSpeedCounter -= 1;
-        return _super.prototype.GetOffsetX.call(this) + (this.GetWidth() * this.currentFrame);
-    };
-    return DrawableAnimation;
-}(Drawable));
-var DrawableCollection = (function () {
-    function DrawableCollection() {
+        return super.GetOffsetX() + (this.GetWidth() * this.currentFrame);
+    }
+}
+class DrawableCollection {
+    constructor() {
         this.currentDrawable = 0;
         this.drawables = new Array(0);
     }
-    DrawableCollection.prototype.AddDrawable = function (drawable) {
+    AddDrawable(drawable) {
         this.drawables.push(drawable);
         this.currentDrawable = this.drawables.length - 1;
-    };
-    DrawableCollection.prototype.GetCurrentDrawable = function () {
+    }
+    GetCurrentDrawable() {
         return this.drawables[this.currentDrawable];
-    };
-    DrawableCollection.prototype.SetCurrentDrawable = function (name) {
-        for (var i = 0; i < this.drawables.length; i++) {
+    }
+    SetCurrentDrawable(name) {
+        for (let i = 0; i < this.drawables.length; i++) {
             if (this.drawables[i].GetName() === name) {
                 this.currentDrawable = i;
                 return;
             }
         }
-    };
-    return DrawableCollection;
-}());
-var Level = (function () {
-    function Level(levelNumber) {
+    }
+}
+class Level {
+    constructor(levelNumber) {
         this.levelNumber = levelNumber;
         this.obstacles = new Array();
     }
-    Level.prototype.GetObstacles = function () {
+    GetObstacles() {
         return this.obstacles;
-    };
-    Level.prototype.AddObstacle = function (obstacle) {
+    }
+    AddObstacle(obstacle) {
         this.obstacles.push(obstacle);
-    };
-    Level.prototype.GetLevelNumber = function () {
+    }
+    GetLevelNumber() {
         return this.levelNumber;
-    };
-    return Level;
-}());
+    }
+}
 var ObjectState;
 (function (ObjectState) {
     ObjectState[ObjectState["ALIVE"] = 0] = "ALIVE";
@@ -333,8 +304,8 @@ var AsteroidSize;
     AsteroidSize[AsteroidSize["MEDIUM"] = 96] = "MEDIUM";
     AsteroidSize[AsteroidSize["BIG"] = 128] = "BIG";
 })(AsteroidSize || (AsteroidSize = {}));
-var GameObject = (function () {
-    function GameObject(width, height, x, y, canvas) {
+class GameObject {
+    constructor(width, height, x, y, canvas) {
         this.vector = new Vector(0, 0, 0);
         this.drawableCollection = new DrawableCollection();
         this.state = ObjectState.ALIVE;
@@ -347,14 +318,14 @@ var GameObject = (function () {
         this.widthHalf = this.width / 2;
         this.AdjustBoundingbox(0, 0);
     }
-    GameObject.prototype.AdjustBoundingbox = function (widthDiff, heightDiff) {
+    AdjustBoundingbox(widthDiff, heightDiff) {
         this.boundingBoxHeight = this.height + heightDiff;
         this.boundingBoxWidth = this.width + widthDiff;
         this.boundingBoxHeightHalf = this.boundingBoxHeight / 2;
         this.boundingBoxWidthHalf = this.boundingBoxWidth / 2;
-    };
-    GameObject.prototype.GetDrawableCollection = function () { return this.drawableCollection; };
-    GameObject.prototype.Act = function () {
+    }
+    GetDrawableCollection() { return this.drawableCollection; }
+    Act() {
         this.x += this.vector.x;
         this.y -= this.vector.y;
         if (this.x > System.resolutionX) {
@@ -369,89 +340,203 @@ var GameObject = (function () {
         else if (this.y + this.height < 0) {
             this.y = System.resolutionY;
         }
-    };
-    GameObject.prototype.Draw = function () {
+    }
+    Draw() {
         this.canvas.DrawObject(this);
-    };
-    GameObject.prototype.CollisionCheck = function (gameObject) {
+    }
+    CollisionCheck(gameObject) {
         this.Dx = Math.abs(this.GetCenterX() - gameObject.GetCenterX());
         this.Dy = Math.abs(this.GetCenterY() - gameObject.GetCenterY());
         return (this.Dx < (this.boundingBoxWidthHalf + gameObject.boundingBoxWidthHalf) && this.Dy < (this.boundingBoxHeightHalf + gameObject.boundingBoxHeightHalf));
-    };
-    GameObject.prototype.GetCenterX = function () {
+    }
+    GetCenterX() {
         return this.x + this.widthHalf;
-    };
-    GameObject.prototype.GetCenterY = function () {
+    }
+    GetCenterY() {
         return this.y + this.heightHalf;
-    };
-    GameObject.prototype.GetBoundingX = function () {
+    }
+    GetBoundingX() {
         return this.x + this.widthHalf - this.boundingBoxWidthHalf;
-    };
-    GameObject.prototype.GetBoundingY = function () {
+    }
+    GetBoundingY() {
         return this.y + this.heightHalf - this.boundingBoxHeightHalf;
-    };
-    GameObject.prototype.SetState = function (objectState) { this.state = objectState; };
-    GameObject.prototype.Is = function (objectState) { return this.state == objectState; };
-    GameObject.prototype.IsNot = function (objectState) { return this.state != objectState; };
-    GameObject.prototype.Hit = function () {
+    }
+    SetState(objectState) { this.state = objectState; }
+    Is(objectState) { return this.state == objectState; }
+    IsNot(objectState) { return this.state != objectState; }
+    Hit() {
         this.hitCounter = 0.2;
         AudioLibrary.Play(11);
-    };
-    return GameObject;
-}());
-var Vector = (function () {
-    function Vector(x, y, angle) {
+    }
+}
+class GamePad {
+    static Setup(game) {
+        this.spaceGame = game;
+        this.keys = new Array();
+    }
+    static Act() {
+        this.gp = navigator.getGamepads()[0];
+        if (this.gp == undefined)
+            return;
+        for (var i = 0; i < this.gp.buttons.length; i++) {
+            if (this.gp.buttons[i].pressed) {
+                if (!this.keys[i]) {
+                    this.keys[i] = true;
+                    this.spaceGame.KeyDown(this.Mapping(i));
+                }
+            }
+            else if (this.keys[i]) {
+                this.keys[i] = false;
+                this.spaceGame.KeyUp(this.Mapping(i));
+            }
+        }
+    }
+    static Mapping(i) {
+        switch (i) {
+            case 0:
+                return UserAction.SHIP1_ACCELERATE;
+            case 1:
+                return UserAction.SHIP1_MISILE;
+            case 2:
+                return UserAction.SHIP1_FIRE;
+            case 3:
+                return UserAction.SHIP1_SHIELD;
+            case 14:
+                return UserAction.SHIP1_LEFT;
+            case 15:
+                return UserAction.SHIP1_RIGHT;
+            default:
+                return null;
+        }
+    }
+    static UnMapping(ua) {
+        switch (ua) {
+            case UserAction.SHIP1_ACCELERATE:
+                return 0;
+            case UserAction.SHIP1_MISILE:
+                return 1;
+            case UserAction.SHIP1_FIRE:
+                return 2;
+            case UserAction.SHIP1_SHIELD:
+                return 3;
+            case UserAction.SHIP1_LEFT:
+                return 14;
+            case UserAction.SHIP1_RIGHT:
+                return 15;
+            default:
+                return -1;
+        }
+    }
+    static IsKeyDown(action) {
+        return this.keys[this.UnMapping(action)];
+    }
+}
+class Keyboard {
+    static Setup(game) {
+        this.spaceGame = game;
+        this.keys = new Array();
+        document.addEventListener("keydown", (e) => this.KeyDown(e.keyCode), false);
+        document.addEventListener("keyup", (e) => this.KeyUp(e.keyCode), false);
+    }
+    static KeyDown(action) {
+        if (action == UserAction.DEBUGMODE) {
+            System.DebugMode = !System.DebugMode;
+            document.getElementById("fpsLabel").style.visibility = System.DebugMode ? "visible" : "hidden";
+        }
+        else if (action == UserAction.MUTEAUDIO) {
+            AudioLibrary.ToggleMute();
+        }
+        else if (this.keys[action] == true) {
+            return;
+        }
+        this.keys[action] = true;
+        this.spaceGame.KeyDown(action);
+    }
+    static KeyUp(action) {
+        this.keys[action] = false;
+        this.spaceGame.KeyUp(action);
+    }
+    static IsKeyDown(action) {
+        return this.keys[action];
+    }
+}
+let chosenRequestFrame;
+let spaceGame;
+let fpsLabel;
+var fps = { startTime: 0, frameNumber: 0, getFPS: function () { this.frameNumber++; var d = new Date().getTime(), currentTime = (d - this.startTime) / 1000, result = Math.floor((this.frameNumber / currentTime)); if (currentTime > 1) {
+        this.startTime = new Date().getTime();
+        this.frameNumber = 0;
+    } return result; } };
+window.onload = () => { new Images(() => this.OnImagesLoaded()); };
+function OnImagesLoaded() {
+    this.spaceGame = System.Initialize();
+    this.chosenRequestFrame = GetFrame();
+    this.fpsLabel = document.getElementById("fpsLabel");
+    RunGame();
+}
+function GetFrame() {
+    return requestAnimationFrame ||
+        webkitRequestAnimationFrame ||
+        mozRequestAnimationFrame ||
+        oRequestAnimationFrame ||
+        msRequestAnimationFrame ||
+        function (callback, element) { window.setTimeout(callback, 1000 / 60); };
+}
+function RunGame() {
+    if (System.DebugMode) {
+        this.fpsLabel.innerHTML = fps.getFPS();
+    }
+    GamePad.Act();
+    this.spaceGame.Act();
+    this.chosenRequestFrame(RunGame);
+}
+class Vector {
+    constructor(x, y, angle) {
         this.x = x;
         this.y = y;
         this.angle = angle;
     }
-    Vector.prototype.Rotate = function (amount) {
+    Rotate(amount) {
         this.angle = (this.angle + amount) % 360;
-    };
-    Vector.prototype.Accelerate = function (amount) {
+    }
+    Accelerate(amount) {
         this.radian = this.angle * Math.PI / 180;
         this.y += Math.cos(this.radian) * amount;
         this.x += Math.sin(this.radian) * amount;
-    };
-    Vector.prototype.ConstantSpeed = function (amount) {
+    }
+    ConstantSpeed(amount) {
         this.radian = (this.angle * Math.PI) / 180;
         this.y = Math.cos(this.radian) * amount;
         this.x = Math.sin(this.radian) * amount;
-    };
-    Vector.prototype.Copy = function (vector) {
+    }
+    Copy(vector) {
         this.x = vector.x;
         this.y = vector.y;
         this.angle = vector.angle;
-    };
-    Vector.prototype.Reset = function () {
+    }
+    Reset() {
         this.x = 0;
         this.y = 0;
         this.angle = 0;
-    };
-    Vector.prototype.SetValues = function (x, y, angle) {
+    }
+    SetValues(x, y, angle) {
         this.x = x;
         this.y = y;
         this.angle = angle;
-    };
-    return Vector;
-}());
-var Jewel = (function (_super) {
-    __extends(Jewel, _super);
-    function Jewel() {
-        _super.call(this, 32, 32, System.resolutionX / 2, System.resolutionY / 2, System.canvas);
-        //this.drawableCollection = DrawableLibrary.GetJewel();
+    }
+}
+class Jewel extends GameObject {
+    constructor() {
+        super(32, 32, System.resolutionX / 2, System.resolutionY / 2, System.canvas);
         this.drawableCollection.SetCurrentDrawable("jewel");
     }
-    Jewel.prototype.Act = function () {
-        _super.prototype.Act.call(this);
-        //this.Draw();
-    };
-    return Jewel;
-}(GameObject));
-var Obstacle = (function (_super) {
-    __extends(Obstacle, _super);
-    function Obstacle(size, width, height, x, y, canvas, energy) {
-        _super.call(this, width, height, x, y, canvas);
+    Act() {
+        super.Act();
+    }
+}
+class Obstacle extends GameObject {
+    constructor(size, width, height, x, y, canvas, energy) {
+        super(width, height, x, y, canvas);
         this.hitColor = "green";
         this.size = size;
         this.energy = energy;
@@ -460,7 +545,7 @@ var Obstacle = (function (_super) {
         this.type = ObstacleType.OTHER;
         this.SetRandomCoordinates();
     }
-    Obstacle.prototype.SetRandomCoordinates = function () {
+    SetRandomCoordinates() {
         if (Math.random() > 0.5) {
             this.x = Math.random() > 0.5 ? System.resolutionX : -this.width;
             this.y = Math.random() * System.resolutionY;
@@ -469,34 +554,33 @@ var Obstacle = (function (_super) {
             this.x = Math.random() * System.resolutionX;
             this.y = Math.random() > 0.5 ? System.resolutionY : -this.height;
         }
-    };
-    Obstacle.prototype.HitByBullet = function (attack) {
-        _super.prototype.Hit.call(this);
+    }
+    HitByBullet(attack) {
+        super.Hit();
         this.energy -= attack;
-    };
-    Obstacle.prototype.GetEnergy = function () {
+    }
+    GetEnergy() {
         return this.energy;
-    };
-    Obstacle.prototype.Explode = function () {
+    }
+    Explode() {
         ParticleSystem.Build(this.x + this.widthHalf, this.y + this.heightHalf);
         this.state = ObjectState.EXPLODING;
         this.drawableCollection.SetCurrentDrawable("explosion");
         AudioLibrary.Play(0);
-    };
-    Obstacle.prototype.GetSize = function () {
+    }
+    GetSize() {
         return this.size;
-    };
-    Obstacle.prototype.IsType = function (type) {
+    }
+    IsType(type) {
         return this.type == type;
-    };
-    Obstacle.prototype.SetCoordinates = function (x, y) {
+    }
+    SetCoordinates(x, y) {
         this.x = x;
         this.y = y;
-    };
-    return Obstacle;
-}(GameObject));
-var MoveStrategy = (function () {
-    function MoveStrategy(obstacle, speed) {
+    }
+}
+class MoveStrategy {
+    constructor(obstacle, speed) {
         this.changeDirectionCount = 0;
         this.changeDirection = 50;
         this.targetAngle = 0;
@@ -506,10 +590,10 @@ var MoveStrategy = (function () {
         this.obstacle.vector.angle = Math.round(Math.random() * 360);
         this.obstacle.vector.ConstantSpeed(this.speed);
     }
-    MoveStrategy.prototype.SetChangeDirection = function (value) {
+    SetChangeDirection(value) {
         this.changeDirection = value;
-    };
-    MoveStrategy.prototype.Act = function () {
+    }
+    Act() {
         if (Math.abs(this.targetAngle) != this.targetAngleCount) {
             if (this.obstacle.IsNot(ObjectState.EXPLODING)) {
                 if (this.targetAngle < 0) {
@@ -530,48 +614,45 @@ var MoveStrategy = (function () {
                 this.targetAngleCount = 0;
             }
         }
-    };
-    return MoveStrategy;
-}());
-var ShootStrategy = (function () {
-    function ShootStrategy(shotSpeed, obstacle) {
+    }
+}
+class ShootStrategy {
+    constructor(shotSpeed, obstacle) {
         this.shotCount = 0;
         this.shot = 0;
         this.shot = shotSpeed;
         this.obstacle = obstacle;
     }
-    ShootStrategy.prototype.Act = function () {
+    Act() {
         this.shotCount++;
         if (this.obstacle.Is(ObjectState.ALIVE) && this.shotCount > this.shot) {
             SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.obstacle.vector);
             this.shotCount = 0;
         }
-    };
-    return ShootStrategy;
-}());
-var ShootThreeSixtyStrategy = (function () {
-    function ShootThreeSixtyStrategy(shotSpeed, obstacle) {
+    }
+}
+class ShootThreeSixtyStrategy {
+    constructor(shotSpeed, obstacle) {
         this.shotCount = 0;
         this.shotSpeed = 0;
         this.vector = new Vector(0, 0, 0);
         this.shotSpeed = shotSpeed;
         this.obstacle = obstacle;
     }
-    ShootThreeSixtyStrategy.prototype.Act = function () {
+    Act() {
         this.shotCount++;
         if (this.obstacle.Is(ObjectState.ALIVE) && this.shotCount > this.shotSpeed) {
-            for (var i = 0; i < 360; i = i + 30) {
+            for (let i = 0; i < 360; i = i + 30) {
                 this.vector.SetValues(0, 0, i);
                 this.vector.ConstantSpeed(1);
                 SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector);
             }
             this.shotCount = 0;
         }
-    };
-    return ShootThreeSixtyStrategy;
-}());
-var TwirvlShootStrategy = (function () {
-    function TwirvlShootStrategy(obstacle) {
+    }
+}
+class TwirvlShootStrategy {
+    constructor(obstacle) {
         this.shotCount = 0;
         this.shotSpeed = 0;
         this.angle = 0;
@@ -579,7 +660,7 @@ var TwirvlShootStrategy = (function () {
         this.shotSpeed = 1;
         this.obstacle = obstacle;
     }
-    TwirvlShootStrategy.prototype.Act = function () {
+    Act() {
         this.shotCount++;
         if (this.obstacle.Is(ObjectState.ALIVE)) {
             if (this.shotCount > this.shotSpeed) {
@@ -593,18 +674,17 @@ var TwirvlShootStrategy = (function () {
                 }
             }
         }
-    };
-    return TwirvlShootStrategy;
-}());
-var ShootRandomStrategy = (function () {
-    function ShootRandomStrategy(shotSpeed, obstacle) {
+    }
+}
+class ShootRandomStrategy {
+    constructor(shotSpeed, obstacle) {
         this.shotCount = 0;
         this.shot = 0;
         this.vector = new Vector(0, 0, 0);
         this.shot = shotSpeed;
         this.obstacle = obstacle;
     }
-    ShootRandomStrategy.prototype.Act = function () {
+    Act() {
         this.shotCount++;
         if (this.obstacle.Is(ObjectState.ALIVE) && this.shotCount > this.shot) {
             this.vector.SetValues(0, 0, Math.random() * 360);
@@ -612,39 +692,35 @@ var ShootRandomStrategy = (function () {
             SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector);
             this.shotCount = 0;
         }
-    };
-    return ShootRandomStrategy;
-}());
-var Shield = (function (_super) {
-    __extends(Shield, _super);
-    function Shield() {
-        _super.call(this, 156, 156, 0, 0, System.canvas);
+    }
+}
+class Shield extends GameObject {
+    constructor() {
+        super(156, 156, 0, 0, System.canvas);
         this.drawableCollection = DrawableLibrary.GetShield();
     }
-    Shield.prototype.ShadowDraw = function (x, y, angle) {
+    ShadowDraw(x, y, angle) {
         this.x = x - this.widthHalf;
         this.y = y - this.heightHalf;
         this.vector.angle = angle;
         this.canvas.DrawObjectRotate(this);
-    };
-    return Shield;
-}(GameObject));
-var TextDrawer = (function (_super) {
-    __extends(TextDrawer, _super);
-    function TextDrawer() {
-        _super.call(this, 0, 0, 0, 0, System.canvas);
+    }
+}
+class TextDrawer extends GameObject {
+    constructor() {
+        super(0, 0, 0, 0, System.canvas);
         this.maxVal = 2;
         this.count = 0;
         this.alpha = 0;
         this.startValue = 75;
         this.fontSize = this.startValue;
     }
-    TextDrawer.prototype.SetText = function (value) {
+    SetText(value) {
         this.fontSize = this.startValue;
         this.count = 0;
         this.text = value;
-    };
-    TextDrawer.prototype.Act = function () {
+    }
+    Act() {
         if (this.count > this.maxVal)
             return false;
         this.alpha = -1 * Math.pow(this.count, 2) + 2 * this.count;
@@ -652,37 +728,34 @@ var TextDrawer = (function (_super) {
         this.fontSize += 3;
         this.canvas.DrawLevelText(this.text, this.fontSize, this.alpha);
         return (this.count > this.maxVal);
-    };
-    return TextDrawer;
-}(GameObject));
-var Thrust = (function (_super) {
-    __extends(Thrust, _super);
-    function Thrust(ship) {
-        _super.call(this, ship.width, ship.height, ship.x, ship.y + ship.height - 20, System.canvas);
+    }
+}
+class Thrust extends GameObject {
+    constructor(ship) {
+        super(ship.width, ship.height, ship.x, ship.y + ship.height - 20, System.canvas);
         this.drawableCollection = DrawableLibrary.GetThrust();
         this.thrusting = false;
         this.ship = ship;
     }
-    Thrust.prototype.Spawn = function () {
+    Spawn() {
         this.x = this.ship.x;
         this.y = this.ship.y + this.ship.height - 20;
         this.SetThrusting(false);
-    };
-    Thrust.prototype.Draw = function () { this.canvas.DrawObjectRotateAround(this); };
-    Thrust.prototype.Act = function () {
+    }
+    Draw() { this.canvas.DrawObjectRotateAround(this); }
+    Act() {
         this.vector.Copy(this.ship.vector);
-        _super.prototype.Act.call(this);
+        super.Act();
         if (!this.thrusting || this.ship.Is(ObjectState.DEAD) || this.ship.Is(ObjectState.EXPLODING))
             return;
         this.Draw();
-    };
-    Thrust.prototype.SetThrusting = function (value) {
+    }
+    SetThrusting(value) {
         this.thrusting = value;
-    };
-    return Thrust;
-}(GameObject));
-var LevelManager = (function () {
-    function LevelManager() {
+    }
+}
+class LevelManager {
+    constructor() {
         this.levels = new Array();
         this.levels.push(new Level0());
         this.levels.push(new Level1());
@@ -691,70 +764,27 @@ var LevelManager = (function () {
         this.levels.push(new Level4());
         this.levels.push(new Level5());
     }
-    LevelManager.prototype.GetNextLevel = function () {
+    GetNextLevel() {
         return this.levels.shift();
-    };
-    LevelManager.prototype.PeakAtNextLevel = function () {
+    }
+    PeakAtNextLevel() {
         return this.levels[0];
-    };
-    return LevelManager;
-}());
-var Level0 = (function (_super) {
-    __extends(Level0, _super);
-    function Level0() {
-        _super.call(this, 0);
     }
-    return Level0;
-}(Level));
-var Level1 = (function (_super) {
-    __extends(Level1, _super);
-    function Level1() {
-        _super.call(this, 1);
+}
+class Level0 extends Level {
+    constructor() {
+        super(0);
+    }
+}
+class Level1 extends Level {
+    constructor() {
+        super(1);
         this.AddObstacle(new AsteroidMedium());
-        //this.AddObstacle(new AsteroidSmall());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
     }
-    return Level1;
-}(Level));
-var Level2 = (function (_super) {
-    __extends(Level2, _super);
-    function Level2() {
-        _super.call(this, 2);
+}
+class Level2 extends Level {
+    constructor() {
+        super(2);
         this.AddObstacle(new Slicer());
         this.AddObstacle(new Fighter());
         this.AddObstacle(new BugEye());
@@ -764,24 +794,20 @@ var Level2 = (function (_super) {
         this.AddObstacle(new Saucer());
         this.AddObstacle(new SaucerBig());
     }
-    return Level2;
-}(Level));
-var Level3 = (function (_super) {
-    __extends(Level3, _super);
-    function Level3() {
-        _super.call(this, 3);
+}
+class Level3 extends Level {
+    constructor() {
+        super(3);
         this.AddObstacle(new SaucerBig());
         this.AddObstacle(new Saucer());
         this.AddObstacle(new Blades());
         this.AddObstacle(new AsteroidMedium());
         this.AddObstacle(new AsteroidSmall());
     }
-    return Level3;
-}(Level));
-var Level4 = (function (_super) {
-    __extends(Level4, _super);
-    function Level4() {
-        _super.call(this, 4);
+}
+class Level4 extends Level {
+    constructor() {
+        super(4);
         this.AddObstacle(new Saucer());
         this.AddObstacle(new Blades());
         this.AddObstacle(new Fighter());
@@ -789,12 +815,10 @@ var Level4 = (function (_super) {
         this.AddObstacle(new AsteroidSmall());
         this.AddObstacle(new AsteroidSmaller());
     }
-    return Level4;
-}(Level));
-var Level5 = (function (_super) {
-    __extends(Level5, _super);
-    function Level5() {
-        _super.call(this, 5);
+}
+class Level5 extends Level {
+    constructor() {
+        super(5);
         this.AddObstacle(new SaucerBig());
         this.AddObstacle(new Saucer());
         this.AddObstacle(new Blades());
@@ -807,15 +831,14 @@ var Level5 = (function (_super) {
         this.AddObstacle(new AsteroidSmall());
         this.AddObstacle(new AsteroidSmaller());
     }
-    return Level5;
-}(Level));
-var Particle = (function () {
-    function Particle(i) {
+}
+class Particle {
+    constructor(i) {
         this.id = i;
         this.orgHue = rand(50, 0, 1);
         this.active = false;
     }
-    Particle.prototype.Build = function (x, y) {
+    Build(x, y) {
         this.r = rand(7, 2, 1);
         this.x = x;
         this.y = y;
@@ -825,8 +848,8 @@ var Particle = (function () {
         this.vy = Math.random() * 10 - 5;
         this.gravity = 0.01;
         System.canvas.DrawParticle(this.x, this.y, this.r, this.hue);
-    };
-    Particle.prototype.Draw = function () {
+    }
+    Draw() {
         this.active = true;
         this.x += this.vx;
         this.y += this.vy;
@@ -837,23 +860,22 @@ var Particle = (function () {
         if (this.r <= .05) {
             this.active = false;
         }
-    };
-    return Particle;
-}());
-var ParticleSystem = (function () {
-    function ParticleSystem() {
+    }
+}
+class ParticleSystem {
+    constructor() {
         ParticleSystem.init();
     }
-    ParticleSystem.init = function () {
+    static init() {
         for (var i = 0; i < this.particleNum; i++) {
             this.particles.push(new Particle(i));
         }
-    };
-    ParticleSystem.Build = function (x, y) {
+    }
+    static Build(x, y) {
         this.x = x;
         this.y = y;
-    };
-    ParticleSystem.Draw = function () {
+    }
+    static Draw() {
         for (var i = 0; i < this.particles.length; i++) {
             if (this.particles[i].active === true) {
                 this.particles[i].Draw();
@@ -868,31 +890,29 @@ var ParticleSystem = (function () {
         }
         this.count = 0;
         this.x = -1;
-    };
-    ParticleSystem.particleNum = 60;
-    ParticleSystem.particles = [];
-    ParticleSystem.count = 10;
-    return ParticleSystem;
-}());
-//helper functions
+    }
+}
+ParticleSystem.particleNum = 60;
+ParticleSystem.particles = [];
+ParticleSystem.count = 10;
 function rand(max, min, _int) {
     var max = (max === 0 || max) ? max : 1, min = min || 0, gen = min + (max - min) * Math.random();
     return (_int) ? Math.round(gen) : gen;
 }
 ;
-var BulletPool = (function () {
-    function BulletPool(ship, color) {
+class BulletPool {
+    constructor(ship, color) {
         this.ship = ship;
         this.maxBullets = 5;
         this.bullets = new Array();
         this.LoadBulletsOfColor(color);
     }
-    BulletPool.prototype.LoadBulletsOfColor = function (color) {
-        for (var i = 0; i < this.maxBullets; i++) {
+    LoadBulletsOfColor(color) {
+        for (let i = 0; i < this.maxBullets; i++) {
             this.bullets.push(new Bullet(color));
         }
-    };
-    BulletPool.prototype.SpawnMisile = function () {
+    }
+    SpawnMisile() {
         if (this.ship.Is(ObjectState.DEAD) || this.ship.Is(ObjectState.EXPLODING)) {
             return;
         }
@@ -906,13 +926,13 @@ var BulletPool = (function () {
             this.ship.vector.Accelerate(-3);
             AudioLibrary.Play(3);
         }
-    };
-    BulletPool.prototype.SpawnLaser = function () {
+    }
+    SpawnLaser() {
         if (this.Spawn(BulletTypes.LAZER)) {
             AudioLibrary.Play(1);
         }
-    };
-    BulletPool.prototype.Spawn = function (type) {
+    }
+    Spawn(type) {
         if (this.ship.IsNot(ObjectState.ALIVE) && this.ship.IsNot(ObjectState.IMMORTAL)) {
             return false;
         }
@@ -922,9 +942,9 @@ var BulletPool = (function () {
             return true;
         }
         return false;
-    };
-    BulletPool.prototype.Act = function () {
-        for (var i = 0; i < this.maxBullets; i++) {
+    }
+    Act() {
+        for (let i = 0; i < this.maxBullets; i++) {
             if (this.bullets[i].Is(ObjectState.DEAD)) {
                 return;
             }
@@ -932,14 +952,14 @@ var BulletPool = (function () {
                 this.KillBullet(i);
             }
         }
-    };
-    BulletPool.prototype.KillBullet = function (i) {
+    }
+    KillBullet(i) {
         this.bullets[i].SetState(ObjectState.DEAD);
         this.bullets.push(this.bullets.splice(i, 1)[0]);
         return true;
-    };
-    BulletPool.prototype.Collide = function (object) {
-        for (var i = 0; i < this.maxBullets; i++) {
+    }
+    Collide(object) {
+        for (let i = 0; i < this.maxBullets; i++) {
             if (this.bullets[i].Is(ObjectState.DEAD)) {
                 return 0;
             }
@@ -950,98 +970,94 @@ var BulletPool = (function () {
             }
         }
         return 0;
-    };
-    return BulletPool;
-}());
-var DrawableLibrary = (function () {
-    function DrawableLibrary() {
     }
-    DrawableLibrary.GetShip = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
-        var ship = Images.GetImage("ship");
+}
+class DrawableLibrary {
+    static GetShip(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
+        let ship = Images.GetImage("ship");
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(ship, 15, 6272, 0, 128, 128, 7, "idle"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetShield = function () {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetShield() {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("shield"), 20, 0, 0, 192, 192, 0, "shield", null));
         return drawableCollection;
-    };
-    DrawableLibrary.GetSaucer = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetSaucer(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("saucer"), 16, 0, 0, 128, 128, 6, "saucer"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetAsteroid = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetAsteroid(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("asteroid"), 16, 0, 0, 64, 64, 3, "asteroid"));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("asteroid3"), 16, 0, 0, 64, 64, 3, "asteroid3"));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("asteroid4"), 16, 0, 0, 64, 64, 3, "asteroid4"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetFighter = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetFighter(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("fighter"), 16, 0, 0, 128, 128, 6, "fighter"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetSlicer = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetSlicer(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("slicer"), 16, 0, 0, 128, 128, 6, "slicer"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetBlades = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetBlades(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("blades"), 16, 0, 0, 128, 128, 6, "blades"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetLazer = function (color) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetLazer(color) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new Drawable("missile", Images.GetImage("missile"), 0, 0, 32, 32));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("bullet" + color), 16, 0, 0, 32, 64, 1, "bullet"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetPowerUps = function () {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetPowerUps() {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new Drawable("missile", Images.GetImage("missile"), 0, 0));
         drawableCollection.AddDrawable(new Drawable("life", Images.GetImage("shipsmall"), 0, 0));
         drawableCollection.AddDrawable(new Drawable("shield", Images.GetImage("shieldsmall"), 0, 0));
         drawableCollection.AddDrawable(new Drawable("blitz", Images.GetImage("blitz"), 0, 0));
         drawableCollection.AddDrawable(new Drawable("energy", Images.GetImage("lifesmall"), 0, 0));
         return drawableCollection;
-    };
-    DrawableLibrary.GetThrust = function () {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetThrust() {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("thrust"), 24, 0, 0, 128, 128, 1, "thrust"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetSpikey = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetSpikey(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("spikey"), 16, 0, 0, 128, 128, 6, "spikey"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetBugEye = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetBugEye(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("bugeye"), 16, 0, 0, 128, 128, 6, "bugeye"));
         return drawableCollection;
-    };
-    DrawableLibrary.GetScythe = function (explotionFinishedEventHandler) {
-        var drawableCollection = new DrawableCollection();
+    }
+    static GetScythe(explotionFinishedEventHandler) {
+        let drawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("explosion"), 34, 0, 0, 128, 128, 2, "explosion", explotionFinishedEventHandler));
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("scythe"), 16, 0, 0, 128, 128, 6, "scythe"));
         return drawableCollection;
-    };
-    return DrawableLibrary;
-}());
-var Images = (function () {
-    function Images(callback) {
+    }
+}
+class Images {
+    constructor(callback) {
         this.imagesLoaded = 0;
         this.callback = callback;
         Images.images = new Array();
@@ -1055,13 +1071,11 @@ var Images = (function () {
         this.AddImage("missile.png", "missile");
         this.AddImage("shield.png", "shield");
         this.AddImage("explosion.png", "explosion");
-        // power ups
         this.AddImage("shipsmall.png", "shipsmall");
         this.AddImage("shieldsmall.png", "shieldsmall");
         this.AddImage("asteroidsmall.png", "asteroidsmall");
         this.AddImage("blitz.png", "blitz");
         this.AddImage("lifesmall.png", "lifesmall");
-        // obstacles
         this.AddImage("blades.png", "blades");
         this.AddImage("slicer.png", "slicer");
         this.AddImage("bugeye.png", "bugeye");
@@ -1073,382 +1087,219 @@ var Images = (function () {
         this.AddImage("asteroid3.png", "asteroid3");
         this.AddImage("asteroid4.png", "asteroid4");
     }
-    Images.prototype.AddImage = function (file, name) {
-        var _this = this;
-        var image = new Image();
+    AddImage(file, name) {
+        let image = new Image();
         image.id = name;
-        image.onload = function () {
-            _this.imagesLoaded++;
-            if (_this.imagesLoaded == Images.images.length) {
-                _this.callback();
+        image.onload = () => {
+            this.imagesLoaded++;
+            if (this.imagesLoaded == Images.images.length) {
+                this.callback();
             }
         };
         image.src = "Resources/Images/" + file;
         Images.images.push(image);
-    };
-    Images.GetImage = function (name) {
-        for (var i = 0; i < Images.images.length; i++) {
+    }
+    static GetImage(name) {
+        for (let i = 0; i < Images.images.length; i++) {
             if (Images.images[i].id == name) {
                 return Images.images[i];
             }
         }
         alert("Image: " + name + " not found");
-    };
-    return Images;
-}());
-var System = (function () {
-    function System() {
     }
-    System.Initialize = function () {
+}
+class System {
+    static Initialize() {
+        AudioLibrary.Initialize();
         System.canvas = new Canvas("mainCanvas");
-        System.backgroundCanvas = new Canvas("backgroundCanvas");
-        System.backgroundCanvas.DrawDrawable(new Drawable("background", Images.GetImage("background")), 0, 0, System.resolutionX, System.resolutionY);
-    };
-    System.resolutionX = 1920;
-    System.resolutionY = 1080;
-    System.DebugMode = false;
-    System.Volume = 0.5;
-    return System;
-}());
-var Keyboard = (function () {
-    function Keyboard() {
+        let backgroundCanvas = new Canvas("backgroundCanvas");
+        backgroundCanvas.DrawDrawable(new Drawable("background", Images.GetImage("background")), 0, 0, System.resolutionX, System.resolutionY);
+        var game = new SpaceGame();
+        GamePad.Setup(game);
+        Keyboard.Setup(game);
+        return game;
     }
-    Keyboard.Setup = function (game) {
-        var _this = this;
-        this.spaceGame = game;
-        this.keys = new Array();
-        document.addEventListener("keydown", function (e) { return _this.KeyDown(e.keyCode); }, false);
-        document.addEventListener("keyup", function (e) { return _this.KeyUp(e.keyCode); }, false);
-    };
-    Keyboard.KeyDown = function (action) {
-        if (action == UserAction.DEBUGMODE) {
-            System.DebugMode = !System.DebugMode;
-            document.getElementById("fpsLabel").style.visibility = System.DebugMode ? "visible" : "hidden";
-        }
-        else if (action == UserAction.MUTEAUDIO) {
-            AudioLibrary.ToggleMute();
-        }
-        else if (this.keys[action] == true) {
-            return;
-        }
-        this.keys[action] = true;
-        this.spaceGame.KeyDown(action);
-    };
-    Keyboard.KeyUp = function (action) {
-        this.keys[action] = false;
-        this.spaceGame.KeyUp(action);
-    };
-    Keyboard.IsKeyDown = function (action) {
-        return this.keys[action];
-    };
-    return Keyboard;
-}());
-var GamePad = (function () {
-    function GamePad() {
-    }
-    GamePad.Setup = function (game) {
-        this.spaceGame = game;
-        this.keys = new Array();
-    };
-    GamePad.Act = function () {
-        //if ("getGamepads" in navigator) {
-        var gp = navigator.getGamepads()[0];
-        for (var i = 0; i < gp.buttons.length; i++) {
-            if (gp.buttons[i].pressed) {
-                if (!this.keys[i]) {
-                    this.keys[i] = true;
-                    this.spaceGame.KeyDown(this.Mapping(i));
-                }
-            }
-            else {
-                if (this.keys[i]) {
-                    this.keys[i] = false;
-                    this.spaceGame.KeyUp(this.Mapping(i));
-                }
-            }
-        }
-        //}
-    };
-    GamePad.Mapping = function (i) {
-        switch (i) {
-            case 0:
-                return UserAction.SHIP1_ACCELERATE;
-            case 1:
-                return UserAction.SHIP1_MISILE;
-            case 2:
-                return UserAction.SHIP1_FIRE;
-            case 3:
-                return UserAction.SHIP1_SHIELD;
-            case 14:
-                return UserAction.SHIP1_LEFT;
-            case 15:
-                return UserAction.SHIP1_RIGHT;
-            default: return null;
-        }
-    };
-    GamePad.UnMapping = function (ua) {
-        switch (ua) {
-            case UserAction.SHIP1_ACCELERATE:
-                return 0;
-            case UserAction.SHIP1_MISILE:
-                return 1;
-            case UserAction.SHIP1_FIRE:
-                return 2;
-            case UserAction.SHIP1_SHIELD:
-                return 3;
-            case UserAction.SHIP1_LEFT:
-                return 14;
-            case UserAction.SHIP1_RIGHT:
-                return 15;
-            default: return -1;
-        }
-    };
-    GamePad.IsKeyDown = function (action) {
-        return this.keys[this.UnMapping(action)];
-    };
-    return GamePad;
-}());
-var Asteroid = (function (_super) {
-    __extends(Asteroid, _super);
-    function Asteroid(size, energy) {
-        var _this = this;
-        _super.call(this, size, size, size, 0, 0, System.canvas, energy);
+}
+System.resolutionX = 1920;
+System.resolutionY = 1080;
+System.DebugMode = false;
+System.Volume = 0.5;
+class Asteroid extends Obstacle {
+    constructor(size, energy) {
+        super(size, size, size, 0, 0, System.canvas, energy);
         this.type = ObstacleType.ASTEROID;
-        this.drawableCollection = DrawableLibrary.GetAsteroid(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetAsteroid(() => this.state = ObjectState.DEAD);
     }
-    Asteroid.prototype.HitByBullet = function () {
+    HitByBullet() {
         this.energy -= 1;
         if (this.energy <= 0) {
             this.Explode();
             return true;
         }
         return false;
-    };
-    Asteroid.prototype.Act = function () {
-        _super.prototype.Act.call(this);
-        _super.prototype.Draw.call(this);
-    };
-    return Asteroid;
-}(Obstacle));
-var AsteroidMedium = (function (_super) {
-    __extends(AsteroidMedium, _super);
-    function AsteroidMedium() {
-        _super.call(this, AsteroidSize.SMALL, 1);
+    }
+    Act() {
+        super.Act();
+        super.Draw();
+    }
+}
+class AsteroidMedium extends Asteroid {
+    constructor() {
+        super(AsteroidSize.SMALL, 1);
         this.drawableCollection.SetCurrentDrawable("asteroid");
         this.AdjustBoundingbox(-20, -20);
     }
-    return AsteroidMedium;
-}(Asteroid));
-var AsteroidSmall = (function (_super) {
-    __extends(AsteroidSmall, _super);
-    function AsteroidSmall() {
-        _super.call(this, AsteroidSize.SMALLER, 1);
+}
+class AsteroidSmall extends Asteroid {
+    constructor() {
+        super(AsteroidSize.SMALLER, 1);
         this.AdjustBoundingbox(-30, -30);
         this.drawableCollection.SetCurrentDrawable("asteroid3");
     }
-    return AsteroidSmall;
-}(Asteroid));
-var AsteroidSmaller = (function (_super) {
-    __extends(AsteroidSmaller, _super);
-    function AsteroidSmaller() {
-        _super.call(this, AsteroidSize.SMALLEST, 1);
+}
+class AsteroidSmaller extends Asteroid {
+    constructor() {
+        super(AsteroidSize.SMALLEST, 1);
         this.AdjustBoundingbox(-25, -25);
         this.drawableCollection.SetCurrentDrawable("asteroid4");
     }
-    return AsteroidSmaller;
-}(Asteroid));
-var Blades = (function (_super) {
-    __extends(Blades, _super);
-    function Blades() {
-        var _this = this;
-        _super.call(this, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, 0, 0, System.canvas, 10);
+}
+class Blades extends Obstacle {
+    constructor() {
+        super(AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, 0, 0, System.canvas, 10);
         this.shooterStrategy = new ShootThreeSixtyStrategy(150, this);
         this.AdjustBoundingbox(-50, -50);
-        this.drawableCollection = DrawableLibrary.GetBlades(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetBlades(() => this.state = ObjectState.DEAD);
     }
-    Blades.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    Act() {
+        super.Act();
         this.shooterStrategy.Act();
-        _super.prototype.Draw.call(this);
-    };
-    return Blades;
-}(Obstacle));
-var Spikey = (function (_super) {
-    __extends(Spikey, _super);
-    function Spikey() {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
+        super.Draw();
+    }
+}
+class Spikey extends Obstacle {
+    constructor() {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
         this.moveStrategy = new MoveStrategy(this, 15);
-        this.drawableCollection = DrawableLibrary.GetSpikey(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetSpikey(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-80, -80);
     }
-    Spikey.prototype.Draw = function () {
+    Draw() {
         this.canvas.DrawObjectRotate(this);
-    };
-    Spikey.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         this.moveStrategy.Act();
         this.Draw();
-    };
-    return Spikey;
-}(Obstacle));
-var BugEye = (function (_super) {
-    __extends(BugEye, _super);
-    function BugEye() {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
+    }
+}
+class BugEye extends Obstacle {
+    constructor() {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
         this.moveStrategy = new MoveStrategy(this, 1);
-        this.drawableCollection = DrawableLibrary.GetBugEye(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetBugEye(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-90, -55);
     }
-    BugEye.prototype.Draw = function () {
+    Draw() {
         this.canvas.DrawObjectRotate(this);
-    };
-    BugEye.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         this.moveStrategy.Act();
         this.Draw();
-    };
-    return BugEye;
-}(Obstacle));
-var SaucerBig = (function (_super) {
-    __extends(SaucerBig, _super);
-    function SaucerBig() {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 5);
+    }
+}
+class SaucerBig extends Obstacle {
+    constructor() {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 5);
         this.shooterStrategy = new TwirvlShootStrategy(this);
-        this.drawableCollection = DrawableLibrary.GetSaucer(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-60, -60);
     }
-    SaucerBig.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    Act() {
+        super.Act();
         this.shooterStrategy.Act();
-        _super.prototype.Draw.call(this);
-    };
-    return SaucerBig;
-}(Obstacle));
-var Saucer = (function (_super) {
-    __extends(Saucer, _super);
-    function Saucer() {
-        var _this = this;
-        _super.call(this, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, 0, 0, System.canvas, 5);
+        super.Draw();
+    }
+}
+class Saucer extends Obstacle {
+    constructor() {
+        super(AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, 0, 0, System.canvas, 5);
         this.shooterStrategy = new ShootRandomStrategy(80, this);
-        this.drawableCollection = DrawableLibrary.GetSaucer(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-45, -45);
     }
-    Saucer.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    Act() {
+        super.Act();
         this.shooterStrategy.Act();
-        _super.prototype.Draw.call(this);
-    };
-    return Saucer;
-}(Obstacle));
-var Fighter = (function (_super) {
-    __extends(Fighter, _super);
-    function Fighter() {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 15);
+        super.Draw();
+    }
+}
+class Fighter extends Obstacle {
+    constructor() {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 15);
         this.shootingStrategy = new ShootStrategy(100, this);
         this.moveStrategy = new MoveStrategy(this, 1);
         this.moveStrategy.SetChangeDirection(Math.random() * 200 + 100);
-        this.drawableCollection = DrawableLibrary.GetFighter(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetFighter(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-50, -60);
     }
-    Fighter.prototype.Draw = function () {
+    Draw() {
         this.canvas.DrawObjectRotate(this);
-    };
-    Fighter.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         this.shootingStrategy.Act();
         this.moveStrategy.Act();
         this.Draw();
-    };
-    return Fighter;
-}(Obstacle));
-var Scythe = (function (_super) {
-    __extends(Scythe, _super);
-    function Scythe() {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
+    }
+}
+class Scythe extends Obstacle {
+    constructor() {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
         this.shootingStrategy = new ShootStrategy(20, this);
         this.moveStrategy = new MoveStrategy(this, 1);
-        this.drawableCollection = DrawableLibrary.GetScythe(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetScythe(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-60, -70);
     }
-    Scythe.prototype.Draw = function () {
+    Draw() {
         this.canvas.DrawObjectRotate(this);
-    };
-    Scythe.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         this.shootingStrategy.Act();
         this.moveStrategy.Act();
         this.Draw();
-    };
-    return Scythe;
-}(Obstacle));
-var Slicer = (function (_super) {
-    __extends(Slicer, _super);
-    function Slicer() {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
+    }
+}
+class Slicer extends Obstacle {
+    constructor() {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
         this.shootingStrategy = new ShootStrategy(20, this);
         this.moveStrategy = new MoveStrategy(this, 1);
-        this.drawableCollection = DrawableLibrary.GetSlicer(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetSlicer(() => this.state = ObjectState.DEAD);
         this.AdjustBoundingbox(-90, -40);
     }
-    Slicer.prototype.Draw = function () {
+    Draw() {
         this.canvas.DrawObjectRotate(this);
-    };
-    Slicer.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         this.shootingStrategy.Act();
         this.moveStrategy.Act();
         this.Draw();
-    };
-    return Slicer;
-}(Obstacle));
-//class Slicer extends Obstacle {
-//    private shootingStrategy: ShootStrategy;
-//    private moveStrategy: MoveStrategy;
-//    private getJewelStrategy: GetJewelStrategy;
-//    constructor() {
-//        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
-//        this.shootingStrategy = new ShootStrategy(20, this);
-//        this.moveStrategy = new MoveStrategy(this, 1);
-//        this.drawableCollection = DrawableLibrary.GetSlicer(() => this.state = ObjectState.DEAD);
-//        this.AdjustBoundingbox(-130, -80);
-//        this.getJewelStrategy = new GetJewelStrategy(this);
-//        this.vector.angle = 100;
-//        this.x = System.resolutionX / 2 + 400;
-//        this.y = System.resolutionY / 2 - 400;
-//    }
-//    public Draw() {
-//        this.canvas.DrawObjectRotate(this);
-//    }
-//    private setDirection: boolean = false;
-//    public Act() {
-//        if (!this.setDirection) {
-//            this.getJewelStrategy.SetDirection(this.x, this.y);
-//            this.setDirection = true;
-//        }
-//        this.getJewelStrategy.Act();
-//        //super.Act();
-//        //this.shootingStrategy.Act();
-//        //this.moveStrategy.Act();
-//        this.Draw();
-//    }
-//} 
-var Bullet = (function (_super) {
-    __extends(Bullet, _super);
-    function Bullet(color) {
-        _super.call(this, 32, 64, 0, 0, System.canvas);
+    }
+}
+class Bullet extends GameObject {
+    constructor(color) {
+        super(32, 64, 0, 0, System.canvas);
         this.reach = 70;
         this.reachCounter = 0;
         this.attack = 0;
         this.state = ObjectState.DEAD;
         this.drawableCollection = DrawableLibrary.GetLazer(color);
     }
-    Bullet.prototype.Spawn = function (ship, type, vector) {
+    Spawn(ship, type, vector) {
         this.vector.Copy(vector);
         if (type == BulletTypes.LAZER) {
             this.drawableCollection.SetCurrentDrawable("bullet");
@@ -1467,21 +1318,18 @@ var Bullet = (function (_super) {
         this.state = ObjectState.ALIVE;
         this.x = ship.x + ship.widthHalf - this.widthHalf;
         this.y = ship.y + ship.heightHalf - this.heightHalf;
-    };
-    Bullet.prototype.Draw = function () { this.canvas.DrawObjectRotate(this); };
-    Bullet.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Draw() { this.canvas.DrawObjectRotate(this); }
+    Act() {
+        super.Act();
         this.reachCounter++;
         this.Draw();
         return this.reachCounter > this.reach;
-    };
-    return Bullet;
-}(GameObject));
-var Ship = (function (_super) {
-    __extends(Ship, _super);
-    function Ship(leftAction, rightAction, accelerateAction, x, y, thrustSoundNumber, shieldSoundNumber) {
-        var _this = this;
-        _super.call(this, AsteroidSize.BIG, AsteroidSize.BIG, x, y, System.canvas);
+    }
+}
+class Ship extends GameObject {
+    constructor(leftAction, rightAction, accelerateAction, x, y, thrustSoundNumber, shieldSoundNumber) {
+        super(AsteroidSize.BIG, AsteroidSize.BIG, x, y, System.canvas);
         this.rotateSpeed = 2;
         this.accelerationSpeed = 0.1;
         this.shieldAmount = 200;
@@ -1498,7 +1346,7 @@ var Ship = (function (_super) {
         this.thrust = new Thrust(this);
         this.thrustSoundNumber = thrustSoundNumber;
         this.shieldSoundNumber = shieldSoundNumber;
-        this.drawableCollection = DrawableLibrary.GetShip(function () { return _this.state = ObjectState.DEAD; });
+        this.drawableCollection = DrawableLibrary.GetShip(() => this.state = ObjectState.DEAD);
         this.rightAction = rightAction;
         this.leftAction = leftAction;
         this.accelerateAction = accelerateAction;
@@ -1508,7 +1356,7 @@ var Ship = (function (_super) {
         this.Spawn();
         this.UpdateScore(0);
     }
-    Ship.prototype.Spawn = function () {
+    Spawn() {
         this.energy = 5;
         this.respawnCounter = 0;
         this.drawableCollection.SetCurrentDrawable("idle");
@@ -1518,14 +1366,14 @@ var Ship = (function (_super) {
         this.vector.ConstantSpeed(0);
         this.vector.angle = 0;
         this.thrust.Spawn();
-    };
-    Ship.prototype.Draw = function () {
+    }
+    Draw() {
         this.canvas.DrawObjectRotate(this);
         if (this.isShielding || this.state == ObjectState.IMMORTAL) {
             this.shieldObject.ShadowDraw(this.x + this.widthHalf, this.y + this.heightHalf, this.vector.angle);
         }
-    };
-    Ship.prototype.Explode = function () {
+    }
+    Explode() {
         ParticleSystem.Build(this.x + this.widthHalf, this.y + this.heightHalf);
         this.state = ObjectState.EXPLODING;
         this.ShieldOff();
@@ -1534,12 +1382,12 @@ var Ship = (function (_super) {
         this.vector.Reset();
         AudioLibrary.Play(0);
         AudioLibrary.Stop(this.thrustSoundNumber);
-    };
-    Ship.prototype.HitByBullet = function () {
-        _super.prototype.Hit.call(this);
+    }
+    HitByBullet() {
+        super.Hit();
         this.energy--;
-    };
-    Ship.prototype.Act = function () {
+    }
+    Act() {
         if (this.state == ObjectState.DEAD) {
             if (this.numberOfLives == 0)
                 return;
@@ -1548,7 +1396,7 @@ var Ship = (function (_super) {
                 this.Spawn();
             }
         }
-        _super.prototype.Act.call(this);
+        super.Act();
         this.thrust.Act();
         if (this.state == ObjectState.IMMORTAL) {
             this.respawnCounter++;
@@ -1592,52 +1440,50 @@ var Ship = (function (_super) {
             }
         }
         this.Draw();
-    };
-    Ship.prototype.ShieldOn = function () {
+    }
+    ShieldOn() {
         if (this.state != ObjectState.ALIVE || this.shieldAmount <= 0) {
             return;
         }
         AudioLibrary.Play(this.shieldSoundNumber);
         this.isShielding = true;
-    };
-    Ship.prototype.ShieldOff = function () {
+    }
+    ShieldOff() {
         this.isShielding = false;
         AudioLibrary.Stop(this.shieldSoundNumber);
-    };
-    Ship.prototype.SetMoveAnimation = function () {
+    }
+    SetMoveAnimation() {
         if (this.IsNot(ObjectState.ALIVE) && this.IsNot(ObjectState.IMMORTAL)) {
             return;
         }
         this.thrust.SetThrusting(true);
         AudioLibrary.Play(this.thrustSoundNumber);
-    };
-    Ship.prototype.SetIdleAnimation = function () {
+    }
+    SetIdleAnimation() {
         if (this.IsNot(ObjectState.ALIVE) && this.IsNot(ObjectState.IMMORTAL)) {
             return;
         }
         this.thrust.SetThrusting(false);
         AudioLibrary.Stop(this.thrustSoundNumber);
-    };
-    Ship.prototype.GetShield = function () {
+    }
+    GetShield() {
         return this.shieldAmount;
-    };
-    Ship.prototype.IsShilding = function () {
+    }
+    IsShilding() {
         return this.isShielding;
-    };
-    Ship.prototype.ChargeShield = function () {
+    }
+    ChargeShield() {
         this.shieldAmount = 200;
-    };
-    Ship.prototype.UpdateScore = function (value) {
+    }
+    UpdateScore(value) {
         this.numberOfKills += value;
         this.score = "0000" + this.numberOfKills;
         this.score = this.score.substr(this.score.length - 4);
-    };
-    return Ship;
-}(GameObject));
-var Star = (function (_super) {
-    __extends(Star, _super);
-    function Star(width, height, x, y, canvas, speed, ship) {
-        _super.call(this, width, height, x, y, canvas);
+    }
+}
+class Star extends GameObject {
+    constructor(width, height, x, y, canvas, speed, ship) {
+        super(width, height, x, y, canvas);
         this.shootingStar = false;
         this.steps = 100;
         this.slowDownFactor = 0.95;
@@ -1650,7 +1496,7 @@ var Star = (function (_super) {
         this.blinkCounter = 0;
         this.ship = ship;
     }
-    Star.prototype.ShootingStart = function () {
+    ShootingStart() {
         this.shootingStar = true;
         this.destX = Math.random() * System.resolutionX;
         this.destY = Math.random() + System.resolutionY;
@@ -1659,9 +1505,9 @@ var Star = (function (_super) {
         this.speedX = this.deltaX / this.steps;
         this.speedY = this.deltaY / this.steps;
         this.stepsTaken = 0;
-    };
-    Star.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         if (this.shootingStar) {
             this.vector.x = this.speedX;
             this.vector.y = this.speedY;
@@ -1695,30 +1541,29 @@ var Star = (function (_super) {
         }
         this.alpha = this.blink ? this.starFaded : this.starLight;
         this.canvas.DrawStar(this.x, this.y, this.width, this.alpha);
-    };
-    return Star;
-}(GameObject));
-var ObstacleBulletPool = (function () {
-    function ObstacleBulletPool(ship1, ship2) {
+    }
+}
+class ObstacleBulletPool {
+    constructor(ship1, ship2) {
         this.ship1 = ship1;
         this.ship2 = ship2;
         this.maxBullets = 50;
         this.bullets = new Array();
         this.LoadBulletsOfColor();
     }
-    ObstacleBulletPool.prototype.LoadBulletsOfColor = function () {
-        for (var i = 0; i < this.maxBullets; i++) {
+    LoadBulletsOfColor() {
+        for (let i = 0; i < this.maxBullets; i++) {
             this.bullets.push(new Bullet("green"));
         }
-    };
-    ObstacleBulletPool.prototype.Spawn = function (obstacle, vector) {
+    }
+    Spawn(obstacle, vector) {
         if (this.bullets[this.maxBullets - 1].Is(ObjectState.DEAD)) {
             this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector);
             this.bullets.unshift(this.bullets.pop());
         }
-    };
-    ObstacleBulletPool.prototype.Act = function () {
-        for (var i = 0; i < this.maxBullets; i++) {
+    }
+    Act() {
+        for (let i = 0; i < this.maxBullets; i++) {
             if (this.bullets[i].Is(ObjectState.DEAD)) {
                 return;
             }
@@ -1729,8 +1574,8 @@ var ObstacleBulletPool = (function () {
                 this.CheckShipBulletCollision(this.ship2, i);
             }
         }
-    };
-    ObstacleBulletPool.prototype.CheckShipBulletCollision = function (ship, index) {
+    }
+    CheckShipBulletCollision(ship, index) {
         if (ship.Is(ObjectState.ALIVE) && this.bullets[index].CollisionCheck(ship)) {
             if (!ship.IsShilding()) {
                 ship.HitByBullet();
@@ -1742,23 +1587,22 @@ var ObstacleBulletPool = (function () {
             return true;
         }
         return false;
-    };
-    ObstacleBulletPool.prototype.KillBullet = function (i) {
+    }
+    KillBullet(i) {
         this.bullets[i].SetState(ObjectState.DEAD);
         this.bullets.push(this.bullets.splice(i, 1)[0]);
-    };
-    return ObstacleBulletPool;
-}());
-var ObstaclePool = (function () {
-    function ObstaclePool(ship1, ship2, bulletPool1, bulletPool2) {
+    }
+}
+class ObstaclePool {
+    constructor(ship1, ship2, bulletPool1, bulletPool2) {
         this.ship1 = ship1;
         this.ship2 = ship2;
         this.bulletPool1 = bulletPool1;
         this.bulletPool2 = bulletPool2;
         this.obstacles = new Array(0);
     }
-    ObstaclePool.prototype.Act = function () {
-        for (var i = 0; i < this.obstacles.length; i++) {
+    Act() {
+        for (let i = 0; i < this.obstacles.length; i++) {
             if (this.obstacles[i].Is(ObjectState.DEAD)) {
                 this.obstacles.splice(i, 1);
                 i--;
@@ -1778,8 +1622,8 @@ var ObstaclePool = (function () {
             this.CollisionCheckObstacleBullet(this.obstacles[i], this.bulletPool2, this.ship2);
         }
         return this.obstacles.length == 0;
-    };
-    ObstaclePool.prototype.CollisionCheckObstacleShip = function (ship, i) {
+    }
+    CollisionCheckObstacleShip(ship, i) {
         if (!this.obstacles[i].CollisionCheck(ship)) {
             return false;
         }
@@ -1793,8 +1637,8 @@ var ObstaclePool = (function () {
             return true;
         }
         return false;
-    };
-    ObstaclePool.prototype.CollisionCheckObstacleBullet = function (obstacle, bulletPool, ship) {
+    }
+    CollisionCheckObstacleBullet(obstacle, bulletPool, ship) {
         this.attack = bulletPool.Collide(obstacle);
         if (this.attack > 0) {
             obstacle.HitByBullet(this.attack);
@@ -1806,14 +1650,14 @@ var ObstaclePool = (function () {
             if (obstacle.IsType(ObstacleType.ASTEROID) && this.exploding && obstacle.GetSize() != AsteroidSize.SMALLEST) {
                 this.size = obstacle.GetSize() == AsteroidSize.SMALL ? AsteroidSize.SMALLER : AsteroidSize.SMALLEST;
                 this.amount = obstacle.GetSize() == AsteroidSize.SMALL ? 4 : 10;
-                for (var x = 0; x < this.amount; x++) {
+                for (let x = 0; x < this.amount; x++) {
                     this.obstacles.push(this.GetAsteroidFromSize(this.size, obstacle.x, obstacle.y));
                 }
             }
         }
-    };
-    ObstaclePool.prototype.GetAsteroidFromSize = function (size, x, y) {
-        var obstacle;
+    }
+    GetAsteroidFromSize(size, x, y) {
+        let obstacle;
         if (size == AsteroidSize.SMALLER) {
             obstacle = new AsteroidSmall();
         }
@@ -1822,26 +1666,24 @@ var ObstaclePool = (function () {
         }
         obstacle.SetCoordinates(x, y);
         return obstacle;
-    };
-    ObstaclePool.prototype.SetObstacles = function (obstacles) {
+    }
+    SetObstacles(obstacles) {
         this.obstacles = obstacles;
-    };
-    ObstaclePool.prototype.Nuclear = function () {
-        for (var i = 0; i < this.obstacles.length; i++) {
+    }
+    Nuclear() {
+        for (let i = 0; i < this.obstacles.length; i++) {
             this.obstacles[i].Explode();
         }
-    };
-    return ObstaclePool;
-}());
-var PowerUp = (function (_super) {
-    __extends(PowerUp, _super);
-    function PowerUp() {
-        _super.call(this, AsteroidSize.POWERUP, AsteroidSize.POWERUP, 0, 0, System.canvas);
+    }
+}
+class PowerUp extends GameObject {
+    constructor() {
+        super(AsteroidSize.POWERUP, AsteroidSize.POWERUP, 0, 0, System.canvas);
         this.stayAliveFor = 500;
         this.circleSize = AsteroidSize.POWERUP / 2;
         this.drawableCollection = DrawableLibrary.GetPowerUps();
     }
-    PowerUp.prototype.Spawn = function () {
+    Spawn() {
         if (Math.random() > 0.5) {
             this.x = Math.random() > 0.5 ? System.resolutionX : -this.width;
             this.y = Math.random() * System.resolutionY;
@@ -1854,109 +1696,98 @@ var PowerUp = (function (_super) {
         this.vector.ConstantSpeed(1);
         this.stayAliveCounter = 0;
         this.isAlive = true;
-    };
-    PowerUp.prototype.Act = function () {
-        _super.prototype.Act.call(this);
+    }
+    Act() {
+        super.Act();
         this.vector.angle += 5;
         this.stayAliveCounter++;
         this.Draw();
         this.isAlive = this.stayAliveCounter < this.stayAliveFor;
-    };
-    PowerUp.prototype.Draw = function () {
+    }
+    Draw() {
         this.canvas.DrawObjectRotate(this);
         this.canvas.DrawCircle(this.x + this.circleSize, this.y + this.circleSize, 60, this.color, 0.2, 12);
-    };
-    PowerUp.prototype.Collide = function () {
+    }
+    Collide() {
         this.stayAliveCounter = this.stayAliveFor + 1;
         this.isAlive = false;
-    };
-    PowerUp.prototype.GetType = function () {
+    }
+    GetType() {
         return this.type;
-    };
-    return PowerUp;
-}(GameObject));
-var PowerUpMisile = (function (_super) {
-    __extends(PowerUpMisile, _super);
-    function PowerUpMisile() {
-        _super.call(this);
+    }
+}
+class PowerUpMisile extends PowerUp {
+    constructor() {
+        super();
         this.color = "#FF6868";
         this.type = PowerUpType.MISSILE;
         this.drawableCollection.SetCurrentDrawable("missile");
     }
-    PowerUpMisile.GetInstance = function () {
+    static GetInstance() {
         if (this.instance == null) {
             this.instance = new PowerUpMisile();
         }
         return this.instance;
-    };
-    return PowerUpMisile;
-}(PowerUp));
-var PowerUpLife = (function (_super) {
-    __extends(PowerUpLife, _super);
-    function PowerUpLife() {
-        _super.call(this);
+    }
+}
+class PowerUpLife extends PowerUp {
+    constructor() {
+        super();
         this.drawableCollection.SetCurrentDrawable("life");
         this.type = PowerUpType.LIFE;
         this.color = "#BFFF00";
     }
-    PowerUpLife.GetInstance = function () {
+    static GetInstance() {
         if (this.instance == null) {
             this.instance = new PowerUpLife();
         }
         return this.instance;
-    };
-    return PowerUpLife;
-}(PowerUp));
-var PowerUpShield = (function (_super) {
-    __extends(PowerUpShield, _super);
-    function PowerUpShield() {
-        _super.call(this);
+    }
+}
+class PowerUpShield extends PowerUp {
+    constructor() {
+        super();
         this.drawableCollection.SetCurrentDrawable("shield");
         this.type = PowerUpType.SHIELD;
         this.color = "#72BBFF";
     }
-    PowerUpShield.GetInstance = function () {
+    static GetInstance() {
         if (this.instance == null) {
             this.instance = new PowerUpShield();
         }
         return this.instance;
-    };
-    return PowerUpShield;
-}(PowerUp));
-var PowerUpBlitz = (function (_super) {
-    __extends(PowerUpBlitz, _super);
-    function PowerUpBlitz() {
-        _super.call(this);
+    }
+}
+class PowerUpBlitz extends PowerUp {
+    constructor() {
+        super();
         this.drawableCollection.SetCurrentDrawable("blitz");
         this.type = PowerUpType.BLITZ;
         this.color = "#FFD447";
     }
-    PowerUpBlitz.GetInstance = function () {
+    static GetInstance() {
         if (this.instance == null) {
             this.instance = new PowerUpBlitz();
         }
         return this.instance;
-    };
-    return PowerUpBlitz;
-}(PowerUp));
-var PowerUpEnergy = (function (_super) {
-    __extends(PowerUpEnergy, _super);
-    function PowerUpEnergy() {
-        _super.call(this);
+    }
+}
+class PowerUpEnergy extends PowerUp {
+    constructor() {
+        super();
         this.drawableCollection.SetCurrentDrawable("energy");
         this.type = PowerUpType.ENERGY;
         this.color = "#FF16E0";
     }
-    PowerUpEnergy.GetInstance = function () {
+    static GetInstance() {
         if (this.instance == null) {
             this.instance = new PowerUpEnergy();
         }
         return this.instance;
-    };
-    return PowerUpEnergy;
-}(PowerUp));
-var ShipInformationBar = (function () {
-    function ShipInformationBar() {
+    }
+}
+class ShipInformationBar {
+    constructor() {
         this.misilePicture = Images.GetImage("missile");
         this.shipsmall = Images.GetImage("shipsmall");
         this.sheildSmall = Images.GetImage("shieldsmall");
@@ -1975,8 +1806,7 @@ var ShipInformationBar = (function () {
         this.shieldCounter = 0;
         this.fadeFactor = 10;
     }
-    // todo ship x og y kan sætte i draw 1 gange
-    ShipInformationBar.prototype.Draw = function (ship) {
+    Draw(ship) {
         if (this.maxShipShield === undefined) {
             this.maxShipShield = ship.GetShield();
             this.maxShipEnergy = ship.energy;
@@ -1994,15 +1824,9 @@ var ShipInformationBar = (function () {
             this.currentEnergy = ship.energy;
             this.energyCounter = this.max;
         }
-        //if (this.currentShield != ship.GetShield()) {
-        //    this.currentShield = ship.GetShield();
-        //    this.shieldCounter = this.max;
-        //}
         if (this.show) {
         }
         else {
-            //this.energyCounter = this.max;
-            //this.DrawEnergy(ship);
             this.DrawLife(ship, 100, 5);
             this.DrawMissile(ship, 100 + this.xBigDiff, 5);
             if (this.energyCounter > 0) {
@@ -2014,21 +1838,21 @@ var ShipInformationBar = (function () {
                 this.DrawShield(ship);
             }
         }
-    };
-    ShipInformationBar.prototype.DrawLife = function (ship, x, y) {
+    }
+    DrawLife(ship, x, y) {
         System.canvas.DrawImage(this.shipsmall, x, y, this.iconSize, this.iconSize, this.alpha);
         System.canvas.DrawText(x + this.xDiff, y + this.yDiff, ship.numberOfLives.toString(), this.font);
-    };
-    ShipInformationBar.prototype.DrawMissile = function (ship, x, y) {
+    }
+    DrawMissile(ship, x, y) {
         System.canvas.DrawImage(this.misilePicture, x, y, this.iconSize, this.iconSize, this.alpha);
         System.canvas.DrawText(this.xDiff + x, y + this.yDiff, ship.numberOfMisiles.toString(), this.font);
-    };
-    ShipInformationBar.prototype.DrawScores = function (ship, x) {
+    }
+    DrawScores(ship, x) {
         System.canvas.DrawImage(this.asteroidsmall, x, 5, this.iconSize, this.iconSize);
         x += this.xDiff;
         System.canvas.DrawText(x, 5 + 12, ship.score, this.font);
-    };
-    ShipInformationBar.prototype.DrawEnergy = function (ship) {
+    }
+    DrawEnergy(ship) {
         this.height = this.barHeight;
         if (this.energyCounter < this.max / this.fadeFactor) {
             this.height = this.height * this.energyCounter / (this.max / this.fadeFactor);
@@ -2040,12 +1864,9 @@ var ShipInformationBar = (function () {
         System.canvas.DrawRectangle(this.shipCenterX, this.shipCenterY, this.height, this.barWidth, "#003300");
         this.perc = (ship.energy / this.maxShipEnergy) * this.barWidth;
         System.canvas.DrawRectangle(this.shipCenterX, this.shipCenterY, this.height, this.perc, "#00CC00");
-    };
-    ShipInformationBar.prototype.DrawShield = function (ship) {
+    }
+    DrawShield(ship) {
         this.height = this.barHeight;
-        //if (this.shieldCounter < this.max / this.fadeFactor) {
-        //    this.height = this.height * this.shieldCounter / (this.max / this.fadeFactor);
-        //}
         this.shipCenterX = ship.x + ship.widthHalf - (this.barWidth / 2);
         this.shipCenterY = ship.y + ship.height + this.height + 12;
         System.canvas.DrawRectangle(this.shipCenterX - 4, this.shipCenterY - 4, this.height + 8, this.barWidth + 8, "white");
@@ -2053,11 +1874,10 @@ var ShipInformationBar = (function () {
         System.canvas.DrawRectangle(this.shipCenterX, this.shipCenterY, this.height, this.barWidth, "#2E2F7C");
         this.perc = (ship.GetShield() / this.maxShipShield) * this.barWidth;
         System.canvas.DrawRectangle(this.shipCenterX, this.shipCenterY, this.height, this.perc, "#7F7FFF");
-    };
-    return ShipInformationBar;
-}());
-var SpaceGame = (function () {
-    function SpaceGame() {
+    }
+}
+class SpaceGame {
+    constructor() {
         this.gameState = GameState.RUNNING;
         this.spawnPowerUp = 1000;
         this.spawnPowerUpCounter = 0;
@@ -2066,7 +1886,7 @@ var SpaceGame = (function () {
         this.levelManager = new LevelManager();
         this.player1 = new Ship(UserAction.SHIP1_LEFT, UserAction.SHIP1_RIGHT, UserAction.SHIP1_ACCELERATE, System.resolutionX / 3, System.resolutionY / 2, 2, 12);
         this.poolBullet1 = new BulletPool(this.player1, "red");
-        // this.player1.useGamePad = true;
+        this.player1.useGamePad = true;
         this.player2 = new Ship(UserAction.SHIP2_LEFT2, UserAction.SHIP2_RIGHT2, UserAction.SHIP2_ACCELERATE2, System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13);
         this.poolBullet2 = new BulletPool(this.player2, "blue");
         this.shipInformationBar = new ShipInformationBar();
@@ -2079,7 +1899,7 @@ var SpaceGame = (function () {
         AudioLibrary.ToggleMute();
         AudioLibrary.Play(7);
     }
-    SpaceGame.prototype.Act = function () {
+    Act() {
         System.canvas.Clear();
         this.spawnPowerUpCounter++;
         if (this.spawnPowerUpCounter > this.spawnPowerUp) {
@@ -2092,16 +1912,12 @@ var SpaceGame = (function () {
             this.textdrawer.SetText("Game Over");
             AudioLibrary.Play(9);
         }
-        //if (Math.random() < 0.0001) {
-        //    this.poolObstacle.AddObstacle(new Spikey());
-        //}
         this.CheckPowerUpCollision();
         this.poolStar.Act();
         SpaceGame.poolObstacleBullet.Act();
         this.poolBullet1.Act();
         this.poolBullet2.Act();
         this.player1.Act();
-        //this.ship2.Act();
         if (this.textdrawer.Act()) {
             this.TextWriterFinished();
         }
@@ -2123,8 +1939,8 @@ var SpaceGame = (function () {
         }
         this.shipInformationBar.Draw(this.player1);
         ParticleSystem.Draw();
-    };
-    SpaceGame.prototype.KeyDown = function (action) {
+    }
+    KeyDown(action) {
         if (action == UserAction.SHIP1_ACCELERATE) {
             this.player1.SetMoveAnimation();
         }
@@ -2149,8 +1965,8 @@ var SpaceGame = (function () {
         else if (action == UserAction.SHIP2_MISILE2) {
             this.poolBullet2.SpawnMisile();
         }
-    };
-    SpaceGame.prototype.KeyUp = function (action) {
+    }
+    KeyUp(action) {
         if (action == UserAction.SHIP1_ACCELERATE) {
             this.player1.SetIdleAnimation();
         }
@@ -2163,8 +1979,8 @@ var SpaceGame = (function () {
         else if (action == UserAction.SHIP2_SHIELD) {
             this.player2.ShieldOff();
         }
-    };
-    SpaceGame.prototype.TextWriterFinished = function () {
+    }
+    TextWriterFinished() {
         if (this.gameState == GameState.LEVELFINISHED) {
             this.NextLevel();
             this.gameState = GameState.RUNNING;
@@ -2175,12 +1991,12 @@ var SpaceGame = (function () {
         else if (this.gameState == GameState.COMPLETED) {
             this.gameState = GameState.NOTSTARTED;
         }
-    };
-    SpaceGame.prototype.NextLevel = function () {
+    }
+    NextLevel() {
         this.nextLevel = this.levelManager.GetNextLevel();
         this.poolObstacle.SetObstacles(this.nextLevel.GetObstacles());
-    };
-    SpaceGame.prototype.SpawnPowerUp = function () {
+    }
+    SpawnPowerUp() {
         this.randomPowerUpType = Math.random();
         if (this.randomPowerUpType < 0.2) {
             this.powerUp = PowerUpMisile.GetInstance();
@@ -2202,9 +2018,9 @@ var SpaceGame = (function () {
         }
         this.powerUp.Spawn();
         this.powerUps.push(this.powerUp);
-    };
-    SpaceGame.prototype.CheckPowerUpCollision = function () {
-        for (var i = 0; i < this.powerUps.length; i++) {
+    }
+    CheckPowerUpCollision() {
+        for (let i = 0; i < this.powerUps.length; i++) {
             if (!this.powerUps[i].isAlive) {
                 this.powerUps.splice(i, 1);
                 i--;
@@ -2218,8 +2034,8 @@ var SpaceGame = (function () {
                 this.PowerUpAction(this.powerUps[i], this.player2);
             }
         }
-    };
-    SpaceGame.prototype.PowerUpAction = function (powerUp, ship) {
+    }
+    PowerUpAction(powerUp, ship) {
         powerUp.Collide();
         AudioLibrary.Play(4);
         switch (powerUp.GetType()) {
@@ -2239,20 +2055,19 @@ var SpaceGame = (function () {
                 ship.energy = 5;
                 break;
         }
-    };
-    return SpaceGame;
-}());
-var StarPool = (function () {
-    function StarPool(ship) {
+    }
+}
+class StarPool {
+    constructor(ship) {
         this.count = 0;
         this.shootingStar = 25000;
         this.stars = new Array();
         this.ship = ship;
         this.CreateStars(120);
     }
-    StarPool.prototype.CreateStars = function (number) {
-        var x, y, ran, size, speed;
-        for (var i = 0; i < number; i++) {
+    CreateStars(number) {
+        let x, y, ran, size, speed;
+        for (let i = 0; i < number; i++) {
             x = Math.round(Math.random() * System.resolutionX);
             y = Math.round(Math.random() * System.resolutionY);
             ran = Math.random();
@@ -2263,9 +2078,9 @@ var StarPool = (function () {
             }
             this.stars.push(new Star(size, size, x, y, System.canvas, speed, this.ship));
         }
-    };
-    StarPool.prototype.Act = function () {
-        for (var i = 0; i < this.stars.length; i++) {
+    }
+    Act() {
+        for (let i = 0; i < this.stars.length; i++) {
             this.count++;
             this.stars[i].Act();
             if (this.count == this.shootingStar) {
@@ -2273,7 +2088,5 @@ var StarPool = (function () {
                 this.count = 0;
             }
         }
-    };
-    return StarPool;
-}());
-//# sourceMappingURL=SpaceGame.js.map
+    }
+}

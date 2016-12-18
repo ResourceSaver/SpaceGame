@@ -41,7 +41,7 @@
 
         this.player1 = new Ship(UserAction.SHIP1_LEFT, UserAction.SHIP1_RIGHT, UserAction.SHIP1_ACCELERATE, System.resolutionX / 3, System.resolutionY / 2, 2, 12);
         this.poolBullet1 = new BulletPool(this.player1, "red");
-       // this.player1.useGamePad = true;
+        this.player1.useGamePad = true;
         
         this.player2 = new Ship(UserAction.SHIP2_LEFT2, UserAction.SHIP2_RIGHT2, UserAction.SHIP2_ACCELERATE2, System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13 );
         this.poolBullet2 = new BulletPool(this.player2, "blue");

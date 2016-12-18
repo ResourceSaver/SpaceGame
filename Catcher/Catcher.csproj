@@ -22,7 +22,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Framework\System\Engine.js" />
     <Content Include="index.html" />
     <Content Include="ToDo.txt" />
   </ItemGroup>
@@ -35,6 +34,9 @@
     <TypeScriptCompile Include="Framework\Level.ts" />
     <TypeScriptCompile Include="Framework\System\Enums.ts" />
     <TypeScriptCompile Include="Framework\GameObject.ts" />
+    <TypeScriptCompile Include="Framework\System\GamePad.ts" />
+    <TypeScriptCompile Include="Framework\System\Keyboard.ts" />
+    <TypeScriptCompile Include="Framework\System\Main.ts" />
     <TypeScriptCompile Include="Framework\Vector.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Jewel.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Obstacles\Obstacle.ts" />
@@ -101,13 +103,13 @@
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>
     </TypeScriptModuleKind>
-    <TypeScriptOutFile>
-    </TypeScriptOutFile>
+    <TypeScriptOutFile>SpaceGame.js</TypeScriptOutFile>
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
