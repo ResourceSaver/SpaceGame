@@ -34,11 +34,15 @@
 
     public hitColor: string;
 
+    public drawRotate: boolean;
+
     private Dx: number;
 
     private Dy: number;
 
     constructor(width: number, height: number, x: number, y: number, canvas: Canvas) {
+
+        this.drawRotate = false;
 
         this.vector = new Vector(0, 0, 0);
 
@@ -55,6 +59,8 @@
         this.height = height;
 
         this.width = width;
+
+        this.hitCounter = 0;
 
         this.heightHalf = this.height / 2;
 
@@ -98,12 +104,56 @@
         }
     }
 
-    public Draw() {
+    public Hit() {
 
-        this.canvas.DrawObject(this);
+        this.hitCounter = 0.2;
+
+        AudioLibrary.Play(11);
 
     }
 
+    public Draw() { // use strategi pattern
+
+        if (this.drawRotate) {
+            this.DrawObjectRotate();
+        }
+        else {
+            this.DrawNonRotate();
+        }
+       
+    }
+
+    private DrawNonRotate() {
+
+        this.canvas.DrawObject(this);
+
+        this.DrawHitCircle();
+
+    }
+
+    private DrawObjectRotate() {
+
+        this.canvas.DrawObjectRotate(this);
+
+        this.DrawHitCircle();
+
+    }
+
+    private DrawHitCircle() {
+
+        if (this.hitCounter > 0 && this.IsNot(ObjectState.EXPLODING)) {
+
+            this.hitCounter -= 0.007;
+
+            if (this.hitCounter < 0) {
+                this.hitCounter = 0;
+            }
+
+            this.canvas.DrawHitCircle(this);
+
+        }
+    }
+    
     public CollisionCheck(gameObject: GameObject) { 
 
         this.Dx = Math.abs(this.GetCenterX() - gameObject.GetCenterX());
@@ -139,14 +189,6 @@
     public Is(objectState: ObjectState) { return this.state == objectState; }
 
     public IsNot(objectState: ObjectState) { return this.state != objectState; }
-
-    public Hit() {
-
-        this.hitCounter = 0.2;
-
-        AudioLibrary.Play(11);
-
-    }
 
 }
 

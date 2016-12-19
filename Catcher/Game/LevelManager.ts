@@ -8,10 +8,10 @@
         this.levels.push(new Level0());
 
         this.levels.push(new Level1());
-        this.levels.push(new Level2());
-        this.levels.push(new Level3());
-        this.levels.push(new Level4());
-        this.levels.push(new Level5());
+        //this.levels.push(new Level2());
+        //this.levels.push(new Level3());
+        //this.levels.push(new Level4());
+        //this.levels.push(new Level5());
     }
 
     public GetNextLevel(): Level {
@@ -40,7 +40,9 @@ class Level1 extends Level {
     constructor() {
         super(1);
 
-        this.AddObstacle(new AsteroidMedium());
+        this.AddObstacle(new Slicer());
+
+       // this.AddObstacle(new AsteroidMedium());
         //this.AddObstacle(new AsteroidSmall());
         //this.AddObstacle(new AsteroidSmaller());
         //this.AddObstacle(new AsteroidSmaller());

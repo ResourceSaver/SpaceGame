@@ -28,6 +28,8 @@
     constructor(leftAction: UserAction, rightAction: UserAction, accelerateAction: UserAction, x: number, y: number, thrustSoundNumber:number, shieldSoundNumber:number) {
         super(AsteroidSize.BIG, AsteroidSize.BIG, x, y, System.canvas);
 
+        this.drawRotate = true;
+
         this.hitColor = "#FF6549";
 
         this.energy = 5;
@@ -74,7 +76,7 @@
 
     public Draw() {
 
-        this.canvas.DrawObjectRotate(this);
+        super.Draw();
         
         if (this.isShielding || this.state == ObjectState.IMMORTAL) {
             this.shieldObject.ShadowDraw(this.x + this.widthHalf, this.y + this.heightHalf, this.vector.angle);

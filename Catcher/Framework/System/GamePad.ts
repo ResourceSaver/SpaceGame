@@ -8,7 +8,7 @@
 
         this.spaceGame = game;
 
-        this.keys = new Array<boolean>();
+        this.keys = new Array<boolean>(15);
 
     }
 

@@ -49,22 +49,16 @@
 
         }
 
-        if (gameObject.hitCounter > 0) { // move this to the objects and make a method for drawcircle in canvas
-
-            gameObject.hitCounter -= 0.007;
-
-            if (gameObject.hitCounter < 0) {
-                gameObject.hitCounter = 0;
-            }
-
-            this.width = gameObject.boundingBoxHeight > gameObject.boundingBoxWidth ? gameObject.boundingBoxHeight : gameObject.boundingBoxWidth;
-
-            if (!gameObject.Is(ObjectState.EXPLODING)){
-                this.DrawCircle(gameObject.GetCenterX(), gameObject.GetCenterY(), this.width, gameObject.hitColor, gameObject.hitCounter, this.width * 0.75);
-            }
-        }
-
         this.DrawDrawable(gameObject.GetDrawableCollection().GetCurrentDrawable(), gameObject.x, gameObject.y, gameObject.width, gameObject.height);
+
+    }
+
+    public DrawHitCircle(gameObject:GameObject) {
+
+
+        this.width = gameObject.boundingBoxHeight > gameObject.boundingBoxWidth ? gameObject.boundingBoxHeight : gameObject.boundingBoxWidth;
+
+        this.DrawCircle(gameObject.GetCenterX(), gameObject.GetCenterY(), this.width, gameObject.hitColor, gameObject.hitCounter, this.width * 0.75);
 
     }
 

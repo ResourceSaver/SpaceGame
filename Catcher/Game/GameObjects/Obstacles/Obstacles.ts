@@ -111,14 +111,11 @@ class Spikey extends Obstacle {
 
         this.AdjustBoundingbox(-80, -80);
 
-    }
-
-    public Draw() {
-
-        this.canvas.DrawObjectRotate(this);
+        this.drawRotate = true;
 
     }
-    
+
+   
     public Act() {
         super.Act();
 
@@ -142,13 +139,11 @@ class BugEye extends Obstacle {
 
         this.AdjustBoundingbox(-90, -55);
 
-    }
-
-    public Draw() {
-
-        this.canvas.DrawObjectRotate(this);
+        this.drawRotate = true;
 
     }
+
+
 
     public Act() {
         super.Act();
@@ -229,13 +224,10 @@ class Fighter extends Obstacle {
 
         this.AdjustBoundingbox(-50, -60);
 
-    }
-
-    public Draw() {
-
-        this.canvas.DrawObjectRotate(this);
+        this.drawRotate = true;
 
     }
+   
 
     public Act() {
         super.Act();
@@ -267,13 +259,11 @@ class Scythe extends Obstacle {
 
         this.AdjustBoundingbox(-60, -70);
 
-    }
-
-    public Draw() {
-
-        this.canvas.DrawObjectRotate(this);
+        this.drawRotate = true;
 
     }
+
+
 
     public Act() {
         super.Act();
@@ -290,36 +280,26 @@ class Scythe extends Obstacle {
 
 class Slicer extends Obstacle {
 
-    private shootingStrategy: ShootStrategy;
-    private moveStrategy: MoveStrategy;
+    private attackStrategy: ChargeStrategy;
 
     constructor() {
         super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
 
-        this.shootingStrategy = new ShootStrategy(20, this);
-
-        this.moveStrategy = new MoveStrategy(this, 1);
-
+        this.attackStrategy = new ChargeStrategy(this);
+       
         this.drawableCollection = DrawableLibrary.GetSlicer(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-90, -40);
 
+        this.drawRotate = true;
     }
     
-    public Draw() {
-
-        this.canvas.DrawObjectRotate(this);
-
-    }
-
-
+    
     public Act() {
 
+        this.attackStrategy.Act();
+
         super.Act();
-
-        this.shootingStrategy.Act();
-
-        this.moveStrategy.Act();
 
         this.Draw();
 

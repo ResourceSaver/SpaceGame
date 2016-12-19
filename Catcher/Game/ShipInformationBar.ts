@@ -59,10 +59,10 @@
             this.energyCounter = this.max;
         }
 
-        //if (this.currentShield != ship.GetShield()) {
-        //    this.currentShield = ship.GetShield();
-        //    this.shieldCounter = this.max;
-        //}
+        if (this.currentShield != ship.GetShield()) {
+            this.currentShield = ship.GetShield();
+            this.shieldCounter = this.max;
+        }
 
         if (this.show) {
         }
@@ -78,19 +78,15 @@
                 this.DrawEnergy(ship);
             }
 
-            if (this.currentShield != ship.GetShield()) {
-
-                this.currentShield = ship.GetShield();
-                this.DrawShield(ship);
-
-            }
-
-            //if (this.shieldCounter > 0) {
-
-            //    this.shieldCounter--;
-
+            //if (this.currentShield != ship.GetShield()) {
+            //    this.currentShield = ship.GetShield();
             //    this.DrawShield(ship);
             //}
+
+            if (this.shieldCounter > 0) {
+                this.shieldCounter--;
+                this.DrawShield(ship);
+            }
         }
     }
 
@@ -147,9 +143,9 @@
 
         this.height = this.barHeight;
 
-        //if (this.shieldCounter < this.max / this.fadeFactor) {
-        //    this.height = this.height * this.shieldCounter / (this.max / this.fadeFactor);
-        //}
+        if (this.shieldCounter < this.max / this.fadeFactor) {
+            this.height = this.height * this.shieldCounter / (this.max / this.fadeFactor);
+        }
 
         this.shipCenterX = ship.x + ship.widthHalf - (this.barWidth / 2);
 

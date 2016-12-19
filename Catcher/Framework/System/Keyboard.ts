@@ -26,7 +26,6 @@
 
             AudioLibrary.ToggleMute();
 
-
         }
         else if (this.keys[action] == true) { return; }
 

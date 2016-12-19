@@ -184,3 +184,58 @@ class ShootRandomStrategy {
     }
 
 }
+
+class ChargeStrategy {
+
+    private obstacle: Obstacle;
+
+    private angleDestination: number;
+
+    public constructor(obstacle: Obstacle) {
+
+        this.obstacle = obstacle;
+        this.SetDestination();
+        
+    }
+
+    public Act() {
+
+        if (this.obstacle.vector.angle != this.angleDestination) {
+
+            if (this.obstacle.vector.angle - this.angleDestination > 0) {
+                this.obstacle.vector.Rotate(-0.5);
+            }
+            else {
+                this.obstacle.vector.Rotate(0.5);
+
+            }
+
+        }
+        else {
+            if (this.stepCounter == 1) {
+                this.obstacle.vector.ConstantSpeed(20);
+            }
+            else if (this.stepCounter > this.steps) {
+                this.SetDestination();
+            }
+
+            this.stepCounter++;
+
+        }
+
+    }
+
+    private steps:number = 100;
+    private stepCounter = 1;
+
+    private SetDestination() {
+        this.obstacle.vector.ConstantSpeed(0);
+
+        this.stepCounter = 0;
+
+        this.angleDestination = rand(180, -180, 1);
+
+
+    }
+
+}
