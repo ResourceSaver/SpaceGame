@@ -7,6 +7,8 @@ window.onload = () => { new Images(() => this.OnImagesLoaded()); };
 
 function OnImagesLoaded() {
 
+    AudioLibrary.Initialize(); 
+
     this.spaceGame = System.Initialize();
 
     this.chosenRequestFrame = GetFrame();

@@ -8,10 +8,17 @@
         this.levels.push(new Level0());
 
         this.levels.push(new Level1());
-        //this.levels.push(new Level2());
-        //this.levels.push(new Level3());
-        //this.levels.push(new Level4());
-        //this.levels.push(new Level5());
+        this.levels.push(new Level2());
+        this.levels.push(new Level3());
+        this.levels.push(new Level4());
+        this.levels.push(new Level5());
+        this.levels.push(new Level6());
+        this.levels.push(new Level7());
+        this.levels.push(new Level8());
+        this.levels.push(new Level9());
+        this.levels.push(new Level10());
+        this.levels.push(new Level11());
+
     }
 
     public GetNextLevel(): Level {
@@ -40,46 +47,8 @@ class Level1 extends Level {
     constructor() {
         super(1);
 
-        this.AddObstacle(new Slicer());
+        this.AddObstacle(new AsteroidSmaller());
 
-       // this.AddObstacle(new AsteroidMedium());
-        //this.AddObstacle(new AsteroidSmall());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
-        //this.AddObstacle(new AsteroidSmaller());
     }
 
 }
@@ -89,14 +58,7 @@ class Level2 extends Level {
     constructor() {
         super(2);
 
-        this.AddObstacle(new Slicer());
-        this.AddObstacle(new Fighter());
-        this.AddObstacle(new BugEye());
-        this.AddObstacle(new Scythe());
-        this.AddObstacle(new Blades());
-        this.AddObstacle(new Spikey());
-        this.AddObstacle(new Saucer());
-        this.AddObstacle(new SaucerBig());
+        this.AddObstacle(new AsteroidSmall());
 
     }
 
@@ -107,11 +69,8 @@ class Level3 extends Level {
     constructor() {
         super(3);
 
-        this.AddObstacle(new SaucerBig());
-        this.AddObstacle(new Saucer());
-        this.AddObstacle(new Blades());
         this.AddObstacle(new AsteroidMedium());
-        this.AddObstacle(new AsteroidSmall());
+
     }
 
 }
@@ -121,12 +80,8 @@ class Level4 extends Level {
     constructor() {
         super(4);
 
-        this.AddObstacle(new Saucer());
-        this.AddObstacle(new Blades());
-        this.AddObstacle(new Fighter());
-        this.AddObstacle(new AsteroidMedium());
-        this.AddObstacle(new AsteroidSmall());
-        this.AddObstacle(new AsteroidSmaller());
+        this.AddObstacle(new Slicer());
+
     }
 
 }
@@ -136,19 +91,74 @@ class Level5 extends Level {
     constructor() {
         super(5);
 
-        this.AddObstacle(new SaucerBig());
-        this.AddObstacle(new Saucer());
-        this.AddObstacle(new Blades());
         this.AddObstacle(new Fighter());
-        this.AddObstacle(new Slicer());
+        
+    }
 
-        this.AddObstacle(new Spikey());
+}
+
+class Level6 extends Level {
+
+    constructor() {
+        super(5);
+
         this.AddObstacle(new BugEye());
+ 
+    }
+
+}
+
+class Level7 extends Level {
+
+    constructor() {
+        super(5);
+
         this.AddObstacle(new Scythe());
 
-        this.AddObstacle(new AsteroidMedium());
-        this.AddObstacle(new AsteroidSmall());
-        this.AddObstacle(new AsteroidSmaller());
+    }
+
+}
+
+class Level8 extends Level {
+
+    constructor() {
+        super(5);
+
+        this.AddObstacle(new Blades());
+
+    }
+
+}
+
+class Level9 extends Level {
+
+    constructor() {
+        super(5);
+
+        this.AddObstacle(new Spikey());
+
+    }
+
+}
+
+class Level10 extends Level {
+
+    constructor() {
+        super(5);
+
+        this.AddObstacle(new Saucer());
+
+    }
+
+}
+
+class Level11 extends Level {
+
+    constructor() {
+        super(5);
+
+        this.AddObstacle(new SaucerBig());
+
     }
 
 }

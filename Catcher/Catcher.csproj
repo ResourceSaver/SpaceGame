@@ -32,6 +32,7 @@
     <TypeScriptCompile Include="Framework\DrawableAnimation.ts" />
     <TypeScriptCompile Include="Framework\DrawableCollection.ts" />
     <TypeScriptCompile Include="Framework\Level.ts" />
+    <TypeScriptCompile Include="Framework\LightSource.ts" />
     <TypeScriptCompile Include="Framework\System\Enums.ts" />
     <TypeScriptCompile Include="Framework\GameObject.ts" />
     <TypeScriptCompile Include="Framework\System\GamePad.ts" />

@@ -200,6 +200,8 @@ class ChargeStrategy {
 
     public Act() {
 
+        if (this.obstacle.Is(ObjectState.EXPLODING)) return;
+
         if (this.obstacle.vector.angle != this.angleDestination) {
 
             if (this.obstacle.vector.angle - this.angleDestination > 0) {

@@ -24,7 +24,8 @@
     private spawnPowerUp: number;
 
     private gameState: GameState = GameState.RUNNING;
-    
+
+    private light: LightSource;
 
 
 
@@ -62,9 +63,11 @@
 
         AudioLibrary.Play(7);
 
+        this.light = new LightSource(60);
     }
 
     public Act() { 
+
 
         System.canvas.Clear();
 
@@ -104,6 +107,8 @@
 
         this.poolBullet2.Act();
 
+        this.light.Act(this.player1.x + this.player1.widthHalf, this.player1.y + this.player1.heightHalf);
+
         this.player1.Act(); 
 
         //this.ship2.Act();
@@ -138,6 +143,8 @@
         this.shipInformationBar.Draw(this.player1);
 
         ParticleSystem.Draw();
+
+
 
     }
 
@@ -227,6 +234,9 @@
             this.powerUp = PowerUpEnergy.GetInstance();
         }
 
+        this.powerUp = PowerUpBlitz.GetInstance(); // fnix
+
+
         if (this.powerUp.isAlive) {
 
             return;
@@ -285,6 +295,7 @@
                 ship.ChargeShield();
                 break;
             case PowerUpType.BLITZ:
+                System.canvas.Blitz();
                 this.poolObstacle.Nuclear();
                 break;
             case PowerUpType.ENERGY:

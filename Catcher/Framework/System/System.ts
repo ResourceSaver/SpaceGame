@@ -12,7 +12,6 @@
     
     public static Initialize():SpaceGame {
 
-        AudioLibrary.Initialize(); 
 
         System.canvas = new Canvas("mainCanvas");
 

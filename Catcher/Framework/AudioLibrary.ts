@@ -14,13 +14,15 @@
         AudioLibrary.AddAudioFile("powerup.mp3", 0.51, false);
         AudioLibrary.AddAudioFile("emptymisile.mp3", 0.3, false);
         AudioLibrary.AddAudioFile("thrust2.mp3", 0.9, true);
-        AudioLibrary.AddAudioFile("music.mp3", 0.65, true);
+        AudioLibrary.AddAudioFile("music.mp3", 0.3, true);
         AudioLibrary.AddAudioFile("levelup.mp3", 0.5, false);
         AudioLibrary.AddAudioFile("gameover.mp3", 0.5, false);
         AudioLibrary.AddAudioFile("win.mp3", 0.5, false);
         AudioLibrary.AddAudioFile("clash.mp3", 0.5, false);
         AudioLibrary.AddAudioFile("shield.mp3", 0.65, true);
         AudioLibrary.AddAudioFile("shield.mp3", 0.65, true);
+        AudioLibrary.AddAudioFile("thunder.mp3", 0.75, false);
+
                 
     }
 
@@ -79,10 +81,8 @@
 
     public static Stop(index: number) {
 
-        this.audioCollection[index].currentTime = 0;
-
         this.audioCollection[index].pause();
-
+        
     }
 
 }
