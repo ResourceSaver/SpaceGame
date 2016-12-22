@@ -27,8 +27,6 @@
 
     private light: LightSource;
 
-
-
     constructor() {
 
         this.spawnPowerUp = 1000;
@@ -107,8 +105,6 @@
 
         this.poolBullet2.Act();
 
-        this.light.Act(this.player1.x + this.player1.widthHalf, this.player1.y + this.player1.heightHalf);
-
         this.player1.Act(); 
 
         //this.ship2.Act();
@@ -144,6 +140,7 @@
 
         ParticleSystem.Draw();
 
+        this.light.Act(this.player1.x + this.player1.widthHalf, this.player1.y + this.player1.heightHalf);
 
 
     }

@@ -100,7 +100,7 @@
         this.vector.Reset();
 
         AudioLibrary.Play(0);
-        AudioLibrary.Stop(this.thrustSoundNumber);
+        AudioLibrary.PauseLoop(this.thrustSoundNumber);
 
     }
 
@@ -150,7 +150,7 @@
 
             this.isShielding = false;
 
-            AudioLibrary.Stop(this.shieldSoundNumber);
+            AudioLibrary.PauseLoop(this.shieldSoundNumber);
 
         }
 
@@ -207,7 +207,7 @@
 
         this.isShielding = false;
 
-        AudioLibrary.Stop(this.shieldSoundNumber);
+        AudioLibrary.PauseLoop(this.shieldSoundNumber);
     }
 
     public SetMoveAnimation() {
@@ -226,8 +226,7 @@
 
         this.thrust.SetThrusting(false);
 
-        AudioLibrary.Stop(this.thrustSoundNumber);
-
+        AudioLibrary.PauseLoop(this.thrustSoundNumber);
         
     }
 

@@ -2,8 +2,6 @@
 
     private static audioCollection: Array<HTMLAudioElement>;
 
-    private static Muted: boolean = false;
-
     public static Initialize(): void {
 
         AudioLibrary.audioCollection = new Array<HTMLAudioElement>()
@@ -36,37 +34,11 @@
 
     }
 
-    private static Mute() {
-
-        for (var i = 0; i < AudioLibrary.audioCollection.length; i++) {
-
-            AudioLibrary.audioCollection[i].volume = 0;
-
-        }
-
-    }
-
-    private static UnMute() {
-
-        for (var i = 0; i < AudioLibrary.audioCollection.length; i++) {
-
-            AudioLibrary.audioCollection[i].volume = +AudioLibrary.audioCollection[i].innerText;
-
-        }
-
-    }
-
     public static ToggleMute() {
 
-        AudioLibrary.Muted = !AudioLibrary.Muted;
+        for (var i = 0; i < AudioLibrary.audioCollection.length; i++) {
 
-        if (!AudioLibrary.Muted) {
-            AudioLibrary.UnMute();
-            AudioLibrary.Play(7);
-        }
-        else {
-            AudioLibrary.Mute();
-            AudioLibrary.Stop(7);
+            AudioLibrary.audioCollection[i].muted = !AudioLibrary.audioCollection[i].muted;
         }
 
     }
@@ -81,8 +53,16 @@
 
     public static Stop(index: number) {
 
+        this.audioCollection[index].currentTime = 0;
+
+        this.audioCollection[index].pause(); 
+
+    }
+
+    static PauseLoop(index) {
+
         this.audioCollection[index].pause();
-        
+
     }
 
 }
