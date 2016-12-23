@@ -2,9 +2,7 @@
 
     private blinkSpeed: number;
     private blinkCounter: number;
-    private blink: boolean;
     private starLight: number;
-    private starFaded: number;
     private ship: Ship;
     private speed;
     private alpha: number;
@@ -26,15 +24,11 @@
 
         this.speed = speed;
 
-        this.blink = false;
-
         this.starLight = (speed * 5 + 5) / 10;
 
-        this.starFaded = (speed * 2 + 2) / 10;
+        this.blinkSpeed = 1000;
 
-        this.blinkSpeed = Math.round(Math.random() * 30 + 25);
-
-        this.blinkCounter = 0;
+        this.blinkCounter = 1000 * Math.random();
 
         this.ship = ship;
     }
@@ -91,17 +85,15 @@
             }
         }
 
-        this.blinkCounter++;
+        this.blinkCounter += 0.03;
 
         if (this.blinkCounter > this.blinkSpeed) {
-
-            this.blink = !this.blink;
 
             this.blinkCounter = 0;
 
         }
 
-        this.alpha = this.blink ? this.starFaded : this.starLight;
+        this.alpha = this.starLight * (Math.abs(Math.sin(this.blinkCounter)) + 0.2);
 
         this.canvas.DrawStar(this.x, this.y, this.width, this.alpha);
 
