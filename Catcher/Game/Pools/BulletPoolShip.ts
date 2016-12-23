@@ -10,7 +10,7 @@
 
         this.ship = ship;
 
-        this.maxBullets = 5;
+        this.maxBullets = 8;
 
         this.bullets = new Array<Bullet>();
 

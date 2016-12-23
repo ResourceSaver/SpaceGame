@@ -4,7 +4,7 @@
 
     public static resolutionY: number = 1080;
 
-    public static DebugMode: boolean = true;
+    public static DebugMode: boolean = false;
 
     public static canvas: Canvas;
 

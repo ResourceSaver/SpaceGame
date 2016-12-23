@@ -37,7 +37,7 @@
 class Level0 extends Level {
 
     constructor() {
-        super(0);
+        super('0');
     }
 
 }
@@ -45,7 +45,7 @@ class Level0 extends Level {
 class Level1 extends Level {
 
     constructor() {
-        super(1);
+        super('Level 1');
 
         this.AddObstacle(new AsteroidSmaller());
 
@@ -56,7 +56,7 @@ class Level1 extends Level {
 class Level2 extends Level {
 
     constructor() {
-        super(2);
+        super('Level 2');
 
         this.AddObstacle(new AsteroidSmall());
 
@@ -67,7 +67,7 @@ class Level2 extends Level {
 class Level3 extends Level {
 
     constructor() {
-        super(3);
+        super('Level 3');
 
         this.AddObstacle(new AsteroidMedium());
 
@@ -78,7 +78,7 @@ class Level3 extends Level {
 class Level4 extends Level {
 
     constructor() {
-        super(4);
+        super('Level 4');
 
         this.AddObstacle(new Slicer());
 
@@ -89,7 +89,7 @@ class Level4 extends Level {
 class Level5 extends Level {
 
     constructor() {
-        super(5);
+        super('Level 5');
 
         this.AddObstacle(new Fighter());
         
@@ -100,7 +100,7 @@ class Level5 extends Level {
 class Level6 extends Level {
 
     constructor() {
-        super(5);
+        super('Level 6');
 
         this.AddObstacle(new BugEye());
  
@@ -111,7 +111,7 @@ class Level6 extends Level {
 class Level7 extends Level {
 
     constructor() {
-        super(5);
+        super('Level 7');
 
         this.AddObstacle(new Scythe());
 
@@ -122,7 +122,7 @@ class Level7 extends Level {
 class Level8 extends Level {
 
     constructor() {
-        super(5);
+        super('Level 8');
 
         this.AddObstacle(new Blades());
 
@@ -133,7 +133,7 @@ class Level8 extends Level {
 class Level9 extends Level {
 
     constructor() {
-        super(5);
+        super('Level 9');
 
         this.AddObstacle(new Spikey());
 
@@ -144,7 +144,7 @@ class Level9 extends Level {
 class Level10 extends Level {
 
     constructor() {
-        super(5);
+        super('Level 10');
 
         this.AddObstacle(new Saucer());
 
@@ -155,7 +155,7 @@ class Level10 extends Level {
 class Level11 extends Level {
 
     constructor() {
-        super(5);
+        super('Final boss');
 
         this.AddObstacle(new SaucerBig());
 

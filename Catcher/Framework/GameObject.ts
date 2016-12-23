@@ -104,7 +104,7 @@
         }
     }
 
-    public Hit() {
+    public HitByBullet(attack:number):void {
 
         this.hitCounter = 0.2;
 
@@ -141,7 +141,7 @@
 
     private DrawHitCircle() {
 
-        if (this.hitCounter > 0 && this.IsNot(ObjectState.EXPLODING)) {
+        if (this.hitCounter > 0 && this.Is(ObjectState.ALIVE)) {
 
             this.hitCounter -= 0.007;
 

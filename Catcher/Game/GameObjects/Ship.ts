@@ -100,13 +100,14 @@
         this.vector.Reset();
 
         AudioLibrary.Play(0);
+
         AudioLibrary.PauseLoop(this.thrustSoundNumber);
 
     }
 
-    public HitByBullet() {
+    public HitByBullet(attack:number) {
 
-        super.Hit();
+        super.HitByBullet(attack);
 
         this.energy--;
 

@@ -103,7 +103,7 @@
 
             if (!ship.IsShilding()) {
 
-                ship.HitByBullet();
+                ship.HitByBullet(0);
 
                 if (ship.energy == 0) {
                     ship.Explode();

@@ -53,7 +53,7 @@
         this.poolStar = new StarPool(this.player1);
 
         this.textdrawer = new TextDrawer();
-        this.textdrawer.SetText(this.levelManager.PeakAtNextLevel().GetLevelNumber().toString());
+        this.textdrawer.SetText(this.levelManager.PeakAtNextLevel().GetLevelName().toString());
 
         this.NextLevel();
 
@@ -65,7 +65,6 @@
     }
 
     public Act() { 
-
 
         System.canvas.Clear();
 
@@ -118,7 +117,7 @@
             this.nextLevel = this.levelManager.PeakAtNextLevel();
 
             if (this.gameState == GameState.RUNNING && this.nextLevel != null) {
-                this.textdrawer.SetText("Level " + this.nextLevel.GetLevelNumber().toString());
+                this.textdrawer.SetText(this.nextLevel.GetLevelName().toString());
                 this.gameState = GameState.LEVELFINISHED;
                 AudioLibrary.Play(8);
 
@@ -177,9 +176,6 @@
 
     }
 
-    
-    
-
     private TextWriterFinished() {
 
         if (this.gameState == GameState.LEVELFINISHED) {
@@ -209,8 +205,6 @@
 
     }
 
-
-
     private SpawnPowerUp() {
 
         this.randomPowerUpType = Math.random();
@@ -230,9 +224,6 @@
         else if (this.randomPowerUpType <= 1.0) {
             this.powerUp = PowerUpEnergy.GetInstance();
         }
-
-        this.powerUp = PowerUpBlitz.GetInstance(); // fnix
-
 
         if (this.powerUp.isAlive) {
 

@@ -37,7 +37,7 @@
 
     public HitByBullet(attack:number): void {
 
-        super.Hit();
+        super.HitByBullet(attack);
 
         this.energy -= attack;
 

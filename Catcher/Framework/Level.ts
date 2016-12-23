@@ -1,12 +1,12 @@
 ﻿class Level {
 
-    protected levelNumber: number;
+    protected levelName: string;
 
     protected obstacles: Array<Obstacle>;
     
-    public constructor(levelNumber:number) {
+    public constructor(levelName:string) {
 
-        this.levelNumber = levelNumber;
+        this.levelName = levelName;
 
         this.obstacles = new Array<Obstacle>();
 
@@ -24,9 +24,9 @@
 
     }
     
-    public GetLevelNumber(): number {
+    public GetLevelName(): string {
 
-        return this.levelNumber;
+        return this.levelName;
 
     }
 

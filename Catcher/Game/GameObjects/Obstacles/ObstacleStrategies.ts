@@ -187,11 +187,11 @@ class ShootRandomStrategy {
 
 class ChargeStrategy {
 
-    private obstacle: Obstacle;
+    private obstacle: Slicer;
 
     private angleDestination: number;
 
-    public constructor(obstacle: Obstacle) {
+    public constructor(obstacle: Slicer) {
 
         this.obstacle = obstacle;
         this.SetDestination();
@@ -216,9 +216,12 @@ class ChargeStrategy {
         else {
             if (this.stepCounter == 1) {
                 this.obstacle.vector.ConstantSpeed(20);
+                //this.obstacle.ThrustOnOff(true);
             }
             else if (this.stepCounter > this.steps) {
                 this.SetDestination();
+                //this.obstacle.ThrustOnOff(false);
+
             }
 
             this.stepCounter++;

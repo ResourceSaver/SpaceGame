@@ -18,12 +18,13 @@
 
     private static KeyDown(action: UserAction) {
 
-        if (action == UserAction.MUTEAUDIO) {
+        if (this.keys[action] == true) { return; }
+
+        else if (action == UserAction.MUTEAUDIO) {
 
             AudioLibrary.ToggleMute();
 
         }
-        else if (this.keys[action] == true) { return; }
 
         this.keys[action] = true;
 

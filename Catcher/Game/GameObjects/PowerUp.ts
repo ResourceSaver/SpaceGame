@@ -6,6 +6,8 @@
     private stayAliveFor: number = 500;
     public isAlive: boolean;
     private circleSize = AsteroidSize.POWERUP / 2;
+    private count = 0;
+    private radius: number = 50;
 
     public constructor() {
         super(AsteroidSize.POWERUP, AsteroidSize.POWERUP, 0, 0, System.canvas);
@@ -38,6 +40,8 @@
     public Act() {
         super.Act();
 
+        this.count = (this.count + 0.03) % 300;
+
         this.vector.angle += 5;
 
         this.stayAliveCounter++;
@@ -50,8 +54,9 @@
 
     public Draw() {
 
+        this.canvas.DrawCircle(this.x + this.circleSize, this.y + this.circleSize, this.radius * ((5 + Math.abs(Math.sin(this.count))) / 6), this.color, 0.2, 12);
+
         this.canvas.DrawObjectRotate(this);
-        this.canvas.DrawCircle(this.x + this.circleSize, this.y + this.circleSize, 60, this.color, 0.2, 12);
 
     }
 

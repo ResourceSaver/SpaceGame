@@ -59,9 +59,17 @@
 
     }
 
-    static PauseLoop(index) {
+    private static prevVol = 0;
+
+    public static PauseLoop(index) {
+
+        this.prevVol = this.audioCollection[index].volume; 
+
+        this.audioCollection[index].volume = 0;
 
         this.audioCollection[index].pause();
+
+        this.audioCollection[index].volume = this.prevVol;
 
     }
 

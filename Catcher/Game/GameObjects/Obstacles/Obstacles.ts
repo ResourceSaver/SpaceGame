@@ -73,12 +73,9 @@ class AsteroidSmaller extends Asteroid {
 }
 
 class Blades extends Obstacle {
-    private shooterStrategy: ShootThreeSixtyStrategy;
 
     constructor() {
         super(AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, 0, 0, System.canvas, 10);
-
-        this.shooterStrategy = new ShootThreeSixtyStrategy(150, this);
 
         this.AdjustBoundingbox(-50, -50);
 
@@ -89,8 +86,6 @@ class Blades extends Obstacle {
     public Act() {
 
         super.Act();
-
-        this.shooterStrategy.Act();
 
         super.Draw();
 
@@ -183,12 +178,12 @@ class SaucerBig extends Obstacle {
 
 class Saucer extends Obstacle {
 
-    private shooterStrategy: ShootRandomStrategy; fnix
+    private shooterStrategy: ShootThreeSixtyStrategy; 
 
     constructor() {
         super(AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, AsteroidSize.MEDIUM, 0, 0, System.canvas, 5);
 
-        this.shooterStrategy = new ShootRandomStrategy(80, this);
+        this.shooterStrategy = new ShootThreeSixtyStrategy(150, this);
 
         this.drawableCollection = DrawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
 
@@ -210,6 +205,8 @@ class Fighter extends Obstacle {
 
     private shootingStrategy: ShootStrategy;
 
+    //private thrust: Thrust;
+
     private moveStrategy: MoveStrategy;
 
     constructor() {
@@ -226,6 +223,10 @@ class Fighter extends Obstacle {
 
         this.drawRotate = true;
 
+        //this.thrust = new Thrust(this);
+        //this.thrust.Spawn();
+        //this.thrust.SetThrusting(true);
+
     }
    
 
@@ -236,6 +237,8 @@ class Fighter extends Obstacle {
 
         this.moveStrategy.Act();
 
+        //this.thrust.Act();
+
         this.Draw();
 
     }
@@ -243,6 +246,7 @@ class Fighter extends Obstacle {
 }
 
 class Scythe extends Obstacle {
+    //private thrust: Thrust;
 
     private shootingStrategy: ShootStrategy;
 
@@ -261,12 +265,18 @@ class Scythe extends Obstacle {
 
         this.drawRotate = true;
 
+        //this.thrust = new Thrust(this);
+        //this.thrust.Spawn();
+        //this.thrust.SetThrusting(true);
+
     }
 
 
 
     public Act() {
         super.Act();
+
+        //this.thrust.Act();
 
         this.shootingStrategy.Act();
 
@@ -282,6 +292,8 @@ class Slicer extends Obstacle {
 
     private attackStrategy: ChargeStrategy;
 
+    //private thrust: Thrust;
+
     constructor() {
         super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
 
@@ -292,12 +304,24 @@ class Slicer extends Obstacle {
         this.AdjustBoundingbox(-90, -40);
 
         this.drawRotate = true;
+
+        //this.thrust = new Thrust(this);
+
+        //this.thrust.Spawn();
+
     }
-    
+
+    //public ThrustOnOff(bool: boolean) {
+
+    //    this.thrust.SetThrusting(bool);
+
+    //}
     
     public Act() {
 
         this.attackStrategy.Act();
+
+        //this.thrust.Act();
 
         super.Act();
 
@@ -306,63 +330,3 @@ class Slicer extends Obstacle {
     }
 
 }
-
-
-
-//class Slicer extends Obstacle {
-
-//    private shootingStrategy: ShootStrategy;
-//    private moveStrategy: MoveStrategy;
-
-//    private getJewelStrategy: GetJewelStrategy;
-
-//    constructor() {
-//        super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
-
-//        this.shootingStrategy = new ShootStrategy(20, this);
-
-//        this.moveStrategy = new MoveStrategy(this, 1);
-
-//        this.drawableCollection = DrawableLibrary.GetSlicer(() => this.state = ObjectState.DEAD);
-
-//        this.AdjustBoundingbox(-130, -80);
-
-
-
-//        this.getJewelStrategy = new GetJewelStrategy(this);
-//        this.vector.angle = 100;
-//        this.x = System.resolutionX / 2 + 400;
-//        this.y = System.resolutionY / 2 - 400;
-
-
-//    }
-
-//    public Draw() {
-
-//        this.canvas.DrawObjectRotate(this);
-
-//    }
-
-//    private setDirection: boolean = false;
-
-//    public Act() {
-
-//        if (!this.setDirection) {
-//            this.getJewelStrategy.SetDirection(this.x, this.y);
-//            this.setDirection = true;
-//        }
-
-//        this.getJewelStrategy.Act();
-
-
-//        //super.Act();
-
-//        //this.shootingStrategy.Act();
-
-//        //this.moveStrategy.Act();
-
-//        this.Draw();
-
-//    }
-
-//}
