@@ -39,7 +39,6 @@ enum UserAction {
     SHIP2_FIRE2 = 76,
     SHIP2_MISILE2  = 73,
     SHIP2_SHIELD = 80,
-    DEBUGMODE = 66,
     MUTEAUDIO = 77
 }
 

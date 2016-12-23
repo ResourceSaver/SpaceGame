@@ -2,13 +2,13 @@
 
     private player1: Ship;
     private player2: Ship;
-    private poolBullet1: BulletPool; 
-    private poolBullet2: BulletPool;
+    private poolBullet1: BulletPoolShip; 
+    private poolBullet2: BulletPoolShip;
 
     private shipInformationBar: ShipInformationBar; // todo - tegn for player 2
 
     private poolObstacle: ObstaclePool;
-    public static poolObstacleBullet: ObstacleBulletPool;
+    public static poolObstacleBullet: BulletPoolObstacle;
 
     public particleSystem: ParticleSystem;
     private poolStar: StarPool;
@@ -39,16 +39,16 @@
         this.levelManager = new LevelManager();
 
         this.player1 = new Ship(UserAction.SHIP1_LEFT, UserAction.SHIP1_RIGHT, UserAction.SHIP1_ACCELERATE, System.resolutionX / 3, System.resolutionY / 2, 2, 12);
-        this.poolBullet1 = new BulletPool(this.player1, "red");
+        this.poolBullet1 = new BulletPoolShip(this.player1, "red");
         this.player1.useGamePad = true;
         
         this.player2 = new Ship(UserAction.SHIP2_LEFT2, UserAction.SHIP2_RIGHT2, UserAction.SHIP2_ACCELERATE2, System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13 );
-        this.poolBullet2 = new BulletPool(this.player2, "blue");
+        this.poolBullet2 = new BulletPoolShip(this.player2, "blue");
 
         this.shipInformationBar = new ShipInformationBar();
 
         this.poolObstacle = new ObstaclePool(this.player1, this.player2, this.poolBullet1, this.poolBullet2);
-        SpaceGame.poolObstacleBullet = new ObstacleBulletPool(this.player1, this.player2);
+        SpaceGame.poolObstacleBullet = new BulletPoolObstacle(this.player1, this.player2);
 
         this.poolStar = new StarPool(this.player1);
 
@@ -61,7 +61,7 @@
 
         AudioLibrary.Play(7);
 
-        this.light = new LightSource(60);
+        this.light = new LightSource();
     }
 
     public Act() { 
@@ -140,13 +140,13 @@
 
         ParticleSystem.Draw();
 
-        this.light.Act(this.player1.x + this.player1.widthHalf, this.player1.y + this.player1.heightHalf);
+        this.light.Act();
 
 
     }
 
     public KeyDown(action: UserAction) {
-
+        
         if (action == UserAction.SHIP1_ACCELERATE) { this.player1.SetMoveAnimation(); }
 
         else if (action == UserAction.SHIP2_ACCELERATE2) { this.player2.SetMoveAnimation(); }

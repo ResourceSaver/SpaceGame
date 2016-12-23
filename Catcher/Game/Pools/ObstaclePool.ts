@@ -3,8 +3,8 @@
     private obstacles: Array<Obstacle>;
     private ship1: Ship;
     private ship2: Ship;
-    private bulletPool1: BulletPool;
-    private bulletPool2: BulletPool;
+    private bulletPool1: BulletPoolShip;
+    private bulletPool2: BulletPoolShip;
     
     constructor(ship1, ship2, bulletPool1, bulletPool2) {
 
@@ -92,7 +92,7 @@
     private size: AsteroidSize ;
     private amount: number;
 
-    private CollisionCheckObstacleBullet(obstacle: Obstacle, bulletPool: BulletPool, ship:Ship) {
+    private CollisionCheckObstacleBullet(obstacle: Obstacle, bulletPool: BulletPoolShip, ship:Ship) {
 
         this.attack = bulletPool.Collide(obstacle);
 

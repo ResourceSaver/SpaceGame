@@ -1,4 +1,4 @@
-﻿class BulletPool {
+﻿class BulletPoolShip {
 
     private ship: Ship;
 

@@ -18,11 +18,7 @@
 
     private static KeyDown(action: UserAction) {
 
-        if (action == UserAction.DEBUGMODE) {
-            System.DebugMode = !System.DebugMode;
-            document.getElementById("fpsLabel").style.visibility = System.DebugMode ? "visible" : "hidden";
-        }
-        else if (action == UserAction.MUTEAUDIO) {
+        if (action == UserAction.MUTEAUDIO) {
 
             AudioLibrary.ToggleMute();
 

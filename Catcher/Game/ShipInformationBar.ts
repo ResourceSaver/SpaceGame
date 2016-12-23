@@ -12,7 +12,7 @@
     private xDiff = 32;
     private xBigDiff = 55;
     private iconSize = 24;
-    private font = "24px Impact";
+    private font = "22px Source Sans Pro Black";
 
     private show: boolean = false;
     private yDiff: number = 12;

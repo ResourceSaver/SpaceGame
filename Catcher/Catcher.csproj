@@ -23,7 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
-    <Content Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Framework\AudioLibrary.ts" />
@@ -39,7 +38,6 @@
     <TypeScriptCompile Include="Framework\System\Keyboard.ts" />
     <TypeScriptCompile Include="Framework\System\Main.ts" />
     <TypeScriptCompile Include="Framework\Vector.ts" />
-    <TypeScriptCompile Include="Game\GameObjects\Jewel.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Obstacles\Obstacle.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Obstacles\ObstacleStrategies.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Shield.ts" />
@@ -47,7 +45,7 @@
     <TypeScriptCompile Include="Game\GameObjects\Thrust.ts" />
     <TypeScriptCompile Include="Game\LevelManager.ts" />
     <TypeScriptCompile Include="Game\ParticleSystem.ts" />
-    <TypeScriptCompile Include="Game\Pools\BulletPool.ts" />
+    <TypeScriptCompile Include="Game\Pools\BulletPoolShip.ts" />
     <TypeScriptCompile Include="Game\DrawableLibrary.ts" />
     <TypeScriptCompile Include="Framework\System\Images.ts" />
     <TypeScriptCompile Include="Framework\System\System.ts" />
@@ -55,7 +53,7 @@
     <TypeScriptCompile Include="Game\GameObjects\Bullet.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Ship.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Star.ts" />
-    <TypeScriptCompile Include="Game\Pools\ObstacleBulletPool.ts" />
+    <TypeScriptCompile Include="Game\Pools\BulletPoolObstacle.ts" />
     <TypeScriptCompile Include="Game\Pools\ObstaclePool.ts" />
     <TypeScriptCompile Include="Game\GameObjects\PowerUp.ts" />
     <TypeScriptCompile Include="Game\ShipInformationBar.ts" />

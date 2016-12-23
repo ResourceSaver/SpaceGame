@@ -1,4 +1,4 @@
-﻿class ObstacleBulletPool {
+﻿class BulletPoolObstacle {
 
     private ship1: Ship;
 

@@ -4,7 +4,7 @@
 
     public static resolutionY: number = 1080;
 
-    public static DebugMode: boolean = false;
+    public static DebugMode: boolean = true;
 
     public static canvas: Canvas;
 
@@ -28,5 +28,31 @@
 
         return game;
     }
-    
+
+}
+
+class SystemPerformance {
+
+    private startTime:number = 0;
+    private frameNumber: number = 0;
+    private d: number = 0;
+    private currentTime: number = 0;
+    private result: number = 0;
+
+    public GetFPS() {
+
+        this.frameNumber++;
+        this.d = new Date().getTime();
+        this.currentTime = (this.d - this.startTime) / 1000;
+        this.result = Math.floor((this.frameNumber / this.currentTime));
+
+        if (this.currentTime > 1) {
+            this.startTime = new Date().getTime();
+            this.frameNumber = 0;
+        }
+
+        return this.result;
+
+    }
+
 }

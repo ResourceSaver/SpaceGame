@@ -197,17 +197,17 @@
         
         this.context.save();
         this.context.globalAlpha = alpha;
-
-        this.context.fillStyle = '#916DFF';
+        this.context.fillStyle = 'white';
         this.context.font = fontSize + "px Impact";
         this.context.fillText(text, System.resolutionX / 2, System.resolutionY / 2);
-
         this.context.restore();
     }
 
     public DrawText(x: number, y: number, string: string, font: string, alpha:number = 1) {
 
         this.context.save();
+
+        this.context.fillStyle = 'white';
 
         this.context.globalAlpha = alpha;
 
@@ -247,7 +247,9 @@
         
     }
 
-    public DrawLight(x:number, y:number, radius:number) {
+    public DrawLight() {
+
+        // put this logic to lightsource class
 
         if (this.xx > 0) {
             this.xx = this.xx - 0.1;
@@ -255,6 +257,7 @@
          else {
             return;
         }
+
 
         this.context.save();
         this.context.globalCompositeOperation = 'lighter';
