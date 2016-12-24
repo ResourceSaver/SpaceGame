@@ -1,7 +1,7 @@
 ﻿class Star extends GameObject {
 
-    private blinkSpeed: number;
     private blinkCounter: number;
+    private blinkSpeed: number;
     private starLight: number;
     private ship: Ship;
     private speed;
@@ -26,9 +26,9 @@
 
         this.starLight = (speed * 5 + 5) / 10;
 
-        this.blinkSpeed = 1000;
+        this.blinkCounter = 1000;
 
-        this.blinkCounter = 1000 * Math.random();
+        this.blinkSpeed = (0.05 * Math.random()) + 0.03;
 
         this.ship = ship;
     }
@@ -85,9 +85,9 @@
             }
         }
 
-        this.blinkCounter += 0.03;
+        this.blinkCounter += this.blinkSpeed;
 
-        if (this.blinkCounter > this.blinkSpeed) {
+        if (this.blinkCounter % 100 == 0) {
 
             this.blinkCounter = 0;
 
