@@ -836,7 +836,17 @@ class Thrust extends GameObject {
 class LevelManager {
     constructor() {
         this.levels = new Array();
-        this.levels.push(new Level0());
+        this.levels.push(new Level1());
+        this.levels.push(new Level2());
+        this.levels.push(new Level3());
+        this.levels.push(new Level4());
+        this.levels.push(new Level5());
+        this.levels.push(new Level6());
+        this.levels.push(new Level7());
+        this.levels.push(new Level8());
+        this.levels.push(new Level9());
+        this.levels.push(new Level10());
+        this.levels.push(new Level11());
     }
     GetNextLevel() {
         return this.levels.shift();

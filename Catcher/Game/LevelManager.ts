@@ -5,7 +5,7 @@
     constructor() {
         this.levels = new Array<Level>();
 
-        this.levels.push(new Level0());
+        //this.levels.push(new Level0());
 
         this.levels.push(new Level1());
         this.levels.push(new Level2());
