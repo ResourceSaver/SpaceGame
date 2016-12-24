@@ -2,16 +2,11 @@
 
     private blinkCounter: number;
     private blinkSpeed: number;
-    private starLight: number;
     private ship: Ship;
     private speed;
     private alpha: number;
     private shootingStar: boolean = false;
     private steps: number = 100;
-    private destX: number;
-    private destY: number;
-    private deltaX: number;
-    private deltaY: number;
     private speedX: number;
     private speedY: number;
     private stepsTaken: number;
@@ -24,8 +19,6 @@
 
         this.speed = speed;
 
-        this.starLight = (speed * 5 + 5) / 10;
-
         this.blinkCounter = 1000;
 
         this.blinkSpeed = (0.05 * Math.random()) + 0.03;
@@ -34,15 +27,12 @@
     }
 
     public ShootingStart() {
+
         this.shootingStar = true;
-        this.destX = Math.random() * System.resolutionX;
-        this.destY = Math.random() + System.resolutionY;
 
-        this.deltaX = this.destX - this.x;
-        this.deltaY = this.destY - this.y;
+        this.speedX = ((Math.random() * System.resolutionX) - this.x) / this.steps;
 
-        this.speedX = this.deltaX / this.steps;
-        this.speedY = this.deltaY / this.steps;
+        this.speedY = ((Math.random() + System.resolutionY) - this.y) / this.steps;
 
         this.stepsTaken = 0;
     }
@@ -93,7 +83,7 @@
 
         }
 
-        this.alpha = this.starLight * (Math.abs(Math.sin(this.blinkCounter)) + 0.2);
+        this.alpha = this.speed * Math.abs(Math.sin(this.blinkCounter)) + 0.1;
 
         this.canvas.DrawStar(this.x, this.y, this.width, this.alpha);
 

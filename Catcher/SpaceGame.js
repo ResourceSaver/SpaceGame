@@ -1590,19 +1590,14 @@ class Star extends GameObject {
         this.slowDownFactor = 0.95;
         this.vector = new Vector(speed, speed, 0);
         this.speed = speed;
-        this.starLight = (speed * 5 + 5) / 10;
         this.blinkCounter = 1000;
         this.blinkSpeed = (0.05 * Math.random()) + 0.03;
         this.ship = ship;
     }
     ShootingStart() {
         this.shootingStar = true;
-        this.destX = Math.random() * System.resolutionX;
-        this.destY = Math.random() + System.resolutionY;
-        this.deltaX = this.destX - this.x;
-        this.deltaY = this.destY - this.y;
-        this.speedX = this.deltaX / this.steps;
-        this.speedY = this.deltaY / this.steps;
+        this.speedX = ((Math.random() * System.resolutionX) - this.x) / this.steps;
+        this.speedY = ((Math.random() + System.resolutionY) - this.y) / this.steps;
         this.stepsTaken = 0;
     }
     Act() {
@@ -1637,7 +1632,7 @@ class Star extends GameObject {
         if (this.blinkCounter % 100 == 0) {
             this.blinkCounter = 0;
         }
-        this.alpha = this.starLight * (Math.abs(Math.sin(this.blinkCounter)) + 0.2);
+        this.alpha = this.speed * Math.abs(Math.sin(this.blinkCounter)) + 0.1;
         this.canvas.DrawStar(this.x, this.y, this.width, this.alpha);
     }
 }
