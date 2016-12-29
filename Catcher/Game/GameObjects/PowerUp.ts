@@ -54,7 +54,7 @@
 
     public Draw() {
 
-        this.canvas.DrawCircle(this.x + this.circleSize, this.y + this.circleSize, this.radius * ((5 + Math.abs(Math.sin(this.count))) / 6), this.color, 0.2, 12);
+        this.canvas.DrawCircle(this.x + this.circleSize, this.y + this.circleSize, this.radius, this.color, 0.2, 12);
 
         this.canvas.DrawObjectRotate(this);
 

@@ -10,9 +10,7 @@
     }
 
     public HitByBullet(): boolean {
-
-
-
+        
         this.energy -= 1;
 
         if (this.energy <= 0) {

@@ -21,7 +21,7 @@
         AudioLibrary.AddAudioFile("shield.mp3", 0.65, true);
         AudioLibrary.AddAudioFile("thunder.mp3", 0.75, false);
 
-                
+        
     }
 
     private static AddAudioFile(fileName: string, volume: number, loop:boolean) {

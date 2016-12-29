@@ -104,7 +104,7 @@
         }
     }
 
-    public HitByBullet(attack:number):void {
+    public HitByBullet(attack: number):void {
 
         this.hitCounter = 0.2;
 

@@ -10,7 +10,7 @@
 
         this.ship = ship;
 
-        this.CreateStars(120);
+        this.CreateStars(100);
     }
 
     private CreateStars(number: number) {
