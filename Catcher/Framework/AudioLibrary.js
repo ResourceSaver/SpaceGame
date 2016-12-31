@@ -1,16 +1,10 @@
-﻿class AudioLibrary {
-
-    private audioCollection: Array<HTMLAudioElement>;
-
-    public constructor() {
-
+class AudioLibrary {
+    constructor() {
+        this.prevVol = 0;
         this.Initialize();
-
     }
-
-    private Initialize(): void {
-
-        this.audioCollection = new Array<HTMLAudioElement>()
+    Initialize() {
+        this.audioCollection = new Array();
         this.AddAudioFile("explosion.mp3", 0.45, false);
         this.AddAudioFile("laser.mp3", 0.2, false);
         this.AddAudioFile("thrust2.mp3", 0.9, true);
@@ -26,56 +20,31 @@
         this.AddAudioFile("shield.mp3", 0.65, true);
         this.AddAudioFile("shield.mp3", 0.65, true);
         this.AddAudioFile("thunder.mp3", 0.75, false);
-        
     }
-
-    private AddAudioFile(fileName: string, volume: number, loop:boolean) {
-
+    AddAudioFile(fileName, volume, loop) {
         let audio = new Audio('Resources\\Audio\\' + fileName);
         audio.volume = System.Volume * volume;
         audio.innerText = volume.toString();
         audio.loop = loop;
         this.audioCollection.push(audio);
-
     }
-
-    public ToggleMute() {
-
+    ToggleMute() {
         for (var i = 0; i < this.audioCollection.length; i++) {
-
             this.audioCollection[i].muted = !this.audioCollection[i].muted;
         }
-
     }
-
-    public Play(index:number) {
-
+    Play(index) {
         this.audioCollection[index].currentTime = 0;
-
         this.audioCollection[index].play();
-
     }
-
-    public Stop(index: number) {
-
+    Stop(index) {
         this.audioCollection[index].currentTime = 0;
-
-        this.audioCollection[index].pause(); 
-
-    }
-
-    private prevVol = 0;
-
-    public PauseLoop(index) {
-
-        this.prevVol = this.audioCollection[index].volume; 
-
-        this.audioCollection[index].volume = 0;
-
         this.audioCollection[index].pause();
-
-        this.audioCollection[index].volume = this.prevVol;
-
     }
-
+    PauseLoop(index) {
+        this.prevVol = this.audioCollection[index].volume;
+        this.audioCollection[index].volume = 0;
+        this.audioCollection[index].pause();
+        this.audioCollection[index].volume = this.prevVol;
+    }
 }

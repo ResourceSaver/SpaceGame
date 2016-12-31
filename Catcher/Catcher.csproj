@@ -96,6 +96,7 @@
     <TypeScriptCompile Include="Game\Pools\ObstaclePool.ts" />
     <TypeScriptCompile Include="Game\GameObjects\PowerUp.ts" />
     <TypeScriptCompile Include="Game\Pools\ParticlePool.ts" />
+    <TypeScriptCompile Include="Game\Pools\PowerUpPool.ts" />
     <TypeScriptCompile Include="Game\ShipInformationBar.ts" />
     <TypeScriptCompile Include="Game\SpaceGame.ts" />
     <TypeScriptCompile Include="Game\Pools\StarPool.ts" />
