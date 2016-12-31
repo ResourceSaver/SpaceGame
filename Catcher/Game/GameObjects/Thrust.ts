@@ -6,7 +6,7 @@
     constructor(ship: GameObject) {
         super(ship.width, ship.height, ship.x, ship.y + ship.height - 20, System.canvas);
 
-        this.drawableCollection = DrawableLibrary.GetThrust();
+        this.drawableCollection = System.drawableLibrary.GetThrust();
 
         this.thrusting = false;
 

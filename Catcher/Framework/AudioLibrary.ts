@@ -1,49 +1,55 @@
 ﻿class AudioLibrary {
 
-    private static audioCollection: Array<HTMLAudioElement>;
+    private audioCollection: Array<HTMLAudioElement>;
 
-    public static Initialize(): void {
+    public constructor() {
 
-        AudioLibrary.audioCollection = new Array<HTMLAudioElement>()
-        AudioLibrary.AddAudioFile("explosion.mp3", 0.45, false);
-        AudioLibrary.AddAudioFile("laser.mp3", 0.2, false);
-        AudioLibrary.AddAudioFile("thrust2.mp3", 0.9, true);
-        AudioLibrary.AddAudioFile("missile.mp3", 0.7, false);
-        AudioLibrary.AddAudioFile("powerup.mp3", 0.51, false);
-        AudioLibrary.AddAudioFile("emptymisile.mp3", 0.3, false);
-        AudioLibrary.AddAudioFile("thrust2.mp3", 0.9, true);
-        AudioLibrary.AddAudioFile("music.mp3", 0.3, true);
-        AudioLibrary.AddAudioFile("levelup.mp3", 0.5, false);
-        AudioLibrary.AddAudioFile("gameover.mp3", 0.5, false);
-        AudioLibrary.AddAudioFile("win.mp3", 0.5, false);
-        AudioLibrary.AddAudioFile("clash.mp3", 0.5, false);
-        AudioLibrary.AddAudioFile("shield.mp3", 0.65, true);
-        AudioLibrary.AddAudioFile("shield.mp3", 0.65, true);
-        AudioLibrary.AddAudioFile("thunder.mp3", 0.75, false);
+        this.Initialize();
+
+    }
+
+    private Initialize(): void {
+
+        this.audioCollection = new Array<HTMLAudioElement>()
+        this.AddAudioFile("explosion.mp3", 0.45, false);
+        this.AddAudioFile("laser.mp3", 0.2, false);
+        this.AddAudioFile("thrust2.mp3", 0.9, true);
+        this.AddAudioFile("missile.mp3", 0.7, false);
+        this.AddAudioFile("powerup.mp3", 0.51, false);
+        this.AddAudioFile("emptymisile.mp3", 0.3, false);
+        this.AddAudioFile("thrust2.mp3", 0.9, true);
+        this.AddAudioFile("music.mp3", 0.3, true);
+        this.AddAudioFile("levelup.mp3", 0.5, false);
+        this.AddAudioFile("gameover.mp3", 0.5, false);
+        this.AddAudioFile("win.mp3", 0.5, false);
+        this.AddAudioFile("clash.mp3", 0.5, false);
+        this.AddAudioFile("shield.mp3", 0.65, true);
+        this.AddAudioFile("shield.mp3", 0.65, true);
+        this.AddAudioFile("thunder.mp3", 0.75, false);
 
         
     }
 
-    private static AddAudioFile(fileName: string, volume: number, loop:boolean) {
+    private AddAudioFile(fileName: string, volume: number, loop:boolean) {
 
         let audio = new Audio('Resources\\Audio\\' + fileName);
         audio.volume = System.Volume * volume;
         audio.innerText = volume.toString();
         audio.loop = loop;
-        AudioLibrary.audioCollection.push(audio);
+        this.audioCollection.push(audio);
 
     }
 
-    public static ToggleMute() {
+    public ToggleMute() {
 
-        for (var i = 0; i < AudioLibrary.audioCollection.length; i++) {
+        for (var i = 0; i < this.audioCollection.length; i++) {
 
-            AudioLibrary.audioCollection[i].muted = !AudioLibrary.audioCollection[i].muted;
+            this.audioCollection[i].muted = !this.audioCollection[i].muted;
         }
 
     }
 
-    public static Play(index:number) {
+    public Play(index:number) {
 
         this.audioCollection[index].currentTime = 0;
 
@@ -51,7 +57,7 @@
 
     }
 
-    public static Stop(index: number) {
+    public Stop(index: number) {
 
         this.audioCollection[index].currentTime = 0;
 
@@ -59,9 +65,9 @@
 
     }
 
-    private static prevVol = 0;
+    private prevVol = 0;
 
-    public static PauseLoop(index) {
+    public PauseLoop(index) {
 
         this.prevVol = this.audioCollection[index].volume; 
 

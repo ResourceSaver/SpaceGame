@@ -33,7 +33,7 @@
             return;
         }
         else if (this.ship.numberOfMisiles == 0) {
-            AudioLibrary.Play(5);
+            System.audioLibrary.Play(5);
             return;
         };
 
@@ -43,7 +43,7 @@
 
             this.ship.vector.Accelerate(-3);
 
-            AudioLibrary.Play(3);
+            System.audioLibrary.Play(3);
         }
 
     }
@@ -51,7 +51,7 @@
     public SpawnLaser() {
 
         if (this.Spawn(BulletTypes.LAZER)) {
-            AudioLibrary.Play(1);
+            System.audioLibrary.Play(1);
 
         }
 

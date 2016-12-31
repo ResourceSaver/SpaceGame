@@ -11,7 +11,7 @@
         
         this.state = ObjectState.DEAD;
 
-        this.drawableCollection = DrawableLibrary.GetLazer(color);
+        this.drawableCollection = System.drawableLibrary.GetLazer(color);
 
     }
 

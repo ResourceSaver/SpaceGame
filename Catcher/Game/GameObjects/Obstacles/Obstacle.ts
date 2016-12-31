@@ -51,13 +51,13 @@
 
     public Explode(): void {
 
-        ParticleSystem.Build(this.x + this.widthHalf, this.y + this.heightHalf);
+        SpaceGame.particlePool.Build(this.x + this.widthHalf, this.y + this.heightHalf);
 
         this.state = ObjectState.EXPLODING;
 
         this.drawableCollection.SetCurrentDrawable("explosion");
 
-        AudioLibrary.Play(0);
+        System.audioLibrary.Play(0);
         
     }
 

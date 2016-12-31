@@ -42,7 +42,7 @@
 
         this.shieldSoundNumber = shieldSoundNumber;
 
-        this.drawableCollection = DrawableLibrary.GetShip(() => this.state = ObjectState.DEAD );
+        this.drawableCollection = System.drawableLibrary.GetShip(() => this.state = ObjectState.DEAD );
 
         this.rightAction = rightAction;
         this.leftAction = leftAction;
@@ -87,7 +87,7 @@
 
     public Explode() {
 
-        ParticleSystem.Build(this.x + this.widthHalf, this.y + this.heightHalf);
+        SpaceGame.particlePool.Build(this.x + this.widthHalf, this.y + this.heightHalf);
 
         this.state = ObjectState.EXPLODING;
 
@@ -99,9 +99,9 @@
 
         this.vector.Reset();
 
-        AudioLibrary.Play(0);
+        System.audioLibrary.Play(0);
 
-        AudioLibrary.PauseLoop(this.thrustSoundNumber);
+        System.audioLibrary.PauseLoop(this.thrustSoundNumber);
 
     }
 
@@ -151,7 +151,7 @@
 
             this.isShielding = false;
 
-            AudioLibrary.PauseLoop(this.shieldSoundNumber);
+            System.audioLibrary.PauseLoop(this.shieldSoundNumber);
 
         }
 
@@ -169,19 +169,19 @@
         if (this.state == ObjectState.ALIVE || this.state == ObjectState.IMMORTAL) {
 
             if (this.useGamePad) {
-                if (GamePad.IsKeyDown(this.leftAction)) { this.vector.Rotate(-this.rotateSpeed); }
+                if (System.gamePad.IsKeyDown(this.leftAction)) { this.vector.Rotate(-this.rotateSpeed); }
 
-                if (GamePad.IsKeyDown(this.rightAction)) { this.vector.Rotate(this.rotateSpeed); }
+                if (System.gamePad.IsKeyDown(this.rightAction)) { this.vector.Rotate(this.rotateSpeed); }
 
-                if (GamePad.IsKeyDown(this.accelerateAction)) { this.vector.Accelerate(this.accelerationSpeed); }
+                if (System.gamePad.IsKeyDown(this.accelerateAction)) { this.vector.Accelerate(this.accelerationSpeed); }
 
             }
             else {
-                if (Keyboard.IsKeyDown(this.leftAction)) { this.vector.Rotate(-this.rotateSpeed); }
+                if (System.keyboard.IsKeyDown(this.leftAction)) { this.vector.Rotate(-this.rotateSpeed); }
 
-                if (Keyboard.IsKeyDown(this.rightAction)) { this.vector.Rotate(this.rotateSpeed); }
+                if (System.keyboard.IsKeyDown(this.rightAction)) { this.vector.Rotate(this.rotateSpeed); }
 
-                if (Keyboard.IsKeyDown(this.accelerateAction)) { this.vector.Accelerate(this.accelerationSpeed); }
+                if (System.keyboard.IsKeyDown(this.accelerateAction)) { this.vector.Accelerate(this.accelerationSpeed); }
 
             }
 
@@ -198,7 +198,7 @@
             return;
         }
 
-        AudioLibrary.Play(this.shieldSoundNumber);
+        System.audioLibrary.Play(this.shieldSoundNumber);
 
         this.isShielding = true;
 
@@ -208,7 +208,7 @@
 
         this.isShielding = false;
 
-        AudioLibrary.PauseLoop(this.shieldSoundNumber);
+        System.audioLibrary.PauseLoop(this.shieldSoundNumber);
     }
 
     public SetMoveAnimation() {
@@ -217,7 +217,7 @@
 
         this.thrust.SetThrusting(true);
 
-        AudioLibrary.Play(this.thrustSoundNumber);
+        System.audioLibrary.Play(this.thrustSoundNumber);
 
     }
 
@@ -227,7 +227,7 @@
 
         this.thrust.SetThrusting(false);
 
-        AudioLibrary.PauseLoop(this.thrustSoundNumber);
+        System.audioLibrary.PauseLoop(this.thrustSoundNumber);
         
     }
 

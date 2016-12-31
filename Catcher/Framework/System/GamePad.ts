@@ -1,10 +1,10 @@
 ﻿class GamePad {
 
-    private static spaceGame: SpaceGame;
-    private static gp;
-    private static keys: Array<boolean>;
+    private spaceGame: SpaceGame;
+    private gp;
+    private keys: Array<boolean>;
 
-    public static Setup(game: SpaceGame) {
+    public constructor(game: SpaceGame) {
 
         this.spaceGame = game;
 
@@ -12,7 +12,7 @@
 
     }
 
-    public static Act() {
+    public Act() {
 
         this.gp = navigator.getGamepads()[0];
 
@@ -43,7 +43,7 @@
 
     }
 
-    private static Mapping(i: number): UserAction {
+    private Mapping(i: number): UserAction {
 
         switch (i) {
             case 0:
@@ -65,7 +65,7 @@
 
     }
 
-    private static UnMapping(ua: UserAction): number {
+    private UnMapping(ua: UserAction): number {
 
         switch (ua) {
             case UserAction.SHIP1_ACCELERATE:
@@ -86,7 +86,7 @@
 
     }
 
-    public static IsKeyDown(action: UserAction) {
+    public IsKeyDown(action: UserAction) {
 
         return this.keys[this.UnMapping(action)];
 

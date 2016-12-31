@@ -23,7 +23,7 @@ function OnImagesLoaded() {
 
 function RunGame() {
 
-    GamePad.Act();
+    System.gamePad.Act();
 
     this.spaceGame.Act();
 
@@ -35,7 +35,7 @@ function RunGameDebugMode() {
 
     this.fpsLabel.innerHTML = this.systemPerformance.GetFPS();
 
-    GamePad.Act();
+    System.gamePad.Act();
 
     this.spaceGame.Act();
 

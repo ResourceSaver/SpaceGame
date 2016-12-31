@@ -1,6 +1,6 @@
 ﻿class DrawableLibrary {
 
-    public static GetShip(explotionFinishedEventHandler:Function): DrawableCollection {
+    public GetShip(explotionFinishedEventHandler:Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -13,7 +13,7 @@
         return drawableCollection;
     }
 
-    public static GetShield(): DrawableCollection {
+    public GetShield(): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -23,7 +23,7 @@
 
     }
     
-    public static GetSaucer(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetSaucer(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -35,7 +35,7 @@
 
     }
 
-    public static GetAsteroid(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetAsteroid(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -48,7 +48,7 @@
 
     }
 
-    public static GetFighter(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetFighter(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -60,7 +60,7 @@
 
     }
 
-    public static GetSlicer(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetSlicer(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -72,7 +72,7 @@
 
     }
 
-    public static GetBlades(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetBlades(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -84,7 +84,7 @@
 
     }
 
-    public static GetLazer(color: string): DrawableCollection {
+    public GetLazer(color: string): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -96,7 +96,7 @@
 
     }
 
-    public static GetPowerUps() {
+    public GetPowerUps() {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -110,14 +110,14 @@
 
     }
 
-    public static GetThrust() {
+    public GetThrust() {
         let drawableCollection: DrawableCollection = new DrawableCollection();
         drawableCollection.AddDrawable(new DrawableAnimation(Images.GetImage("thrust"), 24, 0, 0, 128, 128, 1, "thrust"));
         return drawableCollection;
 
     }
 
-    public static GetSpikey(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetSpikey(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -129,7 +129,7 @@
 
     }
 
-    public static GetBugEye(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetBugEye(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 
@@ -141,7 +141,7 @@
 
     }
 
-    public static GetScythe(explotionFinishedEventHandler: Function): DrawableCollection {
+    public GetScythe(explotionFinishedEventHandler: Function): DrawableCollection {
 
         let drawableCollection: DrawableCollection = new DrawableCollection();
 

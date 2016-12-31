@@ -1,10 +1,10 @@
 ﻿class Keyboard {
 
-    private static spaceGame: SpaceGame;
+    private spaceGame: SpaceGame;
 
-    private static keys: Array<boolean>;
+    private keys: Array<boolean>;
 
-    public static Setup(game: SpaceGame) {
+    public constructor(game: SpaceGame) {
 
         this.spaceGame = game;
 
@@ -16,13 +16,13 @@
 
     }
 
-    private static KeyDown(action: UserAction) {
+    private KeyDown(action: UserAction) {
 
         if (this.keys[action] == true) { return; }
 
         else if (action == UserAction.MUTEAUDIO) {
 
-            AudioLibrary.ToggleMute();
+            System.audioLibrary.ToggleMute();
 
         }
 
@@ -31,7 +31,7 @@
         this.spaceGame.KeyDown(action);
     }
 
-    private static KeyUp(action: UserAction) {
+    private KeyUp(action: UserAction) {
 
         this.keys[action] = false;
 
@@ -39,7 +39,7 @@
 
     }
 
-    public static IsKeyDown(action: UserAction) {
+    public IsKeyDown(action: UserAction) {
 
         return this.keys[<number>action];
 

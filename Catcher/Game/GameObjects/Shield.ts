@@ -3,7 +3,7 @@
     constructor() {
         super(156, 156, 0, 0, System.canvas);
 
-        this.drawableCollection = DrawableLibrary.GetShield();
+        this.drawableCollection = System.drawableLibrary.GetShield();
 
     }
 

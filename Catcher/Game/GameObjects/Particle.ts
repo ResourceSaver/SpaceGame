@@ -46,61 +46,7 @@
         }
     }
 
-
 }
-
-class ParticleSystem {
-    private static particleNum = 60;
-
-    private static particles:Array<Particle> = [];
-
-    public constructor() {
-        ParticleSystem.init();
-    }
-
-    public static init() {
-        for (var i = 0; i < this.particleNum; i++) {
-            this.particles.push(new Particle(i));
-        }
-
-    }
-
-    private static x;
-
-    private static y; 
-
-    public static Build(x, y) {
-
-        this.x = x;
-        this.y = y;
-
-    }
-
-    private static count = 10;
-
-    public static Draw() {
-
-        for (var i = 0; i < this.particles.length; i++) {
-            if (this.particles[i].active === true) {
-                this.particles[i].Draw();
-            }
-            else if (this.x != -1) {
-                this.particles[i].Build(this.x, this.y);
-                this.count++;
-
-                if (this.count > 30) {
-                    this.x = -1;
-                }
-            }
-        }
-
-        this.count = 0;
-        this.x = -1;
-    }
-}
-
-
-
 
 //helper functions
 function rand(max, min, _int) {

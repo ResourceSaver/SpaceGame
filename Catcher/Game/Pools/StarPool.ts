@@ -25,7 +25,7 @@
 
             ran = Math.random();
 
-            size = ran * 1.3;
+            size = ran;
 
             speed = ran;
 

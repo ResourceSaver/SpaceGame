@@ -12,7 +12,7 @@
     public constructor() {
         super(AsteroidSize.POWERUP, AsteroidSize.POWERUP, 0, 0, System.canvas);
 
-        this.drawableCollection = DrawableLibrary.GetPowerUps();
+        this.drawableCollection = System.drawableLibrary.GetPowerUps();
 
     }
 

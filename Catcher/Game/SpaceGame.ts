@@ -7,10 +7,10 @@
 
     private shipInformationBar: ShipInformationBar; // todo - tegn for player 2
 
+    public static particlePool: ParticlePool;
     private poolObstacle: ObstaclePool;
     public static poolObstacleBullet: BulletPoolObstacle;
 
-    public particleSystem: ParticleSystem;
     private poolStar: StarPool;
     public textdrawer: TextDrawer;
 
@@ -29,10 +29,10 @@
 
     constructor() {
 
+        SpaceGame.particlePool = new ParticlePool();
+
         this.spawnPowerUp = 1000;
         this.spawnPowerUpCounter = 0;
-
-        this.particleSystem = new ParticleSystem();
 
         this.powerUps = new Array<PowerUp>();
 
@@ -57,9 +57,9 @@
 
         this.NextLevel();
 
-        AudioLibrary.ToggleMute();
+        System.audioLibrary.ToggleMute();
 
-        AudioLibrary.Play(7);
+        System.audioLibrary.Play(7);
 
         this.light = new LightSource();
     }
@@ -84,7 +84,7 @@
 
             this.gameState = GameState.GAMEOVER;
             this.textdrawer.SetText("Game Over");
-            AudioLibrary.Play(9);
+            System.audioLibrary.Play(9);
 
         }
 
@@ -119,13 +119,13 @@
             if (this.gameState == GameState.RUNNING && this.nextLevel != null) {
                 this.textdrawer.SetText(this.nextLevel.GetLevelName().toString());
                 this.gameState = GameState.LEVELFINISHED;
-                AudioLibrary.Play(8);
+                System.audioLibrary.Play(8);
 
             }
             else if (this.gameState == GameState.RUNNING) {
                 this.textdrawer.SetText("Game Finished");
                 this.gameState = GameState.COMPLETED;
-                AudioLibrary.Play(10);
+                System.audioLibrary.Play(10);
 
             }
 
@@ -137,7 +137,7 @@
 
         this.shipInformationBar.Draw(this.player1);
 
-        ParticleSystem.Draw();
+        SpaceGame.particlePool.Draw();
 
         this.light.Act();
 
@@ -270,7 +270,7 @@
     private PowerUpAction(powerUp: PowerUp, ship: Ship) {
         powerUp.Collide();
 
-        AudioLibrary.Play(4);
+        System.audioLibrary.Play(4);
 
         switch (powerUp.GetType()) {
             case PowerUpType.LIFE:

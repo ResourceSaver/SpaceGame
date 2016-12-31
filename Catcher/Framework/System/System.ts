@@ -8,11 +8,21 @@
 
     public static canvas: Canvas;
 
+    public static audioLibrary: AudioLibrary;
+
+    public static drawableLibrary: DrawableLibrary;
+
     public static Volume = 0.5;
+
+    public static gamePad: GamePad;
+
+    public static keyboard: Keyboard;
     
     public static Initialize():SpaceGame {
 
-        AudioLibrary.Initialize(); 
+        this.drawableLibrary = new DrawableLibrary();
+
+        this.audioLibrary = new AudioLibrary();
 
         System.canvas = new Canvas("mainCanvas");
 
@@ -22,9 +32,9 @@
 
         var game = new SpaceGame();
 
-        GamePad.Setup(game);
+        this.gamePad = new GamePad(game);
 
-        Keyboard.Setup(game); 
+        this.keyboard = new Keyboard(game); 
 
         return game;
     }

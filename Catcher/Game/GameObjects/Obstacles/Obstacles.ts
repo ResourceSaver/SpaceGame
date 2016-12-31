@@ -5,7 +5,7 @@
 
         this.type = ObstacleType.ASTEROID;
 
-        this.drawableCollection = DrawableLibrary.GetAsteroid(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetAsteroid(() => this.state = ObjectState.DEAD);
 
     }
 
@@ -77,7 +77,7 @@ class Blades extends Obstacle {
 
         this.AdjustBoundingbox(-50, -50);
 
-        this.drawableCollection = DrawableLibrary.GetBlades(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetBlades(() => this.state = ObjectState.DEAD);
 
     }
 
@@ -100,7 +100,7 @@ class Spikey extends Obstacle {
 
         this.moveStrategy = new MoveStrategy(this, 15);
 
-        this.drawableCollection = DrawableLibrary.GetSpikey(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetSpikey(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-80, -80);
 
@@ -128,7 +128,7 @@ class BugEye extends Obstacle {
 
         this.moveStrategy = new MoveStrategy(this, 1);
 
-        this.drawableCollection = DrawableLibrary.GetBugEye(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetBugEye(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-90, -55);
 
@@ -158,7 +158,7 @@ class SaucerBig extends Obstacle {
 
         this.shooterStrategy = new TwirvlShootStrategy( this);
 
-        this.drawableCollection = DrawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-60, -60);
     }
@@ -183,7 +183,7 @@ class Saucer extends Obstacle {
 
         this.shooterStrategy = new ShootThreeSixtyStrategy(150, this);
 
-        this.drawableCollection = DrawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetSaucer(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-45, -45);
     }
@@ -215,7 +215,7 @@ class Fighter extends Obstacle {
         this.moveStrategy = new MoveStrategy(this, 1);
         this.moveStrategy.SetChangeDirection(Math.random() * 200 + 100);
 
-        this.drawableCollection = DrawableLibrary.GetFighter(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetFighter(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-50, -60);
 
@@ -257,7 +257,7 @@ class Scythe extends Obstacle {
 
         this.moveStrategy = new MoveStrategy(this, 1);
 
-        this.drawableCollection = DrawableLibrary.GetScythe(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetScythe(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-60, -70);
 
@@ -297,7 +297,7 @@ class Slicer extends Obstacle {
 
         this.attackStrategy = new ChargeStrategy(this);
        
-        this.drawableCollection = DrawableLibrary.GetSlicer(() => this.state = ObjectState.DEAD);
+        this.drawableCollection = System.drawableLibrary.GetSlicer(() => this.state = ObjectState.DEAD);
 
         this.AdjustBoundingbox(-90, -40);
 

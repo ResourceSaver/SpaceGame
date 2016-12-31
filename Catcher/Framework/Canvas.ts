@@ -238,7 +238,7 @@
 
         this.xx = 1;
 
-        AudioLibrary.Play(14);
+        System.audioLibrary.Play(14);
 
         this.x0 = System.resolutionX * Math.random();
         this.y0 = System.resolutionY * Math.random();
