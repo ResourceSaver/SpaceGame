@@ -36,7 +36,7 @@
 
             this.spawnPowerUp = Math.random() * 1000;
 
-            this.SpawnPowerUp();
+            this.Spawn();
 
         }
 
@@ -44,7 +44,7 @@
 
     }
 
-    private SpawnPowerUp() {
+    private Spawn() {
 
         this.randomPowerUpType = Math.random();
 
@@ -122,7 +122,7 @@
                 ship.ChargeShield();
                 break;
             case PowerUpType.BLITZ:
-                System.canvas.Blitz();
+                SpaceGame.lightening.Blitz();
                 this.poolObstacle.Nuclear();
                 break;
             case PowerUpType.ENERGY:
@@ -131,6 +131,5 @@
         }
 
     }
-
 
 }

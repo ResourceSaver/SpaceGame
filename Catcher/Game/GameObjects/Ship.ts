@@ -28,8 +28,6 @@
     constructor(leftAction: UserAction, rightAction: UserAction, accelerateAction: UserAction, x: number, y: number, thrustSoundNumber:number, shieldSoundNumber:number) {
         super(AsteroidSize.BIG, AsteroidSize.BIG, x, y, System.canvas);
 
-        this.drawRotate = true;
-
         this.hitColor = "#FF6549";
 
         this.energy = 5;
@@ -57,6 +55,8 @@
         this.Spawn();
 
         this.UpdateScore(0);
+
+        this.SetDrawRotateFunction();
 
     }
 

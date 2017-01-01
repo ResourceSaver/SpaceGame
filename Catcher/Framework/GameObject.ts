@@ -34,8 +34,6 @@
 
     public hitColor: string;
 
-    public drawRotate: boolean;
-
     private Dx: number;
 
     private Dy: number;
@@ -52,9 +50,11 @@
 
     }
 
+    private drawFunction: Function;
+
     constructor(width: number, height: number, x: number, y: number, canvas: Canvas) {
 
-        this.drawRotate = false;
+        this.drawFunction = this.DrawNonRotate;
 
         this.vector = new Vector(0, 0, 0);
 
@@ -79,6 +79,12 @@
         this.widthHalf = this.width / 2;
 
         this.AdjustBoundingbox(0, 0);
+    }
+
+    protected SetDrawRotateFunction() {
+
+        this.drawFunction = this.DrawObjectRotate; 
+
     }
 
     protected AdjustBoundingbox(widthDiff: number, heightDiff: number) {
@@ -124,14 +130,9 @@
 
     }
 
-    public Draw() { // use strategi pattern
+    public Draw() { 
 
-        if (this.drawRotate) {
-            this.DrawObjectRotate();
-        }
-        else {
-            this.DrawNonRotate();
-        }
+        this.drawFunction();
        
     }
 

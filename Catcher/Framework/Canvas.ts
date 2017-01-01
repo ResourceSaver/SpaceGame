@@ -18,7 +18,7 @@
 
         this.context.lineWidth = 2;
 
-        //this.DisableSmoothing(this.context);
+       // this.DisableSmoothing(this.context);
 
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
@@ -28,14 +28,14 @@
                 
     }
     
-    //public DisableSmoothing(context) {
+    public DisableSmoothing(context) {
 
-    //    if (context.imageSmoothingEnabled) { context.imageSmoothingEnabled = false; }
-    //    else if (context.mozImageSmoothingEnabled) { context.mozImageSmoothingEnabled = false; }
-    //    else if (context.msImageSmoothingEnabled) { context.msImageSmoothingEnabled = false; }
-    //    else if (context.webkitImageSmoothingEnabled) { context.webkitImageSmoothingEnabled = false; }
+        if (context.imageSmoothingEnabled) { context.imageSmoothingEnabled = false; }
+        else if (context.mozImageSmoothingEnabled) { context.mozImageSmoothingEnabled = false; }
+        else if (context.msImageSmoothingEnabled) { context.msImageSmoothingEnabled = false; }
+        else if (context.webkitImageSmoothingEnabled) { context.webkitImageSmoothingEnabled = false; }
 
-    //}
+    }
 
     public Clear() { this.context.clearRect(0, 0, System.resolutionX, System.resolutionY); }
 
@@ -223,59 +223,22 @@
         
     }
 
-
-
-
-
-    private xx = 1.0;
-    private dd = 0;
-    private x0 = 0;
-    private x1 = 0;
-    private y0 = 0;
-    private y1 = 0;
-
-    public Blitz() {
-
-        this.xx = 1;
-
-        System.audioLibrary.Play(14);
-
-        this.x0 = System.resolutionX * Math.random();
-        this.y0 = System.resolutionY * Math.random();
-        this.x1 = System.resolutionX * Math.random();
-        this.y1 = System.resolutionY * Math.random();
-        
-    }
-
-    public DrawLight() {
-
-        // put this logic to lightsource class
-
-        if (this.xx > 0) {
-            this.xx = this.xx - 0.1;
-        }
-         else {
-            return;
-        }
-
+    public DrawLight(dd, xx, x0, y0, x1, y1) {
 
         this.context.save();
         this.context.globalCompositeOperation = 'lighter';
 
-        this.dd = (1 + Math.sin(this.xx)) / 2;        
-
-        var radialGradient = this.context.createLinearGradient(this.x0, this.y0, this.x1, this.y1);
-        radialGradient.addColorStop(0.0 * this.dd, '#320D42');
-        radialGradient.addColorStop(0.25 * this.dd, '#5D1A7F');
-        radialGradient.addColorStop(0.5 * this.dd, '#A032C1');
+        var radialGradient = this.context.createLinearGradient(x0, y0, x1, y1);
+        radialGradient.addColorStop(0.0 * dd, '#320D42');
+        radialGradient.addColorStop(0.25 * dd, '#5D1A7F');
+        radialGradient.addColorStop(0.5 * dd, '#A032C1');
         radialGradient.addColorStop(0.75, '#FAA8FF');
         radialGradient.addColorStop(1.0, '#FFF2FB');
 
         this.context.fillStyle = radialGradient;
-        this.context.globalAlpha = this.xx;
+        this.context.globalAlpha = xx;
         this.context.fillRect(0, 0, System.resolutionX, System.resolutionY);
-        this.context.globalAlpha = 1;
-
+        //this.context.globalAlpha = 1;
         this.context.restore();
 
     }

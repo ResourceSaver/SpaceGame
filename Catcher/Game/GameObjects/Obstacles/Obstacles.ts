@@ -104,7 +104,7 @@ class Spikey extends Obstacle {
 
         this.AdjustBoundingbox(-80, -80);
 
-        this.drawRotate = true;
+        this.SetDrawRotateFunction();
 
     }
 
@@ -132,7 +132,7 @@ class BugEye extends Obstacle {
 
         this.AdjustBoundingbox(-90, -55);
 
-        this.drawRotate = true;
+        this.SetDrawRotateFunction();
 
     }
 
@@ -219,7 +219,7 @@ class Fighter extends Obstacle {
 
         this.AdjustBoundingbox(-50, -60);
 
-        this.drawRotate = true;
+        this.SetDrawRotateFunction();
 
         //this.thrust = new Thrust(this);
         //this.thrust.Spawn();
@@ -261,7 +261,7 @@ class Scythe extends Obstacle {
 
         this.AdjustBoundingbox(-60, -70);
 
-        this.drawRotate = true;
+        this.SetDrawRotateFunction();
 
         //this.thrust = new Thrust(this);
         //this.thrust.Spawn();
@@ -301,7 +301,7 @@ class Slicer extends Obstacle {
 
         this.AdjustBoundingbox(-90, -40);
 
-        this.drawRotate = true;
+        this.SetDrawRotateFunction();
 
         //this.thrust = new Thrust(this);
 

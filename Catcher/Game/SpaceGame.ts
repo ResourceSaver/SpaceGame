@@ -1,6 +1,6 @@
 ﻿class SpaceGame  {
 
-    private player1: Ship;
+    private player1: Ship; // gør disse referencer static så de kan tilgåes fra andre klasser uden at de sendes med som input parametre!
     private player2: Ship;
 
     private shipInformationBar: ShipInformationBar; // todo - tegn for player 2
@@ -8,7 +8,7 @@
     private nextLevel: Level; // todo flyt til levelmanager
     private textdrawer: TextDrawer;
     private gameState: GameState = GameState.RUNNING;
-    private light: LightSource;
+    public static lightening: LightSource;
 
     public static heatbeat: number = 0; // flyt til ????
 
@@ -30,7 +30,7 @@
 
         this.player1 = new Ship(UserAction.SHIP1_LEFT, UserAction.SHIP1_RIGHT, UserAction.SHIP1_ACCELERATE, System.resolutionX / 3, System.resolutionY / 2, 2, 12);
         this.poolBulletPlayer1 = new BulletPoolShip(this.player1, "red");
-        this.player1.useGamePad = true;
+        //this.player1.useGamePad = true;
 
         this.player2 = new Ship(UserAction.SHIP2_LEFT2, UserAction.SHIP2_RIGHT2, UserAction.SHIP2_ACCELERATE2, System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13 );
         this.poolBulletPlayer2 = new BulletPoolShip(this.player2, "blue");
@@ -51,7 +51,7 @@
 
         System.audioLibrary.Play(7);
 
-        this.light = new LightSource();
+        SpaceGame.lightening = new LightSource();
 
         this.poolPowerUp = new PowerUpPool(this.player1, this.player2, this.poolObstacle);
 
@@ -127,7 +127,7 @@
 
         SpaceGame.poolParticle.Draw();
 
-        this.light.Act();
+        SpaceGame.lightening.Act();
 
     }
 
