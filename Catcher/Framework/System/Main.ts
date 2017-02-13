@@ -1,7 +1,6 @@
 ﻿let chosenRequestFrame;
-let spaceGame;
-
 let fpsLabel, systemPerformance;
+var system;
 var prevFPS = 0;
 var currentFPS = 0;
 
@@ -11,7 +10,9 @@ function OnImagesLoaded() {
 
     this.chosenRequestFrame = GetFrame();
 
-    this.spaceGame = System.Initialize();
+    this.system = new System();
+
+    system.Initialize();
 
     if (System.DebugMode) {
         this.fpsLabel = document.getElementById("fpsLabel");
@@ -26,9 +27,7 @@ function OnImagesLoaded() {
 
 function RunGame() {
 
-    System.gamePad.Act();
-
-    this.spaceGame.Act();
+    this.system.Act();
 
     this.chosenRequestFrame(RunGame);
 
@@ -36,18 +35,17 @@ function RunGame() {
 
 function RunGameDebugMode() {
 
+    this.system.Act();
+
+    this.chosenRequestFrame(RunGameDebugMode);
+
     this.currentFPS = this.systemPerformance.GetFPS();
 
-    if (Math.abs(this.currentFPS - this.prevFPS) > 3){
+    if (Math.abs(this.currentFPS - this.prevFPS) > 3) {
+
         this.fpsLabel.innerHTML = this.currentFPS;
         this.prevFPS = this.currentFPS;
     }
-
-    System.gamePad.Act();
-
-    this.spaceGame.Act();
-
-    this.chosenRequestFrame(RunGameDebugMode);
 
 }
 

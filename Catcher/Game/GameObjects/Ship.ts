@@ -43,7 +43,9 @@
         this.drawableCollection = System.drawableLibrary.GetShip(() => this.state = ObjectState.DEAD );
 
         this.rightAction = rightAction;
+
         this.leftAction = leftAction;
+
         this.accelerateAction = accelerateAction;
 
         this.orginalX = x;

@@ -8,9 +8,9 @@
     private nextLevel: Level; // todo flyt til levelmanager
     private textdrawer: TextDrawer;
     private gameState: GameState = GameState.RUNNING;
-    public static lightening: LightSource;
+    public static Lightning: LightSource;
 
-    public static heatbeat: number = 0; // flyt til ????
+    public static HeartBeat: number = 0; // flyt til ????
 
     // pools
 
@@ -51,7 +51,7 @@
 
         System.audioLibrary.Play(7);
 
-        SpaceGame.lightening = new LightSource();
+        SpaceGame.Lightning = new LightSource();
 
         this.poolPowerUp = new PowerUpPool(this.player1, this.player2, this.poolObstacle);
 
@@ -59,13 +59,7 @@
 
     public Act() { 
 
-        SpaceGame.heatbeat++;
-
-        if (SpaceGame.heatbeat > 10000) {
-            SpaceGame.heatbeat = 0;
-        }
-
-        System.canvas.Clear();
+        SpaceGame.HeartBeat = SpaceGame.HeartBeat + 1 % 10000;
 
         this.poolPowerUp.Act();
 
@@ -82,7 +76,6 @@
         //    this.poolObstacle.AddObstacle(new Spikey());
 
         //}
-
 
         this.poolStar.Act();
 
@@ -127,7 +120,7 @@
 
         SpaceGame.poolParticle.Draw();
 
-        SpaceGame.lightening.Act();
+        SpaceGame.Lightning.Act();
 
     }
 

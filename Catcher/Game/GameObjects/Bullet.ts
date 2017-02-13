@@ -3,7 +3,7 @@
     public attack = 0;
    
     constructor(color:string) {
-        super(32, 64, 0, 0, System.canvas);
+        super(24, 40, 0, 0, System.canvas);
         
         this.state = ObjectState.DEAD;
 
@@ -11,9 +11,9 @@
 
     }
 
-    public Spawn(ship:GameObject, type:BulletTypes, vector:Vector) {
+    public Spawn(ship:GameObject, type:BulletTypes, vector:Vector, offset:number) {
 
-        this.timestamp = SpaceGame.heatbeat;
+        this.timestamp = SpaceGame.HeartBeat;
 
         this.vector.Copy(vector);
 
@@ -44,9 +44,11 @@
 
         this.state = ObjectState.ALIVE;
 
-        this.x = ship.x + ship.widthHalf - this.widthHalf;
+        let radian = this.vector.angle * Math.PI / 180;
 
-        this.y = ship.y + ship.heightHalf - this.heightHalf;
+        this.x = Math.cos(radian) * offset + (ship.x + ship.widthHalf - this.widthHalf);
+
+        this.y = Math.sin(radian) * offset + (ship.y + ship.heightHalf - this.heightHalf);
         
     }
 

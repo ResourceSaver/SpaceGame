@@ -1,9 +1,5 @@
 class AudioLibrary {
     constructor() {
-        this.prevVol = 0;
-        this.Initialize();
-    }
-    Initialize() {
         this.audioCollection = new Array();
         this.AddAudioFile("explosion.mp3", 0.45, false);
         this.AddAudioFile("laser.mp3", 0.2, false);
@@ -42,10 +38,7 @@ class AudioLibrary {
         this.audioCollection[index].pause();
     }
     PauseLoop(index) {
-        this.prevVol = this.audioCollection[index].volume;
-        this.audioCollection[index].volume = 0;
         this.audioCollection[index].pause();
-        this.audioCollection[index].volume = this.prevVol;
     }
 }
 class Canvas {
@@ -370,7 +363,7 @@ class GameObject {
         this.AdjustBoundingbox(0, 0);
     }
     HasReached() {
-        return this.abs(SpaceGame.heatbeat - this.timestamp) == this.reach;
+        return this.abs(SpaceGame.HeartBeat - this.timestamp) == this.reach;
     }
     SetDrawRotateFunction() {
         this.drawFunction = this.DrawObjectRotate;
@@ -531,14 +524,15 @@ class Keyboard {
     }
 }
 let chosenRequestFrame;
-let spaceGame;
 let fpsLabel, systemPerformance;
+var system;
 var prevFPS = 0;
 var currentFPS = 0;
 window.onload = () => { new Images(() => this.OnImagesLoaded()); };
 function OnImagesLoaded() {
     this.chosenRequestFrame = GetFrame();
-    this.spaceGame = System.Initialize();
+    this.system = new System();
+    system.Initialize();
     if (System.DebugMode) {
         this.fpsLabel = document.getElementById("fpsLabel");
         this.systemPerformance = new SystemPerformance();
@@ -549,19 +543,17 @@ function OnImagesLoaded() {
     }
 }
 function RunGame() {
-    System.gamePad.Act();
-    this.spaceGame.Act();
+    this.system.Act();
     this.chosenRequestFrame(RunGame);
 }
 function RunGameDebugMode() {
+    this.system.Act();
+    this.chosenRequestFrame(RunGameDebugMode);
     this.currentFPS = this.systemPerformance.GetFPS();
     if (Math.abs(this.currentFPS - this.prevFPS) > 3) {
         this.fpsLabel.innerHTML = this.currentFPS;
         this.prevFPS = this.currentFPS;
     }
-    System.gamePad.Act();
-    this.spaceGame.Act();
-    this.chosenRequestFrame(RunGameDebugMode);
 }
 function GetFrame() {
     return this.window.requestAnimationFrame ||
@@ -894,6 +886,7 @@ class Level1 extends Level {
     constructor() {
         super('Level 1');
         this.AddObstacle(new AsteroidSmaller());
+        this.AddObstacle(new Fighter());
     }
 }
 class Level2 extends Level {
@@ -993,6 +986,7 @@ function rand(max, min, _int) {
 ;
 class BulletPoolShip {
     constructor(ship, color) {
+        this.offSet = 33;
         this.ship = ship;
         this.maxBullets = 8;
         this.bullets = new Array();
@@ -1028,7 +1022,13 @@ class BulletPoolShip {
             return false;
         }
         if (this.bullets[this.maxBullets - 1].Is(ObjectState.DEAD)) {
-            this.bullets[this.maxBullets - 1].Spawn(this.ship, type, this.ship.vector);
+            if (type == BulletTypes.LAZER) {
+                this.offSet = this.offSet == 33 ? -33 : 33;
+            }
+            else {
+                this.offSet = 0;
+            }
+            this.bullets[this.maxBullets - 1].Spawn(this.ship, type, this.ship.vector, this.offSet);
             this.bullets.unshift(this.bullets.pop());
             return true;
         }
@@ -1200,16 +1200,20 @@ class Images {
     }
 }
 class System {
-    static Initialize() {
-        this.drawableLibrary = new DrawableLibrary();
-        this.audioLibrary = new AudioLibrary();
+    Initialize() {
+        System.drawableLibrary = new DrawableLibrary();
+        System.audioLibrary = new AudioLibrary();
         System.canvas = new Canvas("mainCanvas");
         let backgroundCanvas = new Canvas("backgroundCanvas");
         backgroundCanvas.DrawDrawable(new Drawable("background", Images.GetImage("background")), 0, 0, System.resolutionX, System.resolutionY);
-        var game = new SpaceGame();
-        this.gamePad = new GamePad(game);
-        this.keyboard = new Keyboard(game);
-        return game;
+        this.game = new SpaceGame();
+        System.gamePad = new GamePad(this.game);
+        System.keyboard = new Keyboard(this.game);
+    }
+    Act() {
+        System.canvas.Clear();
+        System.gamePad.Act();
+        this.game.Act();
     }
 }
 System.resolutionX = 1920;
@@ -1390,13 +1394,13 @@ class Slicer extends Obstacle {
 }
 class Bullet extends GameObject {
     constructor(color) {
-        super(32, 64, 0, 0, System.canvas);
+        super(24, 40, 0, 0, System.canvas);
         this.attack = 0;
         this.state = ObjectState.DEAD;
         this.drawableCollection = System.drawableLibrary.GetLazer(color);
     }
-    Spawn(ship, type, vector) {
-        this.timestamp = SpaceGame.heatbeat;
+    Spawn(ship, type, vector, offset) {
+        this.timestamp = SpaceGame.HeartBeat;
         this.vector.Copy(vector);
         if (type == BulletTypes.LAZER) {
             this.drawableCollection.SetCurrentDrawable("bullet");
@@ -1412,8 +1416,9 @@ class Bullet extends GameObject {
             this.vector.Accelerate(4);
         }
         this.state = ObjectState.ALIVE;
-        this.x = ship.x + ship.widthHalf - this.widthHalf;
-        this.y = ship.y + ship.heightHalf - this.heightHalf;
+        let radian = this.vector.angle * Math.PI / 180;
+        this.x = Math.cos(radian) * offset + (ship.x + ship.widthHalf - this.widthHalf);
+        this.y = Math.sin(radian) * offset + (ship.y + ship.heightHalf - this.heightHalf);
     }
     Draw() { this.canvas.DrawObjectRotate(this); }
     Act() {
@@ -1646,7 +1651,7 @@ class BulletPoolObstacle {
     }
     Spawn(obstacle, vector) {
         if (this.bullets[this.maxBullets - 1].Is(ObjectState.DEAD)) {
-            this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector);
+            this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector, 0);
             this.bullets.unshift(this.bullets.pop());
         }
     }
@@ -1978,7 +1983,7 @@ class PowerUpPool {
                 ship.ChargeShield();
                 break;
             case PowerUpType.BLITZ:
-                SpaceGame.lightening.Blitz();
+                SpaceGame.Lightning.Blitz();
                 this.poolObstacle.Nuclear();
                 break;
             case PowerUpType.ENERGY:
@@ -2102,15 +2107,11 @@ class SpaceGame {
         this.NextLevel();
         System.audioLibrary.ToggleMute();
         System.audioLibrary.Play(7);
-        SpaceGame.lightening = new LightSource();
+        SpaceGame.Lightning = new LightSource();
         this.poolPowerUp = new PowerUpPool(this.player1, this.player2, this.poolObstacle);
     }
     Act() {
-        SpaceGame.heatbeat++;
-        if (SpaceGame.heatbeat > 10000) {
-            SpaceGame.heatbeat = 0;
-        }
-        System.canvas.Clear();
+        SpaceGame.HeartBeat = SpaceGame.HeartBeat + 1 % 10000;
         this.poolPowerUp.Act();
         if (this.player1.numberOfLives == 0 && this.player2.numberOfLives == 0) {
             this.gameState = GameState.GAMEOVER;
@@ -2143,7 +2144,7 @@ class SpaceGame {
         }
         this.shipInformationBar.Draw(this.player1);
         SpaceGame.poolParticle.Draw();
-        SpaceGame.lightening.Act();
+        SpaceGame.Lightning.Act();
     }
     KeyDown(action) {
         if (action == UserAction.SHIP1_ACCELERATE) {
@@ -2202,7 +2203,7 @@ class SpaceGame {
         this.poolObstacle.SetObstacles(this.nextLevel.GetObstacles());
     }
 }
-SpaceGame.heatbeat = 0;
+SpaceGame.HeartBeat = 0;
 class StarPool {
     constructor(ship) {
         this.count = 0;

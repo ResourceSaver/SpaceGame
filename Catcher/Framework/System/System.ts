@@ -17,12 +17,14 @@
     public static gamePad: GamePad;
 
     public static keyboard: Keyboard;
-    
-    public static Initialize():SpaceGame {
 
-        this.drawableLibrary = new DrawableLibrary();
+    private game: SpaceGame;
 
-        this.audioLibrary = new AudioLibrary();
+    public Initialize():void {
+
+        System.drawableLibrary = new DrawableLibrary();
+
+        System.audioLibrary = new AudioLibrary();
 
         System.canvas = new Canvas("mainCanvas");
 
@@ -30,13 +32,22 @@
 
         backgroundCanvas.DrawDrawable(new Drawable("background", Images.GetImage("background")), 0, 0, System.resolutionX, System.resolutionY);
 
-        var game = new SpaceGame();
+        this.game = new SpaceGame();
 
-        this.gamePad = new GamePad(game);
+        System.gamePad = new GamePad(this.game);
 
-        this.keyboard = new Keyboard(game); 
+        System.keyboard = new Keyboard(this.game); 
 
-        return game;
+    }
+
+    public Act() {
+
+        System.canvas.Clear();
+
+        System.gamePad.Act();
+
+        this.game.Act();
+
     }
 
 }

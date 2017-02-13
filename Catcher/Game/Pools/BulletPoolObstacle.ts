@@ -34,8 +34,8 @@
     public Spawn(obstacle:Obstacle, vector:Vector) {
 
         if (this.bullets[this.maxBullets - 1].Is(ObjectState.DEAD)) {
-
-            this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector);
+            
+            this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector, 0);
 
             this.bullets.unshift(this.bullets.pop());
 

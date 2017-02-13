@@ -48,6 +48,7 @@ class Level1 extends Level {
         super('Level 1');
 
         this.AddObstacle(new AsteroidSmaller());
+        this.AddObstacle(new Fighter());
 
     }
 

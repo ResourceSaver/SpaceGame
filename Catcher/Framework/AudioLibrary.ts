@@ -4,12 +4,6 @@
 
     public constructor() {
 
-        this.Initialize();
-
-    }
-
-    private Initialize(): void {
-
         this.audioCollection = new Array<HTMLAudioElement>()
         this.AddAudioFile("explosion.mp3", 0.45, false);
         this.AddAudioFile("laser.mp3", 0.2, false);
@@ -26,7 +20,7 @@
         this.AddAudioFile("shield.mp3", 0.65, true);
         this.AddAudioFile("shield.mp3", 0.65, true);
         this.AddAudioFile("thunder.mp3", 0.75, false);
-        
+
     }
 
     private AddAudioFile(fileName: string, volume: number, loop:boolean) {
@@ -64,17 +58,13 @@
 
     }
 
-    private prevVol = 0;
-
     public PauseLoop(index) {
 
-        this.prevVol = this.audioCollection[index].volume; 
-
-        this.audioCollection[index].volume = 0;
+        //this.audioCollection[index].muted = true;
 
         this.audioCollection[index].pause();
 
-        this.audioCollection[index].volume = this.prevVol;
+        //this.audioCollection[index].muted = false;
 
     }
 

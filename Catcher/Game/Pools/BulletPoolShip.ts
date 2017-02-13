@@ -57,13 +57,22 @@
 
     }
 
+    private offSet: number = 33;
+
     private Spawn(type:BulletTypes) {
 
         if (this.ship.IsNot(ObjectState.ALIVE) && this.ship.IsNot(ObjectState.IMMORTAL)) { return false; }
 
         if (this.bullets[this.maxBullets - 1].Is(ObjectState.DEAD)) {
 
-            this.bullets[this.maxBullets - 1].Spawn(this.ship, type, this.ship.vector);
+            if (type == BulletTypes.LAZER) {
+                this.offSet = this.offSet == 33 ? -33 : 33;
+            }
+            else {
+                this.offSet = 0;
+            }
+
+            this.bullets[this.maxBullets - 1].Spawn(this.ship, type, this.ship.vector, this.offSet);
 
             this.bullets.unshift(this.bullets.pop());
 

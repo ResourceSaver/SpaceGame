@@ -122,7 +122,7 @@
                 ship.ChargeShield();
                 break;
             case PowerUpType.BLITZ:
-                SpaceGame.lightening.Blitz();
+                SpaceGame.Lightning.Blitz();
                 this.poolObstacle.Nuclear();
                 break;
             case PowerUpType.ENERGY:

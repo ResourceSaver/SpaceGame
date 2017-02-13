@@ -46,7 +46,7 @@
 
     protected HasReached() {
 
-        return this.abs(SpaceGame.heatbeat - this.timestamp) == this.reach;
+        return this.abs(SpaceGame.HeartBeat - this.timestamp) == this.reach;
 
     }
 
