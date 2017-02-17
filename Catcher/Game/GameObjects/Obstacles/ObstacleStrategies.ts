@@ -55,12 +55,15 @@ class ShootStrategy {
     private shotCount = 0;
     private shot = 0;
     private obstacle: Obstacle;
+    private shotOffset: number;
 
-    constructor(shotSpeed: number, obstacle: Obstacle) {
+    constructor(shotSpeed: number, obstacle: Obstacle, shotOffset:number) {
 
         this.shot = shotSpeed;
 
         this.obstacle = obstacle;
+
+        this.shotOffset = shotOffset;
 
     }
 
@@ -68,7 +71,10 @@ class ShootStrategy {
         this.shotCount++;
 
         if (this.obstacle.Is(ObjectState.ALIVE) && this.shotCount > this.shot) {
-            SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.obstacle.vector);
+
+            this.shotOffset = this.shotOffset * -1;
+
+            SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.obstacle.vector, this.shotOffset);
             this.shotCount = 0;
         }
 
@@ -101,7 +107,7 @@ class ShootThreeSixtyStrategy {
             for (let i = 0; i < 360; i = i + 30) {
                 this.vector.SetValues(0, 0, i);
                 this.vector.ConstantSpeed(1);
-                SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector);
+                SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector, 0);
             }
 
             this.shotCount = 0;
@@ -138,7 +144,7 @@ class TwirvlShootStrategy {
 
                 this.vector.SetValues(0, 0, this.angle);
                 this.vector.ConstantSpeed(1);
-                SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector);
+                SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector, 0);
                 this.shotCount = 0;
                 this.angle += 30;
 
@@ -177,7 +183,7 @@ class ShootRandomStrategy {
         if (this.obstacle.Is(ObjectState.ALIVE) && this.shotCount > this.shot) {
             this.vector.SetValues(0, 0, Math.random() * 360);
             this.vector.ConstantSpeed(1);
-            SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector);
+            SpaceGame.poolObstacleBullet.Spawn(this.obstacle, this.vector, 0);
             this.shotCount = 0;
         }
 

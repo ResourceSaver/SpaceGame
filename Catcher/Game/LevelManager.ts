@@ -47,8 +47,16 @@ class Level1 extends Level {
     constructor() {
         super('Level 1');
 
-        this.AddObstacle(new AsteroidSmaller());
         this.AddObstacle(new Fighter());
+
+
+        //this.AddObstacle(new Slicer());
+
+        //this.AddObstacle(new BugEye());
+        //this.AddObstacle(new Scythe()); 
+        //this.AddObstacle(new Blades()); // catch player
+       // this.AddObstacle(new Spikey());
+        //this.AddObstacle(new Saucer());
 
     }
 
@@ -60,6 +68,7 @@ class Level2 extends Level {
         super('Level 2');
 
         this.AddObstacle(new AsteroidSmall());
+        this.AddObstacle(new Fighter());
 
     }
 

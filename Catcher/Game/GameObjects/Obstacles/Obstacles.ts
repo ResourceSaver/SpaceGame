@@ -210,7 +210,7 @@ class Fighter extends Obstacle {
     constructor() {
         super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 15);
 
-        this.shootingStrategy = new ShootStrategy(100, this);
+        this.shootingStrategy = new ShootStrategy(100, this, 45);
 
         this.moveStrategy = new MoveStrategy(this, 1);
         this.moveStrategy.SetChangeDirection(Math.random() * 200 + 100);
@@ -227,7 +227,6 @@ class Fighter extends Obstacle {
 
     }
    
-
     public Act() {
         super.Act();
 
@@ -253,7 +252,7 @@ class Scythe extends Obstacle {
     constructor() {
         super(AsteroidSize.BIG, AsteroidSize.BIG, AsteroidSize.BIG, 0, 0, System.canvas, 30);
 
-        this.shootingStrategy = new ShootStrategy(20, this);
+        this.shootingStrategy = new ShootStrategy(20, this, 0);
 
         this.moveStrategy = new MoveStrategy(this, 1);
 
@@ -268,8 +267,6 @@ class Scythe extends Obstacle {
         //this.thrust.SetThrusting(true);
 
     }
-
-
 
     public Act() {
         super.Act();

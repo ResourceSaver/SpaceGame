@@ -31,11 +31,11 @@
         }
     }
 
-    public Spawn(obstacle:Obstacle, vector:Vector) {
+    public Spawn(obstacle:Obstacle, vector:Vector, offset:number) {
 
         if (this.bullets[this.maxBullets - 1].Is(ObjectState.DEAD)) {
             
-            this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector, 0);
+            this.bullets[this.maxBullets - 1].Spawn(obstacle, BulletTypes.LAZER, vector, offset);
 
             this.bullets.unshift(this.bullets.pop());
 
