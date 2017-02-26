@@ -20,6 +20,13 @@
         this.animationFinishedEvent = finishedEventHandler;
 
     }
+
+    public ChangeAnimationSpeed(speed: number) {
+
+        this.animationSpeed = speed;
+        this.animationSpeedCounter = 0;
+
+    }
     
     public GetOffsetX(): number {
 

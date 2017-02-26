@@ -6,12 +6,12 @@
     private bulletPool1: BulletPoolShip;
     private bulletPool2: BulletPoolShip;
     
-    constructor(ship1, ship2, bulletPool1, bulletPool2) {
+    constructor(ship1, ship2) {
 
         this.ship1 = ship1;
         this.ship2 = ship2;
-        this.bulletPool1 = bulletPool1;
-        this.bulletPool2 = bulletPool2;
+        this.bulletPool1 = this.ship1.bulletPool;
+        this.bulletPool2 = this.ship2.bulletPool;
         this.obstacles = new Array<Obstacle>(0);
 
     }
@@ -138,6 +138,8 @@
         }
 
         obstacle.SetCoordinates(x, y);
+
+        (<Asteroid>obstacle).ChangeAnimationSpeed((Math.random() + 0.1) * 2);
 
         return obstacle;
 

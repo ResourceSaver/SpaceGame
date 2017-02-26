@@ -14,13 +14,13 @@
 
     public static Volume = 0.5;
 
-    public static gamePad: GamePad;
-
-    public static keyboard: Keyboard;
-
     private game: SpaceGame;
 
+    public static inputController: InputController;
+
     public Initialize():void {
+
+        System.inputController = new InputController();
 
         System.drawableLibrary = new DrawableLibrary();
 
@@ -34,9 +34,6 @@
 
         this.game = new SpaceGame();
 
-        System.gamePad = new GamePad(this.game);
-
-        System.keyboard = new Keyboard(this.game); 
 
     }
 
@@ -44,7 +41,7 @@
 
         System.canvas.Clear();
 
-        System.gamePad.Act();
+        System.inputController.Act();
 
         this.game.Act();
 

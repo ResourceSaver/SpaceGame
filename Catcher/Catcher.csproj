@@ -73,8 +73,7 @@
     <TypeScriptCompile Include="Framework\LightSource.ts" />
     <TypeScriptCompile Include="Framework\System\Enums.ts" />
     <TypeScriptCompile Include="Framework\GameObject.ts" />
-    <TypeScriptCompile Include="Framework\System\GamePad.ts" />
-    <TypeScriptCompile Include="Framework\System\Keyboard.ts" />
+    <TypeScriptCompile Include="Framework\System\InputController.ts" />
     <TypeScriptCompile Include="Framework\System\Main.ts" />
     <TypeScriptCompile Include="Framework\Vector.ts" />
     <TypeScriptCompile Include="Game\GameObjects\Obstacles\Obstacle.ts" />

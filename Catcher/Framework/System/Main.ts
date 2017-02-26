@@ -14,6 +14,8 @@ function OnImagesLoaded() {
 
     system.Initialize();
 
+
+
     if (System.DebugMode) {
         this.fpsLabel = document.getElementById("fpsLabel");
         this.systemPerformance = new SystemPerformance();

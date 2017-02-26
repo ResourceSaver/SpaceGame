@@ -1,8 +1,5 @@
 ﻿class Ship extends GameObject {
 
-    private rightAction: UserAction;
-    private leftAction: UserAction;
-    private accelerateAction: UserAction;
     private rotateSpeed: number = 2;
     private accelerationSpeed: number = 0.1;
     private shieldAmount: number = 200;
@@ -14,7 +11,7 @@
     private numberOfKills: number = 0;
     public score: string;
 
-    public useGamePad: boolean = false;
+    public bulletPool: BulletPoolShip;
 
     private respawnCounter: number = 0;
     private respawnValue: number = 100;
@@ -25,8 +22,10 @@
     private thrustSoundNumber: number;
     private shieldSoundNumber: number;
 
-    constructor(leftAction: UserAction, rightAction: UserAction, accelerateAction: UserAction, x: number, y: number, thrustSoundNumber:number, shieldSoundNumber:number) {
+    constructor(bulletColor:string, x: number, y: number, thrustSoundNumber:number, shieldSoundNumber:number) {
         super(AsteroidSize.BIG, AsteroidSize.BIG, x, y, System.canvas);
+
+        this.bulletPool = new BulletPoolShip(this, bulletColor);
 
         this.hitColor = "#FF6549";
 
@@ -41,12 +40,6 @@
         this.shieldSoundNumber = shieldSoundNumber;
 
         this.drawableCollection = System.drawableLibrary.GetShip(() => this.state = ObjectState.DEAD );
-
-        this.rightAction = rightAction;
-
-        this.leftAction = leftAction;
-
-        this.accelerateAction = accelerateAction;
 
         this.orginalX = x;
 
@@ -117,6 +110,8 @@
 
     public Act() {
 
+        this.bulletPool.Act();
+
         if (this.state == ObjectState.DEAD ) {
 
             if (this.numberOfLives == 0) return;
@@ -170,26 +165,53 @@
 
         if (this.state == ObjectState.ALIVE || this.state == ObjectState.IMMORTAL) {
 
-            if (this.useGamePad) {
-                if (System.gamePad.IsKeyDown(this.leftAction)) { this.vector.Rotate(-this.rotateSpeed); }
-
-                if (System.gamePad.IsKeyDown(this.rightAction)) { this.vector.Rotate(this.rotateSpeed); }
-
-                if (System.gamePad.IsKeyDown(this.accelerateAction)) { this.vector.Accelerate(this.accelerationSpeed); }
-
-            }
-            else {
-                if (System.keyboard.IsKeyDown(this.leftAction)) { this.vector.Rotate(-this.rotateSpeed); }
-
-                if (System.keyboard.IsKeyDown(this.rightAction)) { this.vector.Rotate(this.rotateSpeed); }
-
-                if (System.keyboard.IsKeyDown(this.accelerateAction)) { this.vector.Accelerate(this.accelerationSpeed); }
-
+            if (this.rotateLeft) {
+                this.vector.Rotate(-this.rotateSpeed);
             }
 
+            if (this.rotateRight) {
+                this.vector.Rotate(this.rotateSpeed);
+            }
+
+            if (this.accelerate) {
+                this.vector.Accelerate(this.accelerationSpeed);
+            }
+          
         }
         
         this.Draw();
+
+    }
+
+    private rotateLeft: boolean;
+    private rotateRight: boolean;
+    private accelerate: boolean;
+    
+    public OnKeyDown(action: Actions) {
+
+        if (action == Actions.ACCELERATE) { this.SetMoveAnimation(); this.accelerate = true;}
+
+        else if (action == Actions.SHIELD) { this.ShieldOn(); }
+
+        else if (action == Actions.FIRE) { this.bulletPool.SpawnLaser(); }
+
+        else if (action == Actions.MISILE) { this.bulletPool.SpawnMisile(); }
+
+        else if (action == Actions.LEFT) { this.rotateLeft = true; }
+
+        else if (action == Actions.RIGHT) { this.rotateRight = true; }
+
+    }
+
+    public OnKeyUp(action: Actions) {
+
+        if (action == Actions.ACCELERATE) { this.SetIdleAnimation(); this.accelerate = false; }
+
+        else if (action == Actions.SHIELD) { this.ShieldOff(); }
+
+        else if (action == Actions.LEFT) { this.rotateLeft = false; }
+
+        else if (action == Actions.RIGHT) { this.rotateRight = false; }
 
     }
 
@@ -213,7 +235,7 @@
         System.audioLibrary.PauseLoop(this.shieldSoundNumber);
     }
 
-    public SetMoveAnimation() {
+    private SetMoveAnimation() {
 
         if (this.IsNot(ObjectState.ALIVE) && this.IsNot(ObjectState.IMMORTAL)) { return; }
 
@@ -223,7 +245,7 @@
 
     }
 
-    public SetIdleAnimation() {
+    private SetIdleAnimation() {
 
         if (this.IsNot(ObjectState.ALIVE) && this.IsNot(ObjectState.IMMORTAL)) { return; }
 

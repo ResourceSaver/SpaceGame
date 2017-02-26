@@ -1,9 +1,8 @@
 ﻿class BulletPoolShip {
 
     private ship: Ship;
-
     private bullets: Array<Bullet>
-
+    private offSet: number = 33;
     private maxBullets: number;
 
     constructor(ship: Ship, color:string) {
@@ -56,8 +55,6 @@
         }
 
     }
-
-    private offSet: number = 33;
 
     private Spawn(type:BulletTypes) {
 
@@ -140,5 +137,6 @@
         return 0;
 
     }
+
 
 }

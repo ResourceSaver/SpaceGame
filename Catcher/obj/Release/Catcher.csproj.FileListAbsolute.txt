@@ -9,3 +9,9 @@ C:\Users\Niller\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.pdb
 C:\Users\Niller\Documents\GitHub\SpaceGame\Catcher\obj\Release\Catcher.csprojResolveAssemblyReference.cache
 C:\Users\Niller\Documents\GitHub\SpaceGame\Catcher\obj\Release\Catcher.dll
 C:\Users\Niller\Documents\GitHub\SpaceGame\Catcher\obj\Release\Catcher.pdb
+C:\Users\Dell\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.dll.config
+C:\Users\Dell\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.dll
+C:\Users\Dell\Documents\GitHub\SpaceGame\Catcher\bin\Catcher.pdb
+C:\Users\Dell\Documents\GitHub\SpaceGame\Catcher\obj\Release\Catcher.csprojResolveAssemblyReference.cache
+C:\Users\Dell\Documents\GitHub\SpaceGame\Catcher\obj\Release\Catcher.dll
+C:\Users\Dell\Documents\GitHub\SpaceGame\Catcher\obj\Release\Catcher.pdb

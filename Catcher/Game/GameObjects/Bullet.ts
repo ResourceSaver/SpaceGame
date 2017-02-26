@@ -17,6 +17,8 @@
 
         this.vector.Copy(vector);
 
+        //this.vector.angle = offset > 0 ? this.vector.angle - 15 : this.vector.angle + 15;
+
         if (type == BulletTypes.LAZER) {
 
             this.drawableCollection.SetCurrentDrawable("bullet");

@@ -4,18 +4,16 @@
     private player2: Ship;
 
     private shipInformationBar: ShipInformationBar; // todo - tegn for player 2
-    private levelManager: LevelManager; // refactor denne
-    private nextLevel: Level; // todo flyt til levelmanager
     private textdrawer: TextDrawer;
     private gameState: GameState = GameState.RUNNING;
     public static Lightning: LightSource;
-
     public static HeartBeat: number = 0; // flyt til ????
+
+    private levelManager: LevelManager; // refactor denne
+    private nextLevel: Level; // todo flyt til levelmanager
 
     // pools
 
-    private poolBulletPlayer1: BulletPoolShip;
-    private poolBulletPlayer2: BulletPoolShip;
     private poolObstacle: ObstaclePool;
     private poolStar: StarPool;
     private poolPowerUp: PowerUpPool;
@@ -27,17 +25,16 @@
         SpaceGame.poolParticle = new ParticlePool();
 
         this.levelManager = new LevelManager();
+     
+        this.player1 = new Ship("red", System.resolutionX / 3, System.resolutionY / 2, 2, 12);
+        this.player2 = new Ship("blue", System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13 );
 
-        this.player1 = new Ship(UserAction.SHIP1_LEFT, UserAction.SHIP1_RIGHT, UserAction.SHIP1_ACCELERATE, System.resolutionX / 3, System.resolutionY / 2, 2, 12);
-        this.poolBulletPlayer1 = new BulletPoolShip(this.player1, "red");
-        //this.player1.useGamePad = true;
-
-        this.player2 = new Ship(UserAction.SHIP2_LEFT2, UserAction.SHIP2_RIGHT2, UserAction.SHIP2_ACCELERATE2, System.resolutionX / 3 * 2, System.resolutionY / 2, 6, 13 );
-        this.poolBulletPlayer2 = new BulletPoolShip(this.player2, "blue");
+        System.inputController.AddShip1(this.player1);
+        System.inputController.AddShip2(this.player2);
 
         this.shipInformationBar = new ShipInformationBar();
 
-        this.poolObstacle = new ObstaclePool(this.player1, this.player2, this.poolBulletPlayer1, this.poolBulletPlayer2);
+        this.poolObstacle = new ObstaclePool(this.player1, this.player2);
         SpaceGame.poolObstacleBullet = new BulletPoolObstacle(this.player1, this.player2);
 
         this.poolStar = new StarPool(this.player1);
@@ -81,16 +78,12 @@
 
         SpaceGame.poolObstacleBullet.Act();
 
-        this.poolBulletPlayer1.Act();
-
-        this.poolBulletPlayer2.Act();
-
         this.player1.Act(); 
 
         //this.ship2.Act();
 
         if (this.textdrawer.Act()) {
-            this.TextWriterFinished();
+            this.SetGameState();
         }
 
         if (this.poolObstacle.Act()) {
@@ -124,39 +117,7 @@
 
     }
 
-    public KeyDown(action: UserAction) {
-        
-        if (action == UserAction.SHIP1_ACCELERATE) { this.player1.SetMoveAnimation(); }
-
-        else if (action == UserAction.SHIP2_ACCELERATE2) { this.player2.SetMoveAnimation(); }
-
-        else if (action == UserAction.SHIP1_FIRE) { this.poolBulletPlayer1.SpawnLaser(); }
-
-        else if (action == UserAction.SHIP2_FIRE2) { this.poolBulletPlayer2.SpawnLaser(); }
-
-        else if (action == UserAction.SHIP1_SHIELD) { this.player1.ShieldOn(); }
-
-        else if (action == UserAction.SHIP2_SHIELD) { this.player2.ShieldOn() }
-
-        else if (action == UserAction.SHIP1_MISILE) { this.poolBulletPlayer1.SpawnMisile(); }
-
-        else if (action == UserAction.SHIP2_MISILE2) { this.poolBulletPlayer2.SpawnMisile(); }
-
-    }
-
-    public KeyUp(action: UserAction) {
-
-        if (action == UserAction.SHIP1_ACCELERATE) { this.player1.SetIdleAnimation(); }
-
-        else if (action == UserAction.SHIP2_ACCELERATE2) { this.player2.SetIdleAnimation(); }
-
-        else if (action == UserAction.SHIP1_SHIELD) { this.player1.ShieldOff(); }
-
-        else if (action == UserAction.SHIP2_SHIELD) { this.player2.ShieldOff(); }
-
-    }
-
-    private TextWriterFinished() {
+    private SetGameState() {
 
         if (this.gameState == GameState.LEVELFINISHED) {
 

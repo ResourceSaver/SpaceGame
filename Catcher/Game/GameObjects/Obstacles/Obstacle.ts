@@ -6,7 +6,7 @@
     constructor(size: AsteroidSize, width: number, height: number, x: number, y: number, canvas: Canvas, energy:number) {
         super(width, height, x, y, canvas);
 
-        this.hitColor = "green";
+        this.hitColor = "lightgreen";
 
         this.size = size;
 

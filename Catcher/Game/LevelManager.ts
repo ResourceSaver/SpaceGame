@@ -47,7 +47,11 @@ class Level1 extends Level {
     constructor() {
         super('Level 1');
 
-        this.AddObstacle(new Fighter());
+        //this.AddObstacle(new Fighter());
+
+        this.AddObstacle(new AsteroidMedium());
+        this.AddObstacle(new AsteroidSmall());
+        this.AddObstacle(new AsteroidSmaller());
 
 
         //this.AddObstacle(new Slicer());

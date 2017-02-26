@@ -7,6 +7,24 @@
 
         this.drawableCollection = System.drawableLibrary.GetAsteroid(() => this.state = ObjectState.DEAD);
 
+        let x = Math.random();
+
+        if (x < 0.33) {
+            this.drawableCollection.SetCurrentDrawable("asteroid");
+        }
+        else if (x < 0.66) {
+            this.drawableCollection.SetCurrentDrawable("asteroid3");
+        }
+        else {
+            this.drawableCollection.SetCurrentDrawable("asteroid4");
+        }
+
+    }
+
+    public ChangeAnimationSpeed(speed: number) {
+
+        (<DrawableAnimation>this.drawableCollection.GetCurrentDrawable()).ChangeAnimationSpeed(speed);
+
     }
 
     public HitByBullet(): boolean {
@@ -39,7 +57,6 @@ class AsteroidMedium extends Asteroid {
     constructor() {
 
         super(AsteroidSize.SMALL, 1);
-        this.drawableCollection.SetCurrentDrawable("asteroid");
         this.AdjustBoundingbox(-20, -20);
 
     }
@@ -52,7 +69,6 @@ class AsteroidSmall extends Asteroid {
 
         super(AsteroidSize.SMALLER, 1);
         this.AdjustBoundingbox(-30, -30);
-        this.drawableCollection.SetCurrentDrawable("asteroid3");
 
     }
 
@@ -64,7 +80,6 @@ class AsteroidSmaller extends Asteroid {
 
         super(AsteroidSize.SMALLEST, 1);
         this.AdjustBoundingbox(-25, -25);
-        this.drawableCollection.SetCurrentDrawable("asteroid4");
 
     }
 
