@@ -9,8 +9,7 @@
     public static Lightning: LightSource;
     public static HeartBeat: number = 0; // flyt til ????
 
-    private levelManager: LevelManager; // refactor denne
-    private nextLevel: Level; // todo flyt til levelmanager
+    private levelManager: LevelManager;
 
     // pools
 
@@ -40,9 +39,8 @@
         this.poolStar = new StarPool(this.player1);
 
         this.textdrawer = new TextDrawer();
-        this.textdrawer.SetText(this.levelManager.PeakAtNextLevel().GetLevelName().toString());
 
-        this.NextLevel();
+        this.ApplyNextLevel();
 
         System.audioLibrary.ToggleMute();
 
@@ -53,14 +51,14 @@
         this.poolPowerUp = new PowerUpPool(this.player1, this.player2, this.poolObstacle);
 
     }
-
+    
     public Act() { 
 
         SpaceGame.HeartBeat = SpaceGame.HeartBeat + 1 % 10000;
 
         this.poolPowerUp.Act();
 
-        if (this.player1.numberOfLives == 0 && this.player2.numberOfLives == 0) {
+        if (this.player1.numberOfLives == 0 && this.gameState == GameState.RUNNING) {//mising player 2
 
             this.gameState = GameState.GAMEOVER;
             this.textdrawer.SetText("Game Over");
@@ -82,30 +80,13 @@
 
         //this.ship2.Act();
 
-        if (this.textdrawer.Act()) {
-            this.SetGameState();
-        }
+        this.textdrawer.Act();
 
-        if (this.poolObstacle.Act()) {
+        if (this.poolObstacle.Act() && this.gameState == GameState.RUNNING) {
 
-            this.nextLevel = this.levelManager.PeakAtNextLevel();
+            this.levelManager.Advance();
 
-            if (this.gameState == GameState.RUNNING && this.nextLevel != null) {
-                this.textdrawer.SetText(this.nextLevel.GetLevelName().toString());
-                this.gameState = GameState.LEVELFINISHED;
-                System.audioLibrary.Play(8);
-
-            }
-            else if (this.gameState == GameState.RUNNING) {
-                this.textdrawer.SetText("Game Finished");
-                this.gameState = GameState.COMPLETED;
-                System.audioLibrary.Play(10);
-
-            }
-
-        }
-        else if (this.gameState == GameState.LEVELFINISHED) {
-            this.gameState = GameState.RUNNING;
+            this.ApplyNextLevel();
 
         }
 
@@ -117,33 +98,18 @@
 
     }
 
-    private SetGameState() {
+    public ApplyNextLevel() {
 
-        if (this.gameState == GameState.LEVELFINISHED) {
+        System.audioLibrary.Play(8);
 
-            this.NextLevel();
-
-            this.gameState = GameState.RUNNING;
-
+        if (this.levelManager.GetCurrentLevel() == null) {
+            this.textdrawer.SetText("Game Finished");
+            this.gameState = GameState.COMPLETED;
+            System.audioLibrary.Play(10);
         }
-        else if (this.gameState == GameState.GAMEOVER) {
-
-            this.gameState = GameState.NOTSTARTED;
-
-        }
-        else if (this.gameState == GameState.COMPLETED) {
-
-            this.gameState = GameState.NOTSTARTED;
-
+        else {
+            this.textdrawer.SetText(this.levelManager.GetCurrentLevel().GetLevelName().toString());
+            this.poolObstacle.SetObstacles(this.levelManager.GetCurrentLevel().GetObstacles());
         }
     }
-
-    public NextLevel() {
-
-        this.nextLevel = this.levelManager.GetNextLevel();
-
-        this.poolObstacle.SetObstacles(this.nextLevel.GetObstacles());
-
-    }
-
 }

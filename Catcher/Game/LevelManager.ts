@@ -5,41 +5,31 @@
     constructor() {
         this.levels = new Array<Level>();
 
-        this.levels.push(new Level0());
-
         this.levels.push(new Level1());
         this.levels.push(new Level2());
         this.levels.push(new Level3());
         this.levels.push(new Level4());
-        this.levels.push(new Level5());
-        this.levels.push(new Level6());
-        this.levels.push(new Level7());
-        this.levels.push(new Level8());
-        this.levels.push(new Level9());
-        this.levels.push(new Level10());
-        this.levels.push(new Level11());
+        //this.levels.push(new Level5());
+        //this.levels.push(new Level6());
+        //this.levels.push(new Level7());
+        //this.levels.push(new Level8());
+        //this.levels.push(new Level9());
+        //this.levels.push(new Level10());
+        //this.levels.push(new Level11());
 
     }
 
-    public GetNextLevel(): Level {
+    public Advance() {
 
-        return this.levels.shift();
+        this.levels.shift();
 
     }
 
-    public PeakAtNextLevel(): Level {
+    public GetCurrentLevel() : Level {
 
         return this.levels[0];
 
     }
-}
-
-class Level0 extends Level {
-
-    constructor() {
-        super('0');
-    }
-
 }
 
 class Level1 extends Level {
@@ -49,8 +39,8 @@ class Level1 extends Level {
 
         //this.AddObstacle(new Fighter());
 
-        this.AddObstacle(new AsteroidMedium());
-        this.AddObstacle(new AsteroidSmall());
+        //this.AddObstacle(new AsteroidMedium());
+        //this.AddObstacle(new AsteroidSmall());
         this.AddObstacle(new AsteroidSmaller());
 
 
@@ -71,9 +61,9 @@ class Level2 extends Level {
     constructor() {
         super('Level 2');
 
-        this.AddObstacle(new AsteroidSmall());
+        //this.AddObstacle(new AsteroidSmall());
         this.AddObstacle(new Fighter());
-
+        //this.AddObstacle(new AsteroidSmaller());
     }
 
 }
@@ -83,8 +73,8 @@ class Level3 extends Level {
     constructor() {
         super('Level 3');
 
-        this.AddObstacle(new AsteroidMedium());
-
+        //this.AddObstacle(new AsteroidMedium());
+        this.AddObstacle(new AsteroidSmaller());
     }
 
 }
@@ -94,8 +84,8 @@ class Level4 extends Level {
     constructor() {
         super('Level 4');
 
-        this.AddObstacle(new Slicer());
-
+        //this.AddObstacle(new Slicer());
+        this.AddObstacle(new AsteroidSmaller());
     }
 
 }

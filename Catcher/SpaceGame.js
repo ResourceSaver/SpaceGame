@@ -942,56 +942,40 @@ class Thrust extends GameObject {
 class LevelManager {
     constructor() {
         this.levels = new Array();
-        this.levels.push(new Level0());
         this.levels.push(new Level1());
         this.levels.push(new Level2());
         this.levels.push(new Level3());
         this.levels.push(new Level4());
-        this.levels.push(new Level5());
-        this.levels.push(new Level6());
-        this.levels.push(new Level7());
-        this.levels.push(new Level8());
-        this.levels.push(new Level9());
-        this.levels.push(new Level10());
-        this.levels.push(new Level11());
     }
-    GetNextLevel() {
-        return this.levels.shift();
+    Advance() {
+        this.levels.shift();
     }
-    PeakAtNextLevel() {
+    GetCurrentLevel() {
         return this.levels[0];
-    }
-}
-class Level0 extends Level {
-    constructor() {
-        super('0');
     }
 }
 class Level1 extends Level {
     constructor() {
         super('Level 1');
-        this.AddObstacle(new AsteroidMedium());
-        this.AddObstacle(new AsteroidSmall());
         this.AddObstacle(new AsteroidSmaller());
     }
 }
 class Level2 extends Level {
     constructor() {
         super('Level 2');
-        this.AddObstacle(new AsteroidSmall());
         this.AddObstacle(new Fighter());
     }
 }
 class Level3 extends Level {
     constructor() {
         super('Level 3');
-        this.AddObstacle(new AsteroidMedium());
+        this.AddObstacle(new AsteroidSmaller());
     }
 }
 class Level4 extends Level {
     constructor() {
         super('Level 4');
-        this.AddObstacle(new Slicer());
+        this.AddObstacle(new AsteroidSmaller());
     }
 }
 class Level5 extends Level {
@@ -2221,8 +2205,7 @@ class SpaceGame {
         SpaceGame.poolObstacleBullet = new BulletPoolObstacle(this.player1, this.player2);
         this.poolStar = new StarPool(this.player1);
         this.textdrawer = new TextDrawer();
-        this.textdrawer.SetText(this.levelManager.PeakAtNextLevel().GetLevelName().toString());
-        this.NextLevel();
+        this.ApplyNextLevel();
         System.audioLibrary.ToggleMute();
         System.audioLibrary.Play(7);
         SpaceGame.Lightning = new LightSource();
@@ -2231,7 +2214,7 @@ class SpaceGame {
     Act() {
         SpaceGame.HeartBeat = SpaceGame.HeartBeat + 1 % 10000;
         this.poolPowerUp.Act();
-        if (this.player1.numberOfLives == 0 && this.player2.numberOfLives == 0) {
+        if (this.player1.numberOfLives == 0 && this.gameState == GameState.RUNNING) {
             this.gameState = GameState.GAMEOVER;
             this.textdrawer.SetText("Game Over");
             System.audioLibrary.Play(9);
@@ -2239,44 +2222,26 @@ class SpaceGame {
         this.poolStar.Act();
         SpaceGame.poolObstacleBullet.Act();
         this.player1.Act();
-        if (this.textdrawer.Act()) {
-            this.SetGameState();
-        }
-        if (this.poolObstacle.Act()) {
-            this.nextLevel = this.levelManager.PeakAtNextLevel();
-            if (this.gameState == GameState.RUNNING && this.nextLevel != null) {
-                this.textdrawer.SetText(this.nextLevel.GetLevelName().toString());
-                this.gameState = GameState.LEVELFINISHED;
-                System.audioLibrary.Play(8);
-            }
-            else if (this.gameState == GameState.RUNNING) {
-                this.textdrawer.SetText("Game Finished");
-                this.gameState = GameState.COMPLETED;
-                System.audioLibrary.Play(10);
-            }
-        }
-        else if (this.gameState == GameState.LEVELFINISHED) {
-            this.gameState = GameState.RUNNING;
+        this.textdrawer.Act();
+        if (this.poolObstacle.Act() && this.gameState == GameState.RUNNING) {
+            this.levelManager.Advance();
+            this.ApplyNextLevel();
         }
         this.shipInformationBar.Draw(this.player1);
         SpaceGame.poolParticle.Draw();
         SpaceGame.Lightning.Act();
     }
-    SetGameState() {
-        if (this.gameState == GameState.LEVELFINISHED) {
-            this.NextLevel();
-            this.gameState = GameState.RUNNING;
+    ApplyNextLevel() {
+        System.audioLibrary.Play(8);
+        if (this.levelManager.GetCurrentLevel() == null) {
+            this.textdrawer.SetText("Game Finished");
+            this.gameState = GameState.COMPLETED;
+            System.audioLibrary.Play(10);
         }
-        else if (this.gameState == GameState.GAMEOVER) {
-            this.gameState = GameState.NOTSTARTED;
+        else {
+            this.textdrawer.SetText(this.levelManager.GetCurrentLevel().GetLevelName().toString());
+            this.poolObstacle.SetObstacles(this.levelManager.GetCurrentLevel().GetObstacles());
         }
-        else if (this.gameState == GameState.COMPLETED) {
-            this.gameState = GameState.NOTSTARTED;
-        }
-    }
-    NextLevel() {
-        this.nextLevel = this.levelManager.GetNextLevel();
-        this.poolObstacle.SetObstacles(this.nextLevel.GetObstacles());
     }
 }
 SpaceGame.HeartBeat = 0;
